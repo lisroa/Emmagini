@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../public/assets/navBar/nav_logo.png";
-import logoCoin from "../../public/assets/icons/coin.png";
+import logo from "../../../public/assets/navBar/nav_logo.png";
+import logoCoin from "../../../public/assets/icons/coin.png";
 import { CgMenuRound } from "react-icons/cg";
-import { useDataFrontContext } from "../context/FrontProvider";
+import { useDataFrontContext } from "../../context/FrontProvider";
 
 const NavBar = () => {
   const { setSideMenuOpen } = useDataFrontContext();
   return (
-    <div className="flex justify-between items-center fixed z-10 w-full h-16 py-5 px-8 text-sm font-light top-0 bg-blue">
+    <div className="flex justify-between items-center fixed z-10 w-full h-16 py-5 px-8 text-sm font-light top-0 bg-blueEmmagini">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg text-white">
           <Link href="#">

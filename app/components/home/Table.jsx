@@ -1,7 +1,7 @@
 "use client";
-import Card from "./Card";
-import { useDataContext } from "../context/GameDataProvider";
-import imageCard from "../../public/assets/cards/imageCard.png";
+import CardHome from "../cards/CardHome";
+import { useDataContext } from "../../context/GameDataProvider";
+import imageCard from "../../../public/assets/cards/imageCard.png";
 
 function Table() {
   const { infoGames } = useDataContext();
@@ -27,7 +27,7 @@ function Table() {
         {infoGames &&
           Object.values(infoGames).map((game) => (
             <div key={game.id} className="flex justify-center">
-              <Card
+              <CardHome
                 text={game.titulo}
                 imageCard={
                   game.image || game.imagen || game.imagen_1 || game.imagen_0

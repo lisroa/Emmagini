@@ -25,11 +25,11 @@ export const RoundButton = ({
     <button
       onClick={onClick}
       type={type}
-      className={"flex flex-row gap-3 items-center justify-center w-full rounded-full shadow-md border border-gray-50 cursor-pointer hover:bg-gray-50 py-5 px-10"
+      className={"flex flex-row gap-3 items-center justify-center w-full rounded-full shadow-md border border-gray-200 cursor-pointer py-5 px-10"
         .concat(" ", buttonClassName || "")
         .concat(
           " ",
-          isDisabled ? "bg-gray-500 border-gray-500 hover:bg-gray-600" : ""
+          isDisabled ? "bg-gray-500 border-gray-500" : ""
         )}
       disabled={isDisabled}
     >

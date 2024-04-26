@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-function Card({ text, imageCard }) {
+function CardHome({ text, imageCard }) {
   return (
     <div className="bg-white rounded-md shadow-md p-4 w-[256px] h-auto flex flex-col items-center cursor-pointer hover:shadow-">
       <div className="relative h-40 w-full">
@@ -13,4 +13,4 @@ function Card({ text, imageCard }) {
   );
 }
 
-export default Card;
+export default CardHome;

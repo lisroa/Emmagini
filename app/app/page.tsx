@@ -1,5 +1,5 @@
-import Table from "@/app/components/Table";
-import ImageBanner from "../components/ImageBanner";
+import Table from "@/app/components/home/Table";
+import ImageBanner from "../components/home/ImageBanner";
 import banner from "../../public/assets/bg/background.png";
 
 export default function Home() {

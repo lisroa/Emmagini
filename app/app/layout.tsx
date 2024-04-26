@@ -1,9 +1,9 @@
 "use client";
 import { GameDataProvider } from "../context/GameDataProvider";
 import { FrontDataProvider } from "../context/FrontProvider";
-import NavBar from "../components/NavBar";
-import SideMenu from "../components/SideMenu";
-import ButtonNav from "../components/ButtonNav";
+import NavBar from "../components/home/NavBar";
+import SideMenu from "../components/SideMenu/SideMenu";
+import ButtonNav from "../components/home/ButtonNav";
 
 export default function Layout({
   children,
@@ -19,7 +19,7 @@ export default function Layout({
           <NavBar />
           <SideMenu />
           {children}
-          <ButtonNav />
+          <ButtonNav /> 
         </main>
       </GameDataProvider>
     </FrontDataProvider>

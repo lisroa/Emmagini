@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { RoundButton } from "@/app/components/RoundButton";
+import { RoundButton } from "@/app/components/buttons/RoundButton";
 import { CircleUser, Mail } from "lucide-react";
 import { useCallback } from "react";
 import { signInWithPopup } from "firebase/auth";

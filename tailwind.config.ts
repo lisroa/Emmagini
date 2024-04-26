@@ -26,7 +26,7 @@ const config: Config = {
         xl: "40rem",
       },
       colors: {
-        blue: "#1C75BC",
+        blueEmmagini: "#1C75BC",
         red: "#BC1C1C",
         backgroundGray: "#F0F6F9",
       },

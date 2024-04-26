@@ -4,7 +4,7 @@ import { BsCartCheck } from "react-icons/bs";
 import { AiOutlineTrophy } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useDataFrontContext } from "../context/FrontProvider";
+import { useDataFrontContext } from "../../context/FrontProvider";
 
 function SideMenu() {
   const { sideMenuOpen, setSideMenuOpen } = useDataFrontContext();
@@ -26,7 +26,7 @@ function SideMenu() {
           </div>
 
           <div className="mt-20">
-            <button className=" flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blue mt-4 rounded-[50px] px-4">
+            <button className=" flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
               <div className="flex items-center">
                 <AiOutlineTrophy className="mr-2" />
                 <span className="text-black ml-2 font-bold text-sm">
@@ -35,7 +35,7 @@ function SideMenu() {
               </div>
               <AiOutlineArrowRight />
             </button>
-            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blue mt-4 rounded-[50px] px-4">
+            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
               <div className="flex items-center">
                 <BsGift className="mr-2" />
                 <span className="text-black ml-2 font-bold text-sm">
@@ -44,7 +44,7 @@ function SideMenu() {
               </div>
               <AiOutlineArrowRight />
             </button>
-            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blue mt-4 rounded-[50px] px-4">
+            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
               <div className="flex items-center">
                 <BsCartCheck className="mr-2" />
                 <span className="text-black ml-2 font-bold text-sm">
@@ -53,7 +53,7 @@ function SideMenu() {
               </div>
               <AiOutlineArrowRight />
             </button>
-            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blue mt-4 rounded-[50px] px-4">
+            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
               <div className="flex items-center">
                 <FaRegUserCircle className="mr-2" />
                 <span className="text-black ml-2 font-bold text-sm">

@@ -3,9 +3,9 @@
 import axios from "axios";
 import Image from "next/image";
 import { LockKeyhole, User } from "lucide-react";
-import { RoundButton } from "@/app/components/RoundButton";
+import { RoundButton } from "@/app/components/buttons/RoundButton";
 import { useCallback, useState } from "react";
-import { ToggleInputVisionButton } from "@/app/components/ToggleInputVisionButton";
+import { ToggleInputVisionButton } from "@/app/components/buttons/ToggleInputVisionButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
