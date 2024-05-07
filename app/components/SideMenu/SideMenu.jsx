@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SlClose } from "react-icons/sl";
 import { BsGift } from "react-icons/bs";
 import { BsCartCheck } from "react-icons/bs";
@@ -26,42 +27,52 @@ function SideMenu() {
           </div>
 
           <div className="mt-20">
-            <button className=" flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-              <div className="flex items-center">
-                <AiOutlineTrophy className="mr-2" />
-                <span className="text-black ml-2 font-bold text-sm">
-                  Premium
-                </span>
-              </div>
-              <AiOutlineArrowRight />
-            </button>
-            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-              <div className="flex items-center">
-                <BsGift className="mr-2" />
-                <span className="text-black ml-2 font-bold text-sm">
-                  Subastas
-                </span>
-              </div>
-              <AiOutlineArrowRight />
-            </button>
-            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-              <div className="flex items-center">
-                <BsCartCheck className="mr-2" />
-                <span className="text-black ml-2 font-bold text-sm">
-                  Compras
-                </span>
-              </div>
-              <AiOutlineArrowRight />
-            </button>
-            <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-              <div className="flex items-center">
-                <FaRegUserCircle className="mr-2" />
-                <span className="text-black ml-2 font-bold text-sm">
-                  Perfil
-                </span>
-              </div>
-              <AiOutlineArrowRight />
-            </button>
+           <Link href="/#">
+                <button className=" flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+                    <div className="flex items-center">
+                      <AiOutlineTrophy className="mr-2" />
+                      <span className="text-black ml-2 font-bold text-sm">
+                        Premium
+                      </span>
+                    </div>
+                    <AiOutlineArrowRight />
+                  </button>
+           
+           </Link>
+            <Link href="/#">
+                  <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+                    <div className="flex items-center">
+                      <BsGift className="mr-2" />
+                      <span className="text-black ml-2 font-bold text-sm">
+                        Subastas
+                      </span>
+                    </div>
+                    <AiOutlineArrowRight />
+                  </button>
+
+            </Link>
+           <Link href="/#">
+                  <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+                      <div className="flex items-center">
+                        <BsCartCheck className="mr-2" />
+                        <span className="text-black ml-2 font-bold text-sm">
+                          Compras
+                        </span>
+                      </div>
+                      <AiOutlineArrowRight />
+                    </button> 
+           </Link>
+          <Link href="/app/perfil">
+                  <button className="flex items-center justify-between w-full sm:w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+                      <div className="flex items-center">
+                        <FaRegUserCircle className="mr-2" />
+                        <span className="text-black ml-2 font-bold text-sm">
+                          Perfil
+                        </span>
+                      </div>
+                      <AiOutlineArrowRight />
+                    </button>
+          </Link>
           </div>
 
           <div className="mx-auto absolute bottom-28 inset-x-0 ml-10">

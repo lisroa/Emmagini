@@ -61,7 +61,6 @@ export const AuthProvider = ({ children }) => {
         return response.data;
       } catch (error) {
         console.error("Error al hacer la solicitud:", error);
-
         throw error;
       }
     },
@@ -90,25 +89,22 @@ export const AuthProvider = ({ children }) => {
           }
         );
 
-        localStorage.setItem(TOKEN_KEY, response.data.token);
-        localStorage.setItem(USER_ID_KEY, response.data.userid);
+        const { token, userid } = response.data;
 
-        setToken(response.data.token);
-        setUserId(response.data.userid);
+        localStorage.setItem(TOKEN_KEY, token);
+        localStorage.setItem(USER_ID_KEY, userid);
 
-        // TODO: Empezar a guardar el token y userID en la cache
+        setToken(token);
+        setUserId(userid);
 
         return response.data;
       } catch (error) {
         console.error("Error al hacer la solicitud:", error);
-
         throw error;
       }
     },
     []
   );
-
-  // TODO: Agregar un useEffect que se ejecuta una unica vez y que se trae el token y userId de cache y los guarda en el state (si es que existen).
 
   useEffect(() => {
     const getCacheData = () => {
@@ -122,6 +118,11 @@ export const AuthProvider = ({ children }) => {
 
     getCacheData();
   }, []);
+
+  /*useEffect(() => {
+    console.log("token:", token);
+    console.log("userId:", userId);
+  }, [token, userId]); */
 
   return (
     <AuthContext.Provider

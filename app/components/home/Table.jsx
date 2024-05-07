@@ -1,36 +1,48 @@
 "use client";
 import CardHome from "../cards/CardHome";
 import { useDataContext } from "../../context/GameDataProvider";
-import imageCard from "../../../public/assets/cards/imageCard.png";
+import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
+
 
 function Table() {
-  const { infoGames } = useDataContext();
+  const { infoGames, infoTruco } = useDataContext();
+  const { setIdTorneo } = useSeriesTrucoDataContext();
 
-  const cardsData = [
-    "Muro",
-    "Memoria",
-    "QR Scanner",
-    "Parejas",
-    "Subastas",
-    "Muro",
-    "Muro",
-    "Muro",
-    "Muro",
-    "Muro",
-    "Muro",
-    "Muro",
-  ];
+  
+  const saveTournamentIdToCache = (tournamentId) => {
+    localStorage.setItem("tournamentId", tournamentId);
+  };
+
+  
+  const handleTournamentCardClick = (tournamentId) => {
+    setIdTorneo(tournamentId); 
+    saveTournamentIdToCache(tournamentId);
+  };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8  p-10 mb-32">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32">
+      <div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-6 gap-4">
         {infoGames &&
           Object.values(infoGames).map((game) => (
             <div key={game.id} className="flex justify-center">
               <CardHome
+                href="/#"
                 text={game.titulo}
                 imageCard={
                   game.image || game.imagen || game.imagen_1 || game.imagen_0
+                }
+              />
+            </div>
+          ))}
+        {infoTruco &&
+          Object.values(infoTruco).map((torneo) => (
+            <div key={torneo.id} className="flex justify-center">
+              <CardHome
+                href="/app/truco"
+                onClick={() => handleTournamentCardClick(torneo.id)}
+                text={torneo.titulo}
+                imageCard={
+                  torneo.image || torneo.imagen || torneo.imagen_1 || torneo.imagen_0
                 }
               />
             </div>

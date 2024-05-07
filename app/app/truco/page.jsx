@@ -1,80 +1,53 @@
-
+"use client"
 import CardGames from "../../components/cards/CardMuro"
-import tester from "../../../public/assets/cards/imageCard.png"
-
+import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
 
 
   // TODO: Hay que agregar logica que ordene los torneos por activos, proximos o anteriores segun la fecha o algun parametro que venga por API.
     // TODO: Adaptar a pantallas mas grandes segun el disenio que armen proximamente.
 
+export default function Page() { 
+
+    const {infoTorneosTruco, setIdSerie} = useSeriesTrucoDataContext();
+    
+    
+        const saveSerieIdToCache = (serieId) => {
+          localStorage.setItem("serieId", serieId);
+        };
+
+  
+        const handleSerieClick = (serieId) => {
+          setIdSerie(serieId); 
+          saveSerieIdToCache(serieId); 
+        };
 
 
-function TrucoHome () { 
+  return (
+    <>
 
- return (
-
-        <div className="flex justify-center items-center mt-32">
-        <div className="">
-            <h1 className="text-black font-bold text-2xl text-center">TORNEOS DE TRUCO</h1>
-
-            <h2 className="text-black ml-4 mb-6 font-semibold">Activos</h2>
-            <div>
-            <CardGames
-                image= {tester}
-                title= "Titulo del torneo"
-                description= "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero consequatur, dolor dolore officia quae iusto ratione quia ducimus itaque nulla sit atque, eligendi animi."
-                subtitle= "Primer premio"
-                text= "Entrada al proximo partido"
-                link= "/app/truco/torneo-activo"
-                buttonText= "Entrar"
-                textSpan= "Fecha sorteo: 27/04/2024"
-                buttonClassName= "w-52 h-9 bg-blueEmmagini border-4 border-gray-200"
-                type="button" 
-            
-            />
-            </div>
-
-
-            <h2 className="text-black ml-4 mt-10 mb-6 font-semibold">Proximos</h2>
-            <div>
-            <CardGames
-                image= {tester}
-                title= "Titulo del torneo"
-                description= "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero consequatur, dolor dolore officia quae iusto ratione quia ducimus itaque nulla sit atque, eligendi animi."
-                subtitle= "Primer premio"
-                text= "Entrada al proximo partido"
-                link= "/app/truco/proximo-torneo"
-                buttonText= "Anotarse"
-                textSpan= "Fecha sorteo: 30/06/2024"
-                buttonClassName= "w-52 h-9 bg-blueEmmagini border-4 border-gray-200"
-                type="button" 
-            
-            />
-            </div>
-            <h2 className="text-black ml-4 mt-10 mb-6 font-semibold">Anteriores</h2>
-            <div>
-            <CardGames
-                image= {tester}
-                title= "Titulo del torneo"
-                description= "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero consequatur, dolor dolore officia quae iusto ratione quia ducimus itaque nulla sit atque, eligendi animi."
-                subtitle= "Ganador"
-                text= "Nombre del usuario"
-                link="/app/truco/torneo-finalizado"
-                buttonText="Ver sorteo"
-                altText= "6000 monedas"
-                textSpan= "Fecha de cierre: 27/03/2024"
-                buttonClassName= "w-52 h-9 bg-blueEmmagini border-4 border-gray-200"
-                type="button" 
-            
-            />
-            </div>
-            
-        </div>
-        </div>
-       
-    )
-}
-
-
-export default TrucoHome;
+    <h1 className="text-black text-center mt-20 text-2xl font-bold">Torneos de truco</h1>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {infoTorneosTruco && infoTorneosTruco.series && infoTorneosTruco.series.map((serie) => (
+                <div key={serie.id} className="flex justify-center">
+                  <CardGames
+                    link="/app/truco/partidas-disponibles"
+                    image= {serie.imagen}
+                    alt="serie.nombre"
+                    title= {serie.nombre}
+                    description= {serie.inicio_txt}
+                    buttonText="ingresar"
+                    textSpan={serie.fin_txt}
+                    buttonClassName="bg-blueEmmagini w-[209.22px] h-[36.37px] md:w-[159px]"
+                    onClick={() => handleSerieClick(serie.id)}
+                  />
+                </div>
+              ))}
+          </div>
+      </div>
+    
+    
+    </>
+  );
+};
 

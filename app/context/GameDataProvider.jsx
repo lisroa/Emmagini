@@ -13,17 +13,26 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export const GameDataContext = createContext();
 
 export const GameDataProvider = ({ children }) => {
+
+
+  //Trae todos los juegos desde demo25
   const [data, setData] = useState();
   const [infoGames, setInfoGames] = useState();
 
+
+  //Trae la info de los torneos de truco desde demo23
+  const [dataTruco, setDataTruco] = useState();
+  const [infoTruco, setInfoTruco] = useState();
+
+
   const { userId, token } = useAuthContext();
 
+
   const getAppData = useCallback(async () => {
-    console.log(token);
-    console.log(userId);
+    //console.log("token que le paso a la api", token);
+    //console.log("id que le paso a la api", userId);
 
     try {
-      // TODO: Llamar a AuthContext para traerte el token y userId, usarlos en esta pegada en vez de tener los valores hardcodeados.
 
       const response = await axios.post(
         "https://backend.emmagini.com/api2/validate",
@@ -54,7 +63,52 @@ export const GameDataProvider = ({ children }) => {
 
   useEffect(() => {
     getAppData();
-  }, []);
+  }, [token, userId]);
+
+
+  //Pegamos a validate desde demo23 para traer los torneos de truco
+
+  const getTrucoData = useCallback(async () => {
+  
+    try {
+
+      const response = await axios.post(
+        "https://backend.emmagini.com/api2/validate",
+        {
+          callback: "https://demo23.emmagini.com/home.php#v=inicio",
+          token,
+          userid: userId,
+          host: "demo23.emmagini.com",
+          lang: "es",
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+        }
+      );
+
+      setDataTruco(response.data);
+      setInfoTruco(response.data.contenidos);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error al hacer la solicitud:", error);
+
+      throw error;
+    }
+  }, [token, userId]);
+
+  useEffect(() => {
+    getTrucoData();
+  }, [token, userId]);
+
+
+  useEffect(() => {
+   console.log(infoTruco)
+  }, [dataTruco, infoTruco]);
+
+
 
   return (
     <GameDataContext.Provider
@@ -63,6 +117,10 @@ export const GameDataProvider = ({ children }) => {
         setData,
         infoGames,
         setInfoGames,
+        dataTruco,
+        setDataTruco,
+        infoTruco,
+        setInfoTruco
       }}
     >
       {children}

@@ -13,7 +13,7 @@ const NavBar = () => {
     <div className="flex justify-between items-center fixed z-10 w-full h-16 py-5 px-8 text-sm font-light top-0 bg-blueEmmagini">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg text-white">
-          <Link href="#">
+          <Link href="/app">
             <Image src={logo} width={106} height={53} />
           </Link>
         </li>

@@ -11,7 +11,7 @@ function GamesCounter () {
         <div class="bg-gray-400 rounded w-[20px] h-[20px]"/>
         <div class="bg-gray-400 rounded w-[20px] h-[20px]"/>
         <div class="bg-gray-400 rounded w-[20px] h-[20px]"/>
-    </div>
+        </div>
     )
 }
 

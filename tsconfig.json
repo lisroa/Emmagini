@@ -28,6 +28,6 @@
     ".next/types/**/*.ts",
     "app/context/AuthProvider.tsx",
     "app/context/FrontProvider.jsx"
-, "app/components/cards/CardHome.jsx", "app/components/cards/Cardmuro.tsx"  ],
+, "app/components/cards/CardHome.jsx", "app/components/cards/Cardmuro.tsx", "app/app/truco/page.jsx"  ],
   "exclude": ["node_modules"]
 }

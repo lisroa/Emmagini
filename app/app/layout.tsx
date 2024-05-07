@@ -1,6 +1,7 @@
 "use client";
 import { GameDataProvider } from "../context/GameDataProvider";
 import { FrontDataProvider } from "../context/FrontProvider";
+import { SeriesTrucoProvider } from "../context/truco/SeriesTrucoProvider";
 import NavBar from "../components/home/NavBar";
 import SideMenu from "../components/SideMenu/SideMenu";
 import ButtonNav from "../components/home/ButtonNav";
@@ -15,12 +16,14 @@ export default function Layout({
   return (
     <FrontDataProvider>
       <GameDataProvider>
-        <main className="relative min-h-screen max-h-screen w-screen h-screen ">
+       <SeriesTrucoProvider>
+       <main className="relative min-h-screen max-h-screen w-screen h-screen ">
           <NavBar />
           <SideMenu />
           {children}
-          <ButtonNav /> 
+         {/*  <ButtonNav /> */}
         </main>
+       </SeriesTrucoProvider>
       </GameDataProvider>
     </FrontDataProvider>
   );
