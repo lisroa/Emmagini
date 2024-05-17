@@ -1,25 +1,28 @@
 "use client";
 
-import {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-} from "react";
+import {createContext,useState,useContext,useEffect,useCallback,} from "react";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
+import {usePartidasTrucoDataContext} from "@/app/context/truco/PartidasTrucoProvider";
+
 
 export const SeriesTrucoContext = createContext();
 
 export const SeriesTrucoProvider = ({ children }) => {
   const [data, setData] = useState();
+  const [dataSeries, setDataSeries] = useState();
   const [infoTorneosTruco, setInfoTorneosTruco] = useState();
+  const [infoSeriesTruco, setInfoSeriesTruco] = useState();
   const [idTorneo, setIdTorneo] = useState("");
   const [idSerie, setIdSerie] = useState("");
 
 
   const { userId, token } = useAuthContext();
+  //const {crearPartida} = usePartidasTrucoDataContext();
+
+
+
+// Traer Torneos
 
   const getTorneosData = useCallback(async () => {
     try {
@@ -48,44 +51,21 @@ export const SeriesTrucoProvider = ({ children }) => {
       console.error("Error al hacer la solicitud:", error);
       throw error;
     }
-  }, [token, userId]);
+  }, [idTorneo]);
 
   useEffect(() => {
     getTorneosData();
-  }, [token, userId]);
+  }, [idTorneo]);
 
   /*useEffect(() => {
     console.log("este es el id del torneo", idTorneo)
   }, [idTorneo]);  */
 
 
-  return (
-    <SeriesTrucoContext.Provider
-      value={{
-        data,
-        setData,
-        infoTorneosTruco,
-        setInfoTorneosTruco,
-        idTorneo,
-        setIdTorneo,
-        idSerie, 
-        setIdSerie
-        
-      }}
-    >
-      {children}
-    </SeriesTrucoContext.Provider>
-  );
-};
 
-export const useSeriesTrucoDataContext = () => useContext(SeriesTrucoContext);
+// Traer las series del torneo seleccionado
 
-
-
-/*
-
-
-const getSeriesData = useCallback(async () => {
+  const getSeriesData = useCallback(async () => {
     try {
       const serieId = localStorage.getItem("serieId");
       const response = await axios.post(
@@ -104,23 +84,51 @@ const getSeriesData = useCallback(async () => {
         }
       );
   
-      setData(response.data);
-      setInfoTorneosTruco(response.data.content);
+      setDataSeries(response.data);
+      setInfoSeriesTruco(response.data.content);
   
       return response.data;
     } catch (error) {
       console.error("Error al hacer la solicitud:", error);
       throw error;
     }
-  }, [token, userId]);
+  }, [idSerie]);
 
-  useEffect(() => {
-    getSeriesData();
-  }, [token, userId]);
+      useEffect(() => {
+        getSeriesData();
+      }, [idSerie]);
 
 
-  useEffect(() => {
-    console.log(infoSeriesTruco)
-  }, [infoSeriesTruco]); 
+      /*useEffect(() => {
+        console.log(infoSeriesTruco)
+      }, [dataSeries, infoSeriesTruco]); */
 
-  */
+
+
+
+  return (
+    <SeriesTrucoContext.Provider
+      value={{
+        data,
+        setData,
+        infoTorneosTruco,
+        setInfoTorneosTruco,
+        idTorneo,
+        setIdTorneo,
+        idSerie, 
+        setIdSerie,
+        infoSeriesTruco, 
+        setInfoSeriesTruco,
+        getSeriesData
+        
+      }}
+    >
+      {children}
+    </SeriesTrucoContext.Provider>
+  );
+};
+
+export const useSeriesTrucoDataContext = () => useContext(SeriesTrucoContext);
+
+
+

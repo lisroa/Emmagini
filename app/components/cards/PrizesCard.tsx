@@ -41,7 +41,7 @@ export const PrizesCard = ({
 }: PrizesCardProps) => {
   return (
     <div
-      className={"w-full flex p-2 rounded-lg ml-4  bg-gray-50 mb-2"
+      className={"w-full flex p-2 rounded-lg bg-gray-50 mb-2"
         .concat(
             "", 
             cardClassName || ""

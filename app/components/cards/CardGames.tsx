@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-
+import { RoundButton } from "../buttons/RoundButton";
 
 // En el orden por el que se utilizan
 
@@ -13,7 +13,7 @@ interface CardGamesProps {
   description: string,
   subtitle: string,
   text: string,
-  link: string,
+  link?: string,
   buttonText: string, 
   altText: string,
   textSpan: string,
@@ -28,7 +28,7 @@ interface CardGamesProps {
 }
 
 export const CardGames = ({
-  link,
+  link = "",
   image,
   alt,
   title,
@@ -54,14 +54,14 @@ export const CardGames = ({
         </div>
 
      <div className="flex-grow ml-4 flex flex-col justify-center">
-        <h1 className={"text-black mb-2 mt-2 text-xs font-semibold"
+        <h1 className={"text-black mb-2 mt-2 text-sm lg:text-base font-semibold"
           .concat(
             " ",
             titleClassName || ""
           )
         }>{title}</h1>
         <p
-        className={"font-normal text-[10px] text-black".concat(
+        className={"font-normal text-[10px] lg:text-xs text-black".concat(
           " ",
           descriptionClassName || ""
         )}
@@ -96,7 +96,7 @@ export const CardGames = ({
                  buttonClassName || ""
                )} type={type} onClick={onClick}>{buttonText}</button>
                  </Link>
-              <p className="text-[10px] text-center text-black ">{textSpan}</p>
+              <p className="text-[10px] text-center text-black mt-2">{textSpan}</p>
           </div>
         </div>
 

@@ -21,7 +21,7 @@ function Table() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32">
-      <div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-5 gap-4">
         {infoGames &&
           Object.values(infoGames).map((game) => (
             <div key={game.id} className="flex justify-center">

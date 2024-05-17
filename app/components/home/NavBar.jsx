@@ -20,15 +20,15 @@ const NavBar = () => {
       </ul>
 
       <div id="coins" className="flex items-center gap-2">
-        <div className="w-28 h-11 bg-white rounded-3xl flex items-center justify-center">
+        <div className=" w-[90px] h-[35px] lg:w-28 h-11 bg-white rounded-3xl flex items-center justify-center">
           <Image
-            className="hover:animate-pulse cursor-pointer"
+            className="hover:animate-pulse cursor-pointer w-[24px] h-[24px] lg:w-[28px] lg:h-[28px]"
             src={logoCoin}
             width={32}
             height={32}
           />
 
-          <span className="text-black font-semibold text-base ml-2">500</span>
+          <span className="text-black font-semibold text-sm lg:text-base ml-2">500</span>
         </div>
 
         <button

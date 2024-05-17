@@ -1,4 +1,5 @@
 "use client";
+import React from "react"
 import { GameDataProvider } from "../context/GameDataProvider";
 import { FrontDataProvider } from "../context/FrontProvider";
 import { SeriesTrucoProvider } from "../context/truco/SeriesTrucoProvider";

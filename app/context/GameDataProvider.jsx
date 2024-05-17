@@ -104,9 +104,9 @@ export const GameDataProvider = ({ children }) => {
   }, [token, userId]);
 
 
-  useEffect(() => {
+  /*useEffect(() => {
    console.log(infoTruco)
-  }, [dataTruco, infoTruco]);
+  }, [dataTruco, infoTruco]); */
 
 
 
