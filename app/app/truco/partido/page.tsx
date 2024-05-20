@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { RoundButton } from "../../../components/buttons/RoundButton";
 import { useJuegoTrucoDataContext } from "@/app/context/truco/JuegoTrucoProvider";
 import "@/app/globals.css";
@@ -140,25 +140,57 @@ function Page() {
 
 			<div className="w-full lg:w-[200px] xl:w-[300px] lg:col-span-3 flex flex-col gap-5">
 				<div className="h-[39px] lg:w-full lg:min-h-[420px] lg:max-h-full flex flex-col items-center justify-center bg-zinc-300 rounded-[20px] p-2">
-					{infoJuegoTruco &&
-						infoJuegoTruco.chat &&
-						infoJuegoTruco.chat.map((text) => {
-							if (text.jugador === "system") {
-								return null;
-							}
+					{infoJuegoTruco && infoJuegoTruco.chat && (
+						<>
+							{/* Mostrar solo el último mensaje en pantallas pequeñas */}
+							<div className="lg:hidden">
+								{(() => {
+									const lastMessage = infoJuegoTruco.chat
+										.filter((text) => text.jugador !== "system")
+										.pop();
 
-							const messageClass =
-								text.jugador === "Yo"
-									? "text-black font-bold"
-									: "text-black font-normal";
+									if (!lastMessage) return null;
 
-							return (
-								<p key={text.id} className={`text-base ${messageClass}`}>
-									{text.jugador === "Yo" ? "Yo: " : `${text.jugador}: `}
-									{text.mensaje}
-								</p>
-							);
-						})}
+									const messageClass =
+										lastMessage.jugador === "Yo"
+											? "text-black font-normal"
+											: "text-black font-bold";
+
+									return (
+										<p
+											key={lastMessage.id}
+											className={`text-base ${messageClass}`}
+										>
+											{lastMessage.jugador === "Yo"
+												? "Yo: "
+												: `${lastMessage.jugador}: `}
+											{lastMessage.mensaje}
+										</p>
+									);
+								})()}
+							</div>
+							{/* Mostrar todos los mensajes en pantallas lg y mayores */}
+							<div className="hidden lg:block">
+								{infoJuegoTruco.chat.map((text) => {
+									if (text.jugador === "system") {
+										return null;
+									}
+
+									const messageClass =
+										text.jugador === "Yo"
+											? "text-black font-normal"
+											: "text-black font-bold";
+
+									return (
+										<p key={text.id} className={`text-base ${messageClass}`}>
+											{text.jugador === "Yo" ? "Yo: " : `${text.jugador}: `}
+											{text.mensaje}
+										</p>
+									);
+								})}
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 
@@ -190,3 +222,43 @@ function Page() {
 }
 
 export default Page;
+
+/*
+
+
+
+<div className="flex-1 flex flex-row justify-center items-center gap-5">
+						{upperPositions.map((naipe) => (
+							<Image
+								src={fixImageUrl(naipe.imagen)}
+								width={90}
+								height={108}
+								className="w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ml-4"
+								alt="naipe"
+								key={naipe.id}
+							/>
+						))}
+						{lowerPositions.map((naipe) => (
+							<Image
+								src={fixImageUrl(naipe.imagen)}
+								width={90}
+								height={108}
+								className="w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ml-4"
+								alt="naipe"
+								key={naipe.id}
+							/>
+						))}
+					</div>
+
+					
+const upperPositions = infoJuegoTruco.mesa.filter(
+		(naipe) => naipe.posicion >= 4 && naipe.posicion <= 6
+	);
+	const lowerPositions = infoJuegoTruco.mesa.filter(
+		(naipe) => naipe.posicion >= 1 && naipe.posicion <= 3
+	);
+
+	upperPositions.sort((a, b) => a.posicion - b.posicion);
+	lowerPositions.sort((a, b) => a.posicion - b.posicion);
+
+					*/
