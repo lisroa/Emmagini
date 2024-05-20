@@ -26,3 +26,14 @@ body {
     text-wrap: balance;
   }
 }
+
+
+  .fondo {
+    /*background-image: url("../public/assets/truco/table.png");*/
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    width: 100%; 
+    height: 100%; 
+  }
+  
