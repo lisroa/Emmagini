@@ -149,7 +149,10 @@ function Page() {
 						{infoJuegoTruco &&
 							infoJuegoTruco.mis_cartas &&
 							infoJuegoTruco.mis_cartas.map((naipe, i) => (
-								<button onClick={() => catchParam("tirar", naipe.id_naipe)}>
+								<button
+									onClick={() => catchParam("tirar", naipe.id_naipe)}
+									key={naipe.id}
+								>
 									<Image
 										src={fixImageUrl(naipe.imagen)}
 										width={106}
@@ -240,6 +243,7 @@ function Page() {
 						text={actionButton.txt}
 						textClassName="text-white text-xs"
 						onClick={() => catchActions(actionButton.val)}
+						key={actionButton.val}
 					/>
 				))}
 			</div>
