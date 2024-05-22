@@ -134,9 +134,9 @@ function Page() {
 					</div>
 				</div>
 
-				<div className="flex justify-center mt-12 lg:mt-2">
-					<div className="w-[336.91] h-[366] mt-4">
-						<h2 className="text-black ml-6 mb-2 text-xs lg:text-base font-semibold">
+				<div className="flex justify-center mt-20 lg:mt-2">
+					<div className="w-[336.91] h-[366]">
+						<h2 className="text-black ml-6 mb-2 text-xs lg:text-base font-semibold sm:mt-4">
 							Premios
 						</h2>
 						<div className="w-[336px] h-[99px] mt-4">
@@ -196,9 +196,9 @@ function Page() {
 			)}
 
 			{infoSeriesTruco.actuales && infoSeriesTruco.actuales.length > 0 && (
-				<div className="w-[336px] lg:w-[1300px] h-auto lg:ml-24 lg:mt-14">
+				<div className="w-[336px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14">
 					<h2 className="text-black text-xs font-semibold ml-6">Activos</h2>
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-8">
+					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-6">
 						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 							{infoSeriesTruco &&
 								infoSeriesTruco.actuales &&

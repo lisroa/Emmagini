@@ -42,6 +42,20 @@ function Page() {
 	}, [infoJuegoTruco]);
 	if (!infoJuegoTruco || !infoJuegoTruco.reverso) return null;
 
+	if (!infoJuegoTruco || !infoJuegoTruco.mesa) return null;
+
+	// Filtra las cartas para las posiciones superiores y las inferiores
+	const upperPositions = infoJuegoTruco.mesa.filter(
+		(naipe) => naipe.posicion >= 4 && naipe.posicion <= 6
+	);
+	const lowerPositions = infoJuegoTruco.mesa.filter(
+		(naipe) => naipe.posicion >= 1 && naipe.posicion <= 3
+	);
+
+	// Ordena las cartas dentro de cada grupo
+	upperPositions.sort((a, b) => a.posicion - b.posicion);
+	lowerPositions.sort((a, b) => a.posicion - b.posicion);
+
 	return (
 		<div className="flex flex-col lg:flex-row gap-5 pt-20 pb-5 w-screen h-screen overflow-hidden p-6">
 			<div className="hidden lg:flex lg:flex-col lg:gap-5 lg:w-[200px] xl:w-[300px]">
@@ -104,19 +118,31 @@ function Page() {
 						/>
 					</div>
 
-					<div className="flex-1 flex flex-row justify-center items-center gap-5">
-						{infoJuegoTruco &&
-							infoJuegoTruco.mesa &&
-							infoJuegoTruco.mesa.map((naipe) => (
+					<div className="flex-1 flex flex-col justify-center items-center gap-5">
+						<div className="flex justify-center gap-5 mb-5">
+							{upperPositions.map((naipe) => (
 								<Image
+									key={naipe.id_naipe}
 									src={fixImageUrl(naipe.imagen)}
-									width={90}
-									height={108}
-									className="w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ml-4"
-									alt="naipe"
-									key={naipe.id}
+									width={106}
+									height={208}
+									alt={`naipe ${naipe.numero} de ${naipe.palo}`}
+									className="w-[96px] h-[108px]"
 								/>
 							))}
+						</div>
+						<div className="flex justify-center gap-5">
+							{lowerPositions.map((naipe) => (
+								<Image
+									key={naipe.id_naipe}
+									src={fixImageUrl(naipe.imagen)}
+									width={106}
+									height={208}
+									alt={`naipe ${naipe.numero} de ${naipe.palo}`}
+									className="w-[96px] h-[108px]"
+								/>
+							))}
+						</div>
 					</div>
 
 					<div className="w-full flex flex-row justify-center items-center">
