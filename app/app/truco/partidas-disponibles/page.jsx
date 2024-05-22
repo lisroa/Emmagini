@@ -197,95 +197,103 @@ function Page() {
 					</div>
 				)}
 
-			{infoSeriesTruco.actuales && infoSeriesTruco.actuales.length > 0 && (
-				<div className="w-[336px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14">
-					<h2 className="text-black text-xs font-semibold ml-6">Activos</h2>
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-6">
-						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-							{infoSeriesTruco &&
-								infoSeriesTruco.actuales &&
-								infoSeriesTruco.actuales.map((partido) => (
-									<div
-										key={partido.id}
-										className="flex justify-center w-[306px]"
-									>
-										<CardGames
-											image={tester}
-											link="/app/truco/partido"
-											title={`Oponente: ${partido.nombre_1}`}
-											description={`Puntaje:`}
-											buttonText="Entrar"
-											buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
-											onClick={() => handlePartidaClick(partido.id)}
-										/>
-									</div>
-								))}
+			{infoSeriesTruco &&
+				infoSeriesTruco.actuales &&
+				infoSeriesTruco.actuales.length > 0 && (
+					<div className="w-[336px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14">
+						<h2 className="text-black text-xs font-semibold ml-6">Activos</h2>
+						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-6">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+								{infoSeriesTruco &&
+									infoSeriesTruco.actuales &&
+									infoSeriesTruco.actuales.map((partido) => (
+										<div
+											key={partido.id}
+											className="flex justify-center w-[306px]"
+										>
+											<CardGames
+												image={tester}
+												link="/app/truco/partido"
+												title={`Oponente: ${partido.nombre_1}`}
+												description={`Puntaje:`}
+												buttonText="Entrar"
+												buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
+												onClick={() => handlePartidaClick(partido.id)}
+											/>
+										</div>
+									))}
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{infoSeriesTruco.abiertos && infoSeriesTruco.abiertos.length > 0 && (
-				<div className="w-[336px] lg:w-[1300px] h-auto lg:ml-24 lg:mt-20">
-					<h2 className="text-black text-xs font-semibold ml-6">
-						Partidos disponibles
-					</h2>
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
-						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-							{infoSeriesTruco &&
-								infoSeriesTruco.abiertos &&
-								infoSeriesTruco.abiertos.map((partido) => (
-									<div
-										key={partido.id}
-										className="flex justify-center w-[306px]"
-									>
-										<CardGames
-											image={tester}
-											link="/app/truco/partido"
-											title={`Oponente: ${partido.nombre_1}`}
-											buttonText="Unirme"
-											buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
-											onClick={() => handleClickUnirmeAPartida(partido.id)}
-										/>
-									</div>
-								))}
+			{infoSeriesTruco &&
+				infoSeriesTruco.abiertos &&
+				infoSeriesTruco.abiertos.length > 0 && (
+					<div className="w-[336px] lg:w-[1300px] h-auto lg:ml-24 lg:mt-20">
+						<h2 className="text-black text-xs font-semibold ml-6">
+							Partidos disponibles
+						</h2>
+						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+								{infoSeriesTruco &&
+									infoSeriesTruco.abiertos &&
+									infoSeriesTruco.abiertos.map((partido) => (
+										<div
+											key={partido.id}
+											className="flex justify-center w-[306px]"
+										>
+											<CardGames
+												image={tester}
+												link="/app/truco/partido"
+												title={`Oponente: ${partido.nombre_1}`}
+												buttonText="Unirme"
+												buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
+												onClick={() => handleClickUnirmeAPartida(partido.id)}
+											/>
+										</div>
+									))}
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{infoSeriesTruco.terminados && infoSeriesTruco.terminados.length > 0 && (
-				<div className="w-[336px] lg:w-[1300px] h-auto lg:mt-14 lg:ml-20">
-					<h2 className="text-black text-xs font-semibold ml-6">Terminados</h2>
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
-						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-							{infoSeriesTruco &&
-								infoSeriesTruco.terminados &&
-								infoSeriesTruco.terminados.map((partido) => (
-									<div
-										key={partido.id}
-										className="flex justify-center w-[306px]"
-									>
-										<CardGames
-											image={tester}
-											link="/#"
-											title={`Oponente: ${partido.nombre_2}`}
-											description={`Puntaje:`}
-											buttonText={
-												partido.ganaste == false ? "Perdiste" : "Ganaste"
-											}
-											buttonClassName={
-												partido.ganaste == false
-													? "bg-red w-[160px] h-[36px]"
-													: "bg-green-600 w-[160px] h-[36px]"
-											}
-										/>
-									</div>
-								))}
+			{infoSeriesTruco &&
+				infoSeriesTruco.terminados &&
+				infoSeriesTruco.terminados.length > 0 && (
+					<div className="w-[336px] lg:w-[1300px] h-auto lg:mt-14 lg:ml-20">
+						<h2 className="text-black text-xs font-semibold ml-6">
+							Terminados
+						</h2>
+						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+								{infoSeriesTruco &&
+									infoSeriesTruco.terminados &&
+									infoSeriesTruco.terminados.map((partido) => (
+										<div
+											key={partido.id}
+											className="flex justify-center w-[306px]"
+										>
+											<CardGames
+												image={tester}
+												link="/#"
+												title={`Oponente: ${partido.nombre_2}`}
+												description={`Puntaje:`}
+												buttonText={
+													partido.ganaste == false ? "Perdiste" : "Ganaste"
+												}
+												buttonClassName={
+													partido.ganaste == false
+														? "bg-red w-[160px] h-[36px]"
+														: "bg-green-600 w-[160px] h-[36px]"
+												}
+											/>
+										</div>
+									))}
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
+				)}
 		</div>
 	);
 }

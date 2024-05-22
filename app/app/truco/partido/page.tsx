@@ -62,30 +62,32 @@ function Page() {
 		<div className="flex flex-col lg:flex-row gap-5 pt-20 pb-5 w-screen h-screen overflow-hidden p-6">
 			<div className="hidden lg:flex lg:flex-col lg:gap-5 lg:w-[200px] xl:w-[300px]">
 				<div className="flex flex-col gap-5">
-					{gameActions.map(
-						(actionButton) =>
-							actionButton.val !== "tirar" && (
-								<RoundButton
-									key={actionButton.val}
-									buttonClassName="bg-blueEmmagini h-[32px] rounded-[11px] w-full"
-									text={actionButton.txt}
-									textClassName="text-white"
-									onClick={() => catchActions(actionButton.val)}
-								/>
-							)
-					)}
+					{gameActions &&
+						gameActions.map(
+							(actionButton) =>
+								actionButton.val !== "tirar" && (
+									<RoundButton
+										key={actionButton.val}
+										buttonClassName="bg-blueEmmagini h-[32px] rounded-[11px] w-full"
+										text={actionButton.txt}
+										textClassName="text-white"
+										onClick={() => catchActions(actionButton.val)}
+									/>
+								)
+						)}
 				</div>
 
 				<div className="flex-1 flex flex-col justify-end items-center gap-5">
-					{leaveActions.map((actionButton) => (
-						<RoundButton
-							key={actionButton.val}
-							buttonClassName="bg-red h-[32px] rounded-[11px] w-full"
-							text={actionButton.txt}
-							textClassName="text-white"
-							onClick={() => catchActions(actionButton.val)}
-						/>
-					))}
+					{leaveActions &&
+						leaveActions.map((actionButton) => (
+							<RoundButton
+								key={actionButton.val}
+								buttonClassName="bg-red h-[32px] rounded-[11px] w-full"
+								text={actionButton.txt}
+								textClassName="text-white"
+								onClick={() => catchActions(actionButton.val)}
+							/>
+						))}
 				</div>
 			</div>
 
