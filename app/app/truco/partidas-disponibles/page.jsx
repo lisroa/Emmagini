@@ -165,35 +165,37 @@ function Page() {
 					</div>
 				</div>
 			</div>
-			{infoSeriesTruco.esperando && infoSeriesTruco.esperando.length > 0 && (
-				<div className="w-[336px] lg:w-[1300px] h-auto lg:ml-24 mt-20">
-					<h2 className="text-black text-xs font-semibold ml-6">
-						Mis partidas creadas
-					</h2>
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-8">
-						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-							{infoSeriesTruco.esperando.map((partido) => (
-								<div
-									key={partido.id}
-									className="flex justify-center w-[306px] h-[214px]"
-								>
-									<CardNewGame
-										image={tester}
-										alt="Partida creada"
-										title={partido.nombre_1}
-										description={partido.nombre_2}
-										buttonText="Eliminar"
-										buttonClassName="bg-blueEmmagini w-[160px] h-[36px] bg-red"
-										onClick={() => {
-											handleClickEliminarPartida(partido.id);
-										}}
-									/>
-								</div>
-							))}
+			{infoSeriesTruco &&
+				infoSeriesTruco.esperando &&
+				infoSeriesTruco.esperando.length > 0 && (
+					<div className="w-[336px] lg:w-[1300px] h-auto lg:ml-24 mt-20">
+						<h2 className="text-black text-xs font-semibold ml-6">
+							Mis partidas creadas
+						</h2>
+						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-8">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+								{infoSeriesTruco.esperando.map((partido) => (
+									<div
+										key={partido.id}
+										className="flex justify-center w-[306px] h-[214px]"
+									>
+										<CardNewGame
+											image={tester}
+											alt="Partida creada"
+											title={partido.nombre_1}
+											description={partido.nombre_2}
+											buttonText="Eliminar"
+											buttonClassName="bg-blueEmmagini w-[160px] h-[36px] bg-red"
+											onClick={() => {
+												handleClickEliminarPartida(partido.id);
+											}}
+										/>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
+				)}
 
 			{infoSeriesTruco.actuales && infoSeriesTruco.actuales.length > 0 && (
 				<div className="w-[336px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14">
