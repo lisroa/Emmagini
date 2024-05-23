@@ -24,6 +24,8 @@ interface AuthContextValues {
 		password: string,
 		confirmPassword: string
 	) => Promise<void>;
+
+	signInWithGoogle: (credential: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValues>({} as any);
@@ -126,6 +128,35 @@ export const AuthProvider = ({ children }) => {
     console.log("userId:", userId);
   }, [token, userId]); */
 
+	const signInWithGoogle = useCallback(async (credential: string) => {
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/google_login",
+				{
+					host: "demo23.emmagini.com",
+					client_id:
+						"587734932427-61hvr9ivdpk93sniog8muc63qpc6nlev.apps.googleusercontent.com",
+					credential: credential,
+					fcm_token: "",
+					es_app: 0,
+					id_plataforma: 3,
+					lang: "es",
+					timezone: -3,
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			return response.data;
+		} catch (error) {
+			console.error("Error al hacer la solicitud:", error);
+			throw error;
+		}
+	}, []);
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -133,6 +164,7 @@ export const AuthProvider = ({ children }) => {
 				token,
 				signInWithEmailAndPassword,
 				singUpNewUser,
+				signInWithGoogle,
 			}}
 		>
 			{children}
