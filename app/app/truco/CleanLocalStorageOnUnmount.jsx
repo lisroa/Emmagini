@@ -1,20 +1,25 @@
 import { useEffect } from "react";
 
-const CleanLocalStorageOnUnmount = () => {
+const CleanLocalStorageOnMount = () => {
 	useEffect(() => {
-		console.log("Component mounted");
-		return () => {
-			console.log("Component unmounted, cleaning localStorage");
-			localStorage.removeItem("param");
-			localStorage.removeItem("serieId");
-			localStorage.removeItem("tournamentId");
-			localStorage.removeItem("action");
-			localStorage.removeItem("partidoId");
-			localStorage.removeItem("token");
-			localStorage.removeItem("user_id");
-		};
+		console.log("Component mounted, cleaning localStorage");
+		const itemsToRemove = [
+			"param",
+			"serieId",
+			"tournamentId",
+			"action",
+			"partidoId",
+			"token",
+			"user_id",
+		];
+		itemsToRemove.forEach((item) => {
+			console.log(`Removing item: ${item}`);
+			localStorage.removeItem(item);
+		});
+		console.log("LocalStorage cleaned");
 	}, []);
+
 	return null;
 };
 
-export default CleanLocalStorageOnUnmount;
+export default CleanLocalStorageOnMount;
