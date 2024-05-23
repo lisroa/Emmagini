@@ -17,6 +17,9 @@ export default function Page() {
 
 	const router = useRouter();
 
+	/* console.log(result.user.stsTokenManager.accessToken);
+			signInWithGoogle(result.user.accessToken);  */
+
 	const onSignInWithGoogle = useCallback(async () => {
 		try {
 			const result = await signInWithPopup(
@@ -24,8 +27,7 @@ export default function Page() {
 				firebaseGoogleAuthProvider
 			);
 			console.log("Respuesta de inicio de sesión con Google:", result.user);
-			console.log(result.user.stsTokenManager.accessToken);
-			signInWithGoogle(result.user.stsTokenManager.accessToken);
+
 			router.push("/app");
 		} catch (error) {
 			console.error("Error al iniciar sesión con Google:", error);
