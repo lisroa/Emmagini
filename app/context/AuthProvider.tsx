@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }) => {
 				{
 					host: "demo23.emmagini.com",
 					client_id:
-						"587734932427-61hvr9ivdpk93sniog8muc63qpc6nlev.apps.googleusercontent.com",
+						"861018734768-mm2f76o6bidnoplpck3i87vdm91vrbut.apps.googleusercontent.com",
 					credential: credential,
 					fcm_token: "",
 					es_app: 0,

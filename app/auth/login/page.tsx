@@ -9,16 +9,13 @@ import { signInWithPopup } from "firebase/auth";
 import { firebaseAuth } from "@/config/firebase/firebase";
 import { firebaseGoogleAuthProvider } from "@/config/firebase/google.provider";
 import { useRouter } from "next/navigation";
-import CleanLocalStorageOnUnmount from "../../app/truco/CleanLocalStorageOnUnmount";
+import CleanLocalStorageOnUnmount from "@/app/app/truco/CleanLocalStorageOnUnmount";
 import { useAuthContext } from "@/app/context/AuthProvider";
 
 export default function Page() {
 	const { signInWithGoogle } = useAuthContext();
 
 	const router = useRouter();
-
-	/* console.log(result.user.stsTokenManager.accessToken);
-			signInWithGoogle(result.user.accessToken);  */
 
 	const onSignInWithGoogle = useCallback(async () => {
 		try {
@@ -27,7 +24,8 @@ export default function Page() {
 				firebaseGoogleAuthProvider
 			);
 			console.log("Respuesta de inicio de sesión con Google:", result.user);
-
+			console.log(result.user.accessToken);
+			signInWithGoogle(result.user.accessToken);
 			router.push("/app");
 		} catch (error) {
 			console.error("Error al iniciar sesión con Google:", error);
