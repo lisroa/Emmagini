@@ -68,7 +68,7 @@ function Page() {
 								actionButton.val !== "tirar" && (
 									<RoundButton
 										key={actionButton.val}
-										buttonClassName="bg-blueEmmagini h-[32px] rounded-[11px] w-full"
+										buttonClassName="bg-blueEmmagini h-[32px] rounded-[11px] w-full py-5 px-10"
 										text={actionButton.txt}
 										textClassName="text-white"
 										onClick={() => catchActions(actionButton.val)}
@@ -82,7 +82,7 @@ function Page() {
 						leaveActions.map((actionButton) => (
 							<RoundButton
 								key={actionButton.val}
-								buttonClassName="bg-red h-[32px] rounded-[11px] w-full"
+								buttonClassName="bg-red h-[32px] rounded-[11px] w-full py-5 px-10"
 								text={actionButton.txt}
 								textClassName="text-white"
 								onClick={() => catchActions(actionButton.val)}
@@ -233,7 +233,7 @@ function Page() {
 						actionButton.val !== "tirar" && (
 							<RoundButton
 								key={actionButton.val}
-								buttonClassName="bg-blueEmmagini h-[36px] rounded-[11px] w-full"
+								buttonClassName="bg-blueEmmagini h-[36px] rounded-[11px] w-full py-5 px-10"
 								text={actionButton.txt}
 								textClassName="text-white text-xs"
 								onClick={() => catchActions(actionButton.val)}
@@ -243,7 +243,7 @@ function Page() {
 
 				{leaveActions.map((actionButton) => (
 					<RoundButton
-						buttonClassName="bg-red h-[36px] rounded-[11px] w-full"
+						buttonClassName="bg-red h-[36px] rounded-[11px] w-full py-5 px-10"
 						text={actionButton.txt}
 						textClassName="text-white text-xs"
 						onClick={() => catchActions(actionButton.val)}

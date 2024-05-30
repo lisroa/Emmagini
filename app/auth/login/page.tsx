@@ -58,13 +58,14 @@ export default function Page() {
 						}
 						text={"Continue with google"}
 						onClick={onSignInWithGoogle}
+						buttonClassName="py-4 px-8"
 					/>
 
 					<Link className="w-full" href={"/auth/login/email"}>
 						<RoundButton
 							logo={<Mail className="text-white" size={20} />}
 							text={"Continue with Email"}
-							buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700"
+							buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 py-4 px-8"
 							textClassName="text-white"
 						/>
 					</Link>
@@ -73,7 +74,7 @@ export default function Page() {
 						<RoundButton
 							logo={<CircleUser className="text-white" size={20} />}
 							text={"Create new account"}
-							buttonClassName="border border-sky-500 hover:bg-sky-600 bg-sky-500"
+							buttonClassName="border border-sky-500 hover:bg-sky-600 bg-sky-500 py-4 px-8"
 							textClassName="text-white"
 						/>
 					</Link>

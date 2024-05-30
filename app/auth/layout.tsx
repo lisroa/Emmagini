@@ -22,7 +22,7 @@ export default function Layout({
 			<div className="relative z-10 flex md:flex-row flex-col items-center justify-center w-full h-full">
 				<div className="flex flex-col items-center justify-center md:w-5/12 md:h-full w-full h-2/6">
 					<Image
-						className="md:w-7/12 w-10/12 max-w-80"
+						className="md:w-7/12 w-10/12 max-w-56 md:max-w-80"
 						src={"/assets/brand/logo.png"}
 						alt={"Emmagini Logo"}
 						width={896}
@@ -30,7 +30,7 @@ export default function Layout({
 					/>
 				</div>
 
-				<div className="flex flex-col items-center justify-center md:p-10 p-7 md:w-5/12 md:h-full md:max-h-xl w-full max-h-4/6 bg-white rounded-4xl shadow-lg overflow-auto">
+				<div className="flex flex-col items-center justify-center md:p-10 p-7 md:w-5/12 md:h-[80%] md:max-h-[68%] w-[80%] max-h-[68%] bg-white rounded-4xl shadow-lg overflow-auto max-w-[540px]">
 					{children}
 				</div>
 			</div>

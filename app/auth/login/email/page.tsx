@@ -103,7 +103,7 @@ export default function Page() {
 				<RoundButton
 					text={"Submit"}
 					type="submit"
-					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 h-14"
+					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 h-14 py-3 px-3"
 					textClassName="text-white"
 				/>
 			</form>

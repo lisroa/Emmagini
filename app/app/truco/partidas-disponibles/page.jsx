@@ -94,7 +94,7 @@ function Page() {
 				<div className="flex flex-col">
 					<div className="w-[209px] h-[36pxpx] mx-auto">
 						<RoundButton
-							buttonClassName="bg-blueEmmagini h-[36px] mt-2"
+							buttonClassName="bg-blueEmmagini h-[36px] mt-2 py-5 px-10"
 							text="Crear partida"
 							textClassName="text-white"
 							onClick={handleClickCrearPartida}
@@ -136,7 +136,7 @@ function Page() {
 
 				<div className="flex justify-center mt-20 lg:mt-2">
 					<div className="w-[336.91] h-[366]">
-						<h2 className="text-black ml-6 mb-2 text-xs lg:text-base font-semibold sm:mt-4">
+						<h2 className="text-black ml-6 mb-2 text-xs lg:text-base font-semibold sm:mt-4 xl:mt-0">
 							Premios
 						</h2>
 						<div className="w-[336px] h-[99px] mt-4">
@@ -173,7 +173,7 @@ function Page() {
 							Mis partidas creadas
 						</h2>
 						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-8">
-							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 								{infoSeriesTruco.esperando.map((partido) => (
 									<div
 										key={partido.id}
@@ -203,7 +203,7 @@ function Page() {
 					<div className="w-[336px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14">
 						<h2 className="text-black text-xs font-semibold ml-6">Activos</h2>
 						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-6">
-							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 								{infoSeriesTruco &&
 									infoSeriesTruco.actuales &&
 									infoSeriesTruco.actuales.map((partido) => (
@@ -235,7 +235,7 @@ function Page() {
 							Partidos disponibles
 						</h2>
 						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
-							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 								{infoSeriesTruco &&
 									infoSeriesTruco.abiertos &&
 									infoSeriesTruco.abiertos.map((partido) => (
@@ -266,7 +266,7 @@ function Page() {
 							Terminados
 						</h2>
 						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 mt-8">
-							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+							<div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 								{infoSeriesTruco &&
 									infoSeriesTruco.terminados &&
 									infoSeriesTruco.terminados.map((partido) => (

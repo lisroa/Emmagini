@@ -6,6 +6,7 @@ import logo from "../../../public/assets/navBar/nav_logo.png";
 import logoCoin from "../../../public/assets/icons/coin.png";
 import { CgMenuRound } from "react-icons/cg";
 import { useDataFrontContext } from "../../context/FrontProvider";
+import ConstantMovement from "@/app/components/animations/ConstantMovement";
 
 const NavBar = () => {
 	const { setSideMenuOpen } = useDataFrontContext();
@@ -21,13 +22,15 @@ const NavBar = () => {
 
 			<div id="coins" className="flex items-center gap-2">
 				<div className=" w-[90px] h-[35px] lg:w-28 h-11 bg-white rounded-3xl flex items-center justify-center">
-					<Image
-						className="hover:animate-pulse cursor-pointer w-[24px] h-[24px] lg:w-[28px] lg:h-[28px]"
-						src={logoCoin}
-						width={32}
-						height={32}
-						alt="coins"
-					/>
+					<ConstantMovement>
+						<Image
+							className="cursor-pointer w-[24px] h-[24px] lg:w-[28px] lg:h-[28px]"
+							src={logoCoin}
+							width={32}
+							height={32}
+							alt="coins"
+						/>
+					</ConstantMovement>
 
 					<span className="text-black font-semibold text-sm lg:text-base ml-2">
 						500

@@ -208,7 +208,7 @@ export default function Page() {
 			</div>
 
 			<form
-				className="flex flex-col gap-5 items-center justify-center w-6/12"
+				className="flex flex-col gap-5 items-center justify-center w-full"
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<div
@@ -282,7 +282,7 @@ export default function Page() {
 				<RoundButton
 					type="submit" // Asegúrate de que el botón sea de tipo submit
 					text={"Submit"}
-					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 h-14"
+					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 py-3 px-3"
 					textClassName="text-white"
 				/>
 			</form>

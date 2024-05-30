@@ -50,7 +50,7 @@ export const CardGames = ({
 }: CardGamesProps) => {
 	return (
 		<div
-			className={"w-full flex p-2 rounded-lg	bg-white".concat(
+			className={" flex p-4 rounded-l bg-white ".concat(
 				" ",
 				cardClassName || ""
 			)}
@@ -59,7 +59,7 @@ export const CardGames = ({
 				<Image
 					src={image}
 					alt={alt}
-					className="w-[101px] h-[175px]"
+					className="w-[91px] h-[155px]"
 					width={101}
 					height={185}
 				/>
