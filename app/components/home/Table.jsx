@@ -23,7 +23,7 @@ function Table() {
 				{infoGames &&
 					Object.values(infoGames).map((game) => (
 						<WhileTap key={game.id}>
-							<div className="flex justify-center">
+							<div className="flex justify-center" key={game.id}>
 								<CardHome
 									href="/#"
 									text={game.titulo}
@@ -37,7 +37,7 @@ function Table() {
 				{infoTruco &&
 					Object.values(infoTruco).map((torneo) => (
 						<WhileTap key={torneo.id}>
-							<div className="flex justify-center">
+							<div className="flex justify-center" key={torneo.id}>
 								<CardHome
 									href="/app/truco"
 									onClick={() => handleTournamentCardClick(torneo.id)}
