@@ -24,8 +24,8 @@ export default function Page() {
 				firebaseGoogleAuthProvider
 			);
 			console.log("Respuesta de inicio de sesión con Google:", result.user);
-			console.log(result.user.accessToken);
-			signInWithGoogle(result.user.accessToken);
+			//console.log(result.user.accessToken);
+			//signInWithGoogle(result.user.accessToken);
 			router.push("/app");
 		} catch (error) {
 			console.error("Error al iniciar sesión con Google:", error);
