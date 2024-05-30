@@ -10,7 +10,6 @@ import { AiOutlineTrophy } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDataFrontContext } from "@/app/context/FrontProvider";
-import Modal from "@/app/components/modals/Modal";
 
 const SideMenu = () => {
 	const { sideMenuOpen, setSideMenuOpen, setModalOpen } = useDataFrontContext();
