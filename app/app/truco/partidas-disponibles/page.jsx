@@ -139,27 +139,27 @@ function Page() {
 						<h2 className="text-black ml-6 mb-2 text-xs lg:text-base font-semibold sm:mt-4 xl:mt-0">
 							Premios
 						</h2>
-						<div className="w-[336px] h-[99px] mt-4">
+						<div className="w-[336px] h-[99px] mt-4 drop-shadow-lg">
 							<PrizesCard
 								title="Primer premio"
 								imageClassName="rounded-lg"
-								description="descripcion del premio ioioioioioioioi ioioioioio ioioioioio ioioioio ioioioio ioioioio iooioioiooio ioioioio ioioio"
+								description="descripcion del premio Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid consequuntur totam iusto modi cumque tempora earum eum, hic tenetur,"
 							/>
 						</div>
 						<div className="w-[336px] h-[99px] mt-4">
 							<PrizesCard
-								cardClassName="w-[336px] h-[99px] mt-4"
+								cardClassName="w-[336px] h-[99px] mt-4 drop-shadow-lg"
 								title="Segundo premio"
 								imageClassName="rounded-lg"
-								description="descripcion del premio ioioioioioioioi ioioioioio ioioioioio ioioioio ioioioio ioioioio iooioioiooio ioioioio ioioio"
+								description="descripcion del premio Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid consequuntur totam iusto modi cumque tempora earum eum, hic tenetur, "
 							/>
 						</div>
 						<div className="w-[336px] h-[99px] mt-4">
 							<PrizesCard
-								cardClassName="w-[336px] h-[99px] mt-4"
+								cardClassName="w-[336px] h-[99px] mt-4 drop-shadow-lg"
 								title="Tercer premio"
 								imageClassName="rounded-lg"
-								description="descripcion del premio ioioioioioioioi ioioioioio ioioioioio ioioioio ioioioio ioioioio iooioioiooio ioioioio ioioio"
+								description="descripcion del premio Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid consequuntur totam iusto modi cumque tempora earum eum, hic tenetur,"
 							/>
 						</div>
 					</div>
@@ -212,10 +212,12 @@ function Page() {
 											className="flex justify-center w-[306px]"
 										>
 											<CardGames
+												cardClassName="drop-shadow-lg"
 												image={tester}
 												link="/app/truco/partido"
 												title={`Oponente: ${partido.nombre_1}`}
 												description={`Puntaje:`}
+												button={true}
 												buttonText="Entrar"
 												buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
 												onClick={() => handlePartidaClick(partido.id)}
@@ -244,9 +246,11 @@ function Page() {
 											className="flex justify-center w-[306px]"
 										>
 											<CardGames
+												cardClassName="drop-shadow-lg"
 												image={tester}
 												link="/app/truco/partido"
 												title={`Oponente: ${partido.nombre_1}`}
+												button={true}
 												buttonText="Unirme"
 												buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
 												onClick={() => handleClickUnirmeAPartida(partido.id)}
@@ -275,14 +279,16 @@ function Page() {
 											className="flex justify-center w-[306px]"
 										>
 											<CardGames
+												cardClassName="drop-shadow-lg"
 												image={tester}
 												link="/#"
 												title={`Oponente: ${partido.nombre_2}`}
 												description={`Puntaje:`}
-												buttonText={
+												div={true}
+												divText={
 													partido.ganaste == false ? "Perdiste" : "Ganaste"
 												}
-												buttonClassName={
+												divClassName={
 													partido.ganaste == false
 														? "bg-red w-[160px] h-[36px]"
 														: "bg-green-600 w-[160px] h-[36px]"

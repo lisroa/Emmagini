@@ -45,7 +45,7 @@ export const CardNewGame = ({
 	onClick,
 }: CardNewGameProps) => {
 	return (
-		<div className="w-full flex p-2 rounded-lg	bg-white w-[336.91] h-[204]">
+		<div className="w-full flex p-2 rounded-lg	bg-white w-[336.91] h-[204] drop-shadow-lg">
 			<div className="flex-none">
 				<Image
 					src={image}

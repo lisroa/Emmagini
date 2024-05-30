@@ -92,7 +92,7 @@ function Page() {
 			</div>
 
 			<div
-				className="flex-1 rounded-[11px] overflow-hidden p-5 relative w-full h-full fondo"
+				className="flex-1 rounded-[11px] overflow-hidden p-5 relative w-full h-full xl:max-w-[1200px] fondo"
 				style={{
 					backgroundImage: `url(${infoJuegoTruco.tablero})`,
 				}}
@@ -175,7 +175,6 @@ function Page() {
 				<div className="h-[39px] lg:w-full lg:min-h-[420px] lg:max-h-full flex flex-col items-center justify-center bg-zinc-300 rounded-[20px] p-2">
 					{infoJuegoTruco && infoJuegoTruco.chat && (
 						<>
-							{/* Mostrar solo el último mensaje en pantallas pequeñas */}
 							<div className="lg:hidden">
 								{(() => {
 									const lastMessage = infoJuegoTruco.chat
@@ -202,7 +201,7 @@ function Page() {
 									);
 								})()}
 							</div>
-							{/* Mostrar todos los mensajes en pantallas lg y mayores */}
+
 							<div className="hidden lg:block">
 								{infoJuegoTruco.chat.map((text) => {
 									if (text.jugador === "system") {
@@ -256,43 +255,3 @@ function Page() {
 }
 
 export default Page;
-
-/*
-
-
-
-<div className="flex-1 flex flex-row justify-center items-center gap-5">
-						{upperPositions.map((naipe) => (
-							<Image
-								src={fixImageUrl(naipe.imagen)}
-								width={90}
-								height={108}
-								className="w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ml-4"
-								alt="naipe"
-								key={naipe.id}
-							/>
-						))}
-						{lowerPositions.map((naipe) => (
-							<Image
-								src={fixImageUrl(naipe.imagen)}
-								width={90}
-								height={108}
-								className="w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ml-4"
-								alt="naipe"
-								key={naipe.id}
-							/>
-						))}
-					</div>
-
-					
-const upperPositions = infoJuegoTruco.mesa.filter(
-		(naipe) => naipe.posicion >= 4 && naipe.posicion <= 6
-	);
-	const lowerPositions = infoJuegoTruco.mesa.filter(
-		(naipe) => naipe.posicion >= 1 && naipe.posicion <= 3
-	);
-
-	upperPositions.sort((a, b) => a.posicion - b.posicion);
-	lowerPositions.sort((a, b) => a.posicion - b.posicion);
-
-					*/

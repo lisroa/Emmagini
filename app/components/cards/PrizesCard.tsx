@@ -1,4 +1,4 @@
-import tester from "../../../public/assets/cards/imageCard.png";
+import tester from "../../../public/assets/cards/trofeo.png";
 import Image from "next/image";
 import { ReactNode } from "react";
 
@@ -44,10 +44,7 @@ export const PrizesCard = ({
 				<Image
 					src={tester}
 					alt="tester"
-					className={"absolute inset-0 w-full h-full  ".concat(
-						"",
-						imageClassName || ""
-					)}
+					className={"absolute  ".concat("", imageClassName || "")}
 				/>
 			</div>
 

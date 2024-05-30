@@ -14,6 +14,10 @@ interface CardGamesProps {
 	description: string;
 	subtitle: string;
 	text: string;
+	button?: boolean;
+	div?: boolean;
+	divClassName?: string;
+	divText?: string;
 	link?: string;
 	buttonText: string;
 	altText: string;
@@ -31,15 +35,19 @@ interface CardGamesProps {
 export const CardGames = ({
 	cardClassName,
 	link = "",
+	button,
+	div,
+	text,
 	image,
 	alt,
 	title,
 	description,
 	subtitle,
-	text,
 	buttonText,
+	divText,
 	altText,
 	textSpan,
+	divClassName,
 	titleClassName,
 	descriptionClassName,
 	subtitleClassName,
@@ -50,7 +58,7 @@ export const CardGames = ({
 }: CardGamesProps) => {
 	return (
 		<div
-			className={" flex p-4 rounded-l bg-white ".concat(
+			className={" flex p-4 rounded-lg bg-white ".concat(
 				" ",
 				cardClassName || ""
 			)}
@@ -65,7 +73,7 @@ export const CardGames = ({
 				/>
 			</div>
 
-			<div className="flex-grow ml-4 flex flex-col justify-center">
+			<div className="flex-grow ml-4 flex flex-col justify-center items-center">
 				<h1
 					className={"text-black mb-2 mt-2 text-sm lg:text-base font-semibold".concat(
 						" ",
@@ -104,18 +112,30 @@ export const CardGames = ({
 						<p className="text-[10px]  text-center text-black">{altText}</p>
 					)}
 
-					<Link href={link}>
-						<button
-							className={"mx-auto rounded-[50px] border-4 border-gray-200 ".concat(
+					{button && (
+						<Link href={link}>
+							<button
+								className={"mx-auto rounded-[50px] border-4 border-gray-200 ".concat(
+									" ",
+									buttonClassName || ""
+								)}
+								type={type}
+								onClick={onClick}
+							>
+								{buttonText}
+							</button>
+						</Link>
+					)}
+					{div && (
+						<div
+							className={"mx-auto rounded-[50px] border-4 border-gray-100 text-center".concat(
 								" ",
-								buttonClassName || ""
+								divClassName || ""
 							)}
-							type={type}
-							onClick={onClick}
 						>
-							{buttonText}
-						</button>
-					</Link>
+							<p className="text-center">{divText}</p>
+						</div>
+					)}
 					<p className="text-[10px] ml-10 text-black mt-2">{textSpan}</p>
 				</div>
 			</div>

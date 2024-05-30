@@ -3,7 +3,6 @@ import CardGames from "../../components/cards/CardGames";
 import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
 
 // TODO: Hay que agregar logica que ordene los torneos por activos, proximos o anteriores segun la fecha o algun parametro que venga por API.
-// TODO: Adaptar a pantallas mas grandes segun el disenio que armen proximamente.
 
 export default function Page() {
 	const { infoTorneosTruco, setIdSerie } = useSeriesTrucoDataContext();
@@ -31,10 +30,11 @@ export default function Page() {
 								<CardGames
 									link="/app/truco/partidas-disponibles"
 									image={serie.imagen}
-									cardClassName="w-[292px] h-[185px]"
+									cardClassName="w-[300px] h-[185px] drop-shadow-lg"
 									alt="serie.nombre"
 									title={serie.nombre}
 									description={serie.inicio_txt}
+									button={true}
 									buttonText="ingresar"
 									textSpan={serie.fin_txt}
 									buttonClassName="bg-blueEmmagini w-[160px] h-[36.37px]"

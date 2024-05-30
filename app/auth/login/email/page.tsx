@@ -89,7 +89,7 @@ export default function Page() {
 					<LockKeyhole className="text-sky-400" size={23} />
 					<input
 						{...register("password")}
-						className="flex-1 bg-transparent text-black text-lg outline-0 h-full"
+						className="flex-1 bg-transparent text-black text-lg outline-0 h-full border-none"
 						placeholder="Password"
 						type={isPasswordVisible ? "text" : "password"}
 					/>

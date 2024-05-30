@@ -17,38 +17,38 @@ function Perfil() {
 				<div className="mt-8">
 					<form className="grid grid-cols-1 gap-4 lg:gap-20 lg:grid-cols-2">
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
-							<p className="font-normal text-xs text-slate-300 ml-2">Usuario</p>
+							<p className="font-normal text-xs text-slate-500 ml-2">Usuario</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white"
+								className="text-black w-[330px] bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
-							<p className="font-normal text-xs text-slate-300 ml-2">Email</p>
+							<p className="font-normal text-xs text-slate-500 ml-2">Email</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white"
+								className="text-black w-[330px] bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
-							<p className="font-normal text-xs text-slate-300 ml-2">Pais</p>
+							<p className="font-normal text-xs text-slate-500 ml-2">Pais</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white"
+								className="text-black w-[330px] bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
-							<p className="font-normal text-xs text-slate-300 ml-2">Ciudad</p>
+							<p className="font-normal text-xs text-slate-500 ml-2">Ciudad</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white"
+								className="text-black w-[330px] bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
-							<p className="font-normal text-xs text-slate-300 ml-2">Edad</p>
+							<p className="font-normal text-xs text-slate-500 ml-2">Edad</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white"
+								className="text-black w-[330px] bg-white border-none"
 							></input>
 						</div>
 					</form>
