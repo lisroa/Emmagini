@@ -73,7 +73,7 @@ function Page() {
 	}, [getJuegoData]);
 
 	return (
-		<div className="w-screen">
+		<div className="">
 			<div>
 				<h1 className="mt-20 text-black text-center font-bold text-2xl">
 					Nombre del torneo
