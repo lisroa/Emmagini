@@ -1,5 +1,5 @@
 "use client";
-import React from "react"
+import React from "react";
 import { GameDataProvider } from "../context/GameDataProvider";
 import { FrontDataProvider } from "../context/FrontProvider";
 import { SeriesTrucoProvider } from "../context/truco/SeriesTrucoProvider";
@@ -8,24 +8,24 @@ import SideMenu from "../components/SideMenu/SideMenu";
 import ButtonNav from "../components/home/ButtonNav";
 
 export default function Layout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  // TODO: Agregar codigo que checkee que estes logeado (tenes token y userId, podes hacer una pegada tambien). Si no estas logeado, te redirecciona al login, si estas logeado no hace nada.
+	// TODO: Agregar codigo que checkee que estes logeado (tenes token y userId, podes hacer una pegada tambien). Si no estas logeado, te redirecciona al login, si estas logeado no hace nada.
 
-  return (
-    <FrontDataProvider>
-      <GameDataProvider>
-       <SeriesTrucoProvider>
-       <main className="relative min-h-screen max-h-screen w-screen h-screen ">
-          <NavBar />
-          <SideMenu />
-          {children}
-         {/*  <ButtonNav /> */}
-        </main>
-       </SeriesTrucoProvider>
-      </GameDataProvider>
-    </FrontDataProvider>
-  );
+	return (
+		<FrontDataProvider>
+			<GameDataProvider>
+				<SeriesTrucoProvider>
+					<main className="relative min-h-screen max-h-screen w-screen h-screen ">
+						<NavBar />
+						<SideMenu />
+						{children}
+						<ButtonNav />
+					</main>
+				</SeriesTrucoProvider>
+			</GameDataProvider>
+		</FrontDataProvider>
+	);
 }

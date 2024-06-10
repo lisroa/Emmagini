@@ -30,6 +30,7 @@ export default function Page() {
 								<CardGames
 									link="/app/truco/partidas-disponibles"
 									image={serie.imagen}
+									imageClassName="w-[91px] h-[155px]"
 									cardClassName="w-[300px] h-[185px] drop-shadow-lg"
 									alt="serie.nombre"
 									title={serie.nombre}
@@ -37,7 +38,7 @@ export default function Page() {
 									button={true}
 									buttonText="ingresar"
 									textSpan={serie.fin_txt}
-									buttonClassName="bg-blueEmmagini w-[160px] h-[36.37px]"
+									buttonClassName="bg-blueEmmagini w-[160px] h-[36.37px] text-white"
 									onClick={() => handleSerieClick(serie.id)}
 								/>
 							</div>
