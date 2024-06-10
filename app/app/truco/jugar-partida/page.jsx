@@ -19,7 +19,6 @@ function Page() {
 	const handleClickCrearPartida = useCallback(async () => {
 		try {
 			await crearPartida();
-			console.log("Partida creada exitosamente");
 		} catch (error) {
 			console.error("Error al crear la partida:", error);
 		}
@@ -33,7 +32,6 @@ function Page() {
 		async (id) => {
 			try {
 				await eliminarPartida(id);
-				console.log("Partida eliminada exitosamente");
 			} catch (error) {
 				console.error("Error al crear la partida:", error);
 			}
@@ -58,7 +56,6 @@ function Page() {
 		async (id) => {
 			try {
 				await unirmeAPartida(id);
-				console.log("Te uniste exitosamente");
 			} catch (error) {
 				console.error("Error al unirte a la partida:", error);
 			}

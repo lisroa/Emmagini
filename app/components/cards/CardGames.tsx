@@ -9,19 +9,24 @@ import { RoundButton } from "../buttons/RoundButton";
 interface CardGamesProps {
 	cardClassName?: string;
 	image?: ReactNode;
-	alt: string;
-	title: string;
-	description: string;
-	subtitle: string;
-	text: string;
+	imageContainer?: string;
+	imageClassName?: string;
+	alt?: string;
+	title?: string;
+	description?: string;
+	subtitle?: string;
+	text?: string;
 	button?: boolean;
+	buttonRouter?: boolean;
+	buttonRouterClassName?: string;
+	textRouterClassName?: string;
 	div?: boolean;
 	divClassName?: string;
 	divText?: string;
 	link?: string;
-	buttonText: string;
-	altText: string;
-	textSpan: string;
+	buttonText?: string;
+	altText?: string;
+	textSpan?: string;
 	titleClassName?: string;
 	descriptionClassName?: string;
 	subtitleClassName?: string;
@@ -36,6 +41,9 @@ export const CardGames = ({
 	cardClassName,
 	link = "",
 	button,
+	buttonRouter,
+	buttonRouterClassName,
+	textRouterClassName,
 	div,
 	text,
 	image,
@@ -50,6 +58,8 @@ export const CardGames = ({
 	divClassName,
 	titleClassName,
 	descriptionClassName,
+	imageContainer,
+	imageClassName,
 	subtitleClassName,
 	textClassName,
 	buttonClassName,
@@ -63,12 +73,12 @@ export const CardGames = ({
 				cardClassName || ""
 			)}
 		>
-			<div className="flex-none">
+			<div className={"flex-none".concat(" ", imageContainer || "")}>
 				<Image
 					src={image}
 					alt={alt}
-					className="w-[91px] h-[155px]"
-					width={101}
+					className={"".concat(" ", imageClassName || "")}
+					width={200}
 					height={185}
 				/>
 			</div>
@@ -126,6 +136,25 @@ export const CardGames = ({
 							</button>
 						</Link>
 					)}
+					{buttonRouter && (
+						<button
+							className={"mx-auto rounded-[50px] border-4 border-gray-200 ".concat(
+								" ",
+								buttonRouterClassName || ""
+							)}
+							type={type}
+							onClick={onClick}
+						>
+							<p
+								className={"align-middle text-center ".concat(
+									" ",
+									textRouterClassName || ""
+								)}
+							>
+								{buttonText}
+							</p>
+						</button>
+					)}
 					{div && (
 						<div
 							className={"mx-auto rounded-[50px] border-4 border-gray-100 text-center".concat(
@@ -136,7 +165,9 @@ export const CardGames = ({
 							<p className="text-center">{divText}</p>
 						</div>
 					)}
-					<p className="text-[10px] ml-10 text-black mt-2">{textSpan}</p>
+					<p className="text-[10px] ml-10 text-black mt-2 align-middle text-center">
+						{textSpan}
+					</p>
 				</div>
 			</div>
 		</div>

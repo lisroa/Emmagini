@@ -30,7 +30,6 @@ function Page() {
 	const handleClickCrearPartida = useCallback(async () => {
 		try {
 			await crearPartida();
-			console.log("Partida creada exitosamente");
 		} catch (error) {
 			console.error("Error al crear la partida:", error);
 		}
@@ -44,9 +43,8 @@ function Page() {
 		async (id) => {
 			try {
 				await eliminarPartida(id);
-				console.log("Partida eliminada exitosamente");
 			} catch (error) {
-				console.error("Error al crear la partida:", error);
+				console.error("Error al eliminar la partida:", error);
 			}
 		},
 		[eliminarPartida]
@@ -60,7 +58,6 @@ function Page() {
 		async (id) => {
 			try {
 				await unirmeAPartida(id);
-				console.log("Te uniste exitosamente");
 			} catch (error) {
 				console.error("Error al unirte a la partida:", error);
 			}
@@ -185,7 +182,7 @@ function Page() {
 											title={partido.nombre_1}
 											description={partido.nombre_2}
 											buttonText="Eliminar"
-											buttonClassName="bg-blueEmmagini w-[160px] h-[36px] bg-red"
+											buttonClassName="bg-blueEmmagini w-[160px] h-[36px] bg-red text-white"
 											onClick={() => {
 												handleClickEliminarPartida(partido.id);
 											}}
@@ -214,12 +211,13 @@ function Page() {
 											<CardGames
 												cardClassName="drop-shadow-lg"
 												image={tester}
+												imageClassName="w-[91px] h-[155px]"
 												link="/app/truco/partido"
 												title={`Oponente: ${partido.nombre_1}`}
 												description={`Puntaje:`}
 												button={true}
 												buttonText="Entrar"
-												buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
+												buttonClassName="bg-blueEmmagini w-[160px] h-[36px] text-white"
 												onClick={() => handlePartidaClick(partido.id)}
 											/>
 										</div>
@@ -248,11 +246,12 @@ function Page() {
 											<CardGames
 												cardClassName="drop-shadow-lg"
 												image={tester}
+												imageClassName="w-[91px] h-[155px]"
 												link="/app/truco/partido"
 												title={`Oponente: ${partido.nombre_1}`}
 												button={true}
 												buttonText="Unirme"
-												buttonClassName="bg-blueEmmagini w-[160px] h-[36px]"
+												buttonClassName="bg-blueEmmagini w-[160px] h-[36px] text-white"
 												onClick={() => handleClickUnirmeAPartida(partido.id)}
 											/>
 										</div>
@@ -281,6 +280,7 @@ function Page() {
 											<CardGames
 												cardClassName="drop-shadow-lg"
 												image={tester}
+												imageClassName="w-[91px] h-[155px]"
 												link="/#"
 												title={`Oponente: ${partido.nombre_2}`}
 												description={`Puntaje:`}
@@ -290,8 +290,8 @@ function Page() {
 												}
 												divClassName={
 													partido.ganaste == false
-														? "bg-red w-[160px] h-[36px]"
-														: "bg-green-600 w-[160px] h-[36px]"
+														? "bg-red w-[160px] h-[36px] text-white"
+														: "bg-green-600 w-[160px] h-[36px] text-white"
 												}
 											/>
 										</div>

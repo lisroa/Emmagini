@@ -43,7 +43,7 @@ const NavBar = () => {
 						setSideMenuOpen(true);
 					}}
 				>
-					<CgMenuRound size={40} />
+					<CgMenuRound size={40} className="text-white" />
 				</button>
 			</div>
 		</div>
