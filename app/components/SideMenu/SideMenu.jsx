@@ -128,7 +128,9 @@ const SideMenu = () => {
 							className="w-[323px] h-12 bg-red mt-4 rounded-[50px] border-4 border-gray-500"
 							onClick={onClick}
 						>
-							<span className="text-base font-bold">Cerrar sesión</span>
+							<span className="text-base font-bold text-white">
+								Cerrar sesión
+							</span>
 						</button>
 					</div>
 				</div>

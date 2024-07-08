@@ -21,16 +21,18 @@ export default function Page({
 	if (!infoGames) {
 		return <div className="mt-20 text-black">Cargando...</div>;
 	}
-
+	// @ts-ignore
 	const museo = infoGames.find((museoItem) => museoItem.id === idMuseo);
 
 	const productos = museo.productos.filter(
+		// @ts-ignore
 		(productItem) => productItem.id_categoria === idCategoria
 	);
 	const categoria = museo.categorias.find(
+		// @ts-ignore
 		(categoria) => categoria.id === idCategoria
 	);
-
+	// @ts-ignore
 	const handleCardClick = (idProducto) => {
 		router.push(`/app/museo/${idMuseo}/${idCategoria}/${idProducto}`);
 	};
@@ -41,11 +43,16 @@ export default function Page({
 			<div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
 				{productos &&
 					Object.values(productos).map((producto) => (
+						// @ts-ignore
 						<WhileTap key={producto.id}>
+							{/*// @ts-ignore */}
 							<div className="flex justify-center" key={producto.id}>
 								<CardHome
+									// @ts-ignore
 									onClick={() => handleCardClick(producto.id)}
+									// @ts-ignore
 									text={producto.titulo}
+									// @ts-ignore
 									imageCard={producto.imagen_0 || producto.imagen_1}
 								/>
 							</div>

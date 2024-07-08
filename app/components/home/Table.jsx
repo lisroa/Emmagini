@@ -4,11 +4,13 @@ import CardHome from "../cards/CardHome";
 import CardTruco from "@/app/components/cards/CardTruco";
 import { useDataContext } from "../../context/GameDataProvider";
 import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
+import { useDataAlbumContext } from "@/app/context/trivia/AlbumProvider";
 import WhileTap from "@/app/components/animations/WhileTap";
 
 function Table() {
 	const { infoGames, infoTruco } = useDataContext();
 	const { setIdTorneo } = useSeriesTrucoDataContext();
+	const { idAlbum, setIdAlbum } = useDataAlbumContext();
 	const router = useRouter();
 
 	const saveTournamentIdToCache = (tournamentId) => {
@@ -20,19 +22,44 @@ function Table() {
 		saveTournamentIdToCache(tournamentId);
 	};
 
-	const handleCardClick = (id, tipo) => {
-		// Redirect based on type
+	const handleCardClick = (id, tipo, nombre) => {
 		if (tipo === "museo") {
 			router.push(`/app/museo/${id}`);
 		} else if (tipo === "album") {
-			// Example path for category
-			router.push(`/app/album/${id}`);
+			if (nombre === "Trivia Copa") {
+				router.push(`/app/trivia/${id}`);
+				setIdAlbum(id);
+			} else if (nombre === "stickers") {
+				router.push(`/app/stickers/${id}`);
+			} else {
+				router.push(`/app/album/${id}`);
+			}
 		} else if (tipo === "parejas") {
-			// Example path for product
-			router.push(`/app/parejas/${id}`);
+			if (nombre === "specificName1") {
+				router.push(`/app/parejas/specificPath1/${id}`);
+			} else if (nombre === "specificName2") {
+				router.push(`/app/parejas/specificPath2/${id}`);
+			} else {
+				router.push(`/app/parejas/${id}`);
+			}
+		} else if (tipo === "memotest") {
+			if (nombre === "specificName1") {
+				router.push(`/app/memotest/specificPath1/${id}`);
+			} else if (nombre === "specificName2") {
+				router.push(`/app/memotest/specificPath2/${id}`);
+			} else {
+				router.push(`/app/memotest/${id}`);
+			}
+		} else if (tipo === "lineatiempo") {
+			if (nombre === "specificName1") {
+				router.push(`/app/lineatiempo/specificPath1/${id}`);
+			} else if (nombre === "specificName2") {
+				router.push(`/app/lineatiempo/specificPath2/${id}`);
+			} else {
+				router.push(`/app/lineatiempo/${id}`);
+			}
 		} else {
-			// Default path or handle other types
-			router.push(`/app/`);
+			("");
 		}
 	};
 
@@ -48,7 +75,9 @@ function Table() {
 									imageCard={
 										game.image || game.imagen || game.imagen_1 || game.imagen_0
 									}
-									onClick={() => handleCardClick(game.id, game.tipo)}
+									onClick={() =>
+										handleCardClick(game.id, game.tipo, game.titulo)
+									}
 								/>
 							</div>
 						</WhileTap>
@@ -61,7 +90,7 @@ function Table() {
 									href="/app/truco"
 									onClick={() => (
 										handleTournamentCardClick(torneo.id),
-										handleCardClick(torneo.id, torneo.tipo)
+										handleCardClick(torneo.id, torneo.tipo, torneo.titulo)
 									)}
 									text={torneo.titulo}
 									imageCard={

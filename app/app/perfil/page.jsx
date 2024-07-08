@@ -1,3 +1,6 @@
+"use client";
+
+import { FloatingLabel } from "flowbite-react";
 import { RoundButton } from "@/app/components/buttons/RoundButton";
 
 function Perfil() {
@@ -20,35 +23,35 @@ function Perfil() {
 							<p className="font-normal text-xs text-slate-500 ml-2">Usuario</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white border-none"
+								className="text-black w-[330px] h-[20px] focus:outline-none focus:ring-0 bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
 							<p className="font-normal text-xs text-slate-500 ml-2">Email</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white border-none"
+								className="text-black w-[330px] h-[20px] focus:outline-none focus:ring-0 bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
 							<p className="font-normal text-xs text-slate-500 ml-2">Pais</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white border-none"
+								className="text-black w-[330px] h-[20px] focus:outline-none focus:ring-0 bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
 							<p className="font-normal text-xs text-slate-500 ml-2">Ciudad</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white border-none"
+								className="text-black w-[330px] h-[20px] focus:outline-none focus:ring-0 bg-white border-none"
 							></input>
 						</div>
 						<div className="w-[344px] h-14 rounded-lg bg-white p-2">
 							<p className="font-normal text-xs text-slate-500 ml-2">Edad</p>
 							<input
 								type="text"
-								className="text-black w-[330px] bg-white border-none"
+								className="text-black w-[330px] h-[20px] focus:outline-none focus:ring-0 bg-white border-none"
 							></input>
 						</div>
 					</form>

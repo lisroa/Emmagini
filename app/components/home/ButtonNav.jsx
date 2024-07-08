@@ -19,12 +19,14 @@ function ButtonNav() {
 					</button>
 				</Link>
 
-				<button className="flex flex-col items-center justify-center w-full h-full rounded-xl p-1">
-					<div className="flex flex-col items-center">
-						<BsCartCheck size={18} className="text-white" />
-						<span className="mt-1 text-md text-white">Comprar</span>
-					</div>
-				</button>
+				<Link href="/app/productos">
+					<button className="flex flex-col items-center justify-center w-full h-full rounded-xl p-1">
+						<div className="flex flex-col items-center">
+							<BsCartCheck size={18} className="text-white" />
+							<span className="mt-1 text-md text-white">Comprar</span>
+						</div>
+					</button>
+				</Link>
 
 				<button className="flex flex-col items-center justify-center w-full h-full rounded-xl p-1">
 					<div className="flex flex-col items-center">

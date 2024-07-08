@@ -81,15 +81,17 @@ export default function Page() {
 				</div>
 
 				<div
-					className={"flex flex-row gap-2 items-center justify-center bg-gray-100 rounded-lg py-3 px-3 w-full".concat(
+					className={"flex flex-row gap-2 items-center justify-center bg-gray-100 rounded-lg py-3 px-3 w-full h-[49px]".concat(
 						" ",
 						formState.errors.password ? "border border-red-500" : ""
 					)}
 				>
-					<LockKeyhole className="text-sky-400" size={23} />
+					<div>
+						<LockKeyhole className="text-sky-400" size={23} />
+					</div>
 					<input
 						{...register("password")}
-						className="flex-1 bg-transparent text-black text-lg outline-0 h-full border-none"
+						className="flex-1 bg-transparent text-black text-lg outline-0 h-full border-none focus:outline-none focus:ring-0"
 						placeholder="Password"
 						type={isPasswordVisible ? "text" : "password"}
 					/>
