@@ -59,7 +59,7 @@ const SideMenu = () => {
 
 			router.push("/auth/login");
 		} catch (error) {
-			console.error("Error al registrar el usuario:", error);
+			console.error("Error al cerrar sesion", error);
 		}
 	}, [logOut]);
 

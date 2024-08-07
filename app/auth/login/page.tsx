@@ -11,13 +11,14 @@ import { firebaseGoogleAuthProvider } from "@/config/firebase/google.provider";
 import { useRouter } from "next/navigation";
 import CleanLocalStorageOnUnmount from "@/app/app/truco/CleanLocalStorageOnUnmount";
 import { useAuthContext } from "@/app/context/AuthProvider";
+import GoogleLoginButton from "@/app/auth/GoogleLoginButton";
 
 export default function Page() {
 	const { signInWithGoogle } = useAuthContext();
 
 	const router = useRouter();
 
-	const onSignInWithGoogle = useCallback(async () => {
+	/*const onSignInWithGoogle = useCallback(async () => {
 		try {
 			const result = await signInWithPopup(
 				firebaseAuth,
@@ -30,7 +31,7 @@ export default function Page() {
 		} catch (error) {
 			console.error("Error al iniciar sesión con Google:", error);
 		}
-	}, [router]);
+	}, [router]); */
 
 	return (
 		<>
@@ -46,20 +47,7 @@ export default function Page() {
 				</div>
 
 				<div className="w-full max-w-sm flex flex-col gap-5 items-center justify-center">
-					<RoundButton
-						logo={
-							<Image
-								className=""
-								src={"/assets/social/google_logo.png"}
-								alt={"Google Logo"}
-								width={20}
-								height={20}
-							/>
-						}
-						text={"Continue with google"}
-						onClick={onSignInWithGoogle}
-						buttonClassName="py-4 px-8"
-					/>
+					<GoogleLoginButton />
 
 					<Link className="w-full" href={"/auth/login/email"}>
 						<RoundButton
@@ -80,14 +68,14 @@ export default function Page() {
 					</Link>
 				</div>
 
-				<div className="w-full flex flex-row items-center justify-center">
+				{/*<div className="w-full flex flex-row items-center justify-center">
 					<p className="text-gray-400 font-regular text-center text-md">
 						Forgot your password?{" "}
 						<span className="text-blue-400 hover:text-blue-500">
 							<Link href="">Click here</Link>
 						</span>
 					</p>
-				</div>
+				</div>*/}
 			</div>
 		</>
 	);

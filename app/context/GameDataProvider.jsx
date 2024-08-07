@@ -13,10 +13,18 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export const GameDataContext = createContext();
 
 export const GameDataProvider = ({ children }) => {
+	//empresa
+
+	const [empresa, setEmpresa] = useState();
+
+	//Loader
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
+
 	//Trae todos los juegos desde demo25
 	const [data, setData] = useState();
 	const [infoGames, setInfoGames] = useState();
-	const [museos, setMuseos] = useState();
+	const [textos, setTextos] = useState();
 
 	//Trae la info de los torneos de truco desde demo23
 	const [dataTruco, setDataTruco] = useState();
@@ -44,11 +52,14 @@ export const GameDataProvider = ({ children }) => {
 
 			setData(response.data);
 			setInfoGames(response.data.contenidos);
-
+			setTextos(response.data.keytext);
+			setEmpresa(response.data.empresa);
+			setIsLoading(false);
 			return response.data;
 		} catch (error) {
 			console.error("Error al hacer la solicitud:", error);
-
+			setIsLoading(false);
+			setError(error);
 			throw error;
 		}
 	}, [token, userId]);
@@ -60,7 +71,8 @@ export const GameDataProvider = ({ children }) => {
 	useEffect(() => {
 		console.log(data);
 		console.log(infoGames);
-	}, [data, infoGames]);
+		console.log(textos);
+	}, [data, infoGames, textos]);
 
 	//Pegamos a validate desde demo23 para traer los torneos de truco
 
@@ -69,7 +81,7 @@ export const GameDataProvider = ({ children }) => {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/validate",
 				{
-					callback: "https://demo23.emmagini.com/home.php#v=inicio",
+					callback: "https://demo25.emmagini.com/home.php#v=inicio",
 					token,
 					userid: userId,
 					host: "demo23.emmagini.com",
@@ -97,9 +109,10 @@ export const GameDataProvider = ({ children }) => {
 		getTrucoData();
 	}, [token, userId]);
 
-	/*useEffect(() => {
-   console.log(infoTruco)
-  }, [dataTruco, infoTruco]); */
+	useEffect(() => {
+		//console.log("truco", infoTruco);
+		console.log("empresa", empresa);
+	}, [dataTruco, infoTruco]);
 
 	return (
 		<GameDataContext.Provider
@@ -112,6 +125,12 @@ export const GameDataProvider = ({ children }) => {
 				setDataTruco,
 				infoTruco,
 				setInfoTruco,
+				textos,
+				setTextos,
+				isLoading,
+				setIsLoading,
+				error,
+				empresa,
 			}}
 		>
 			{children}

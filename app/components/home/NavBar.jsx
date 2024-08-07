@@ -6,10 +6,16 @@ import logo from "../../../public/assets/navBar/nav_logo.png";
 import logoCoin from "../../../public/assets/icons/coin.png";
 import { CgMenuRound } from "react-icons/cg";
 import { useDataFrontContext } from "../../context/FrontProvider";
+import { useDataContext } from "@/app/context/GameDataProvider";
 import ConstantMovement from "@/app/components/animations/ConstantMovement";
 
 const NavBar = () => {
 	const { setSideMenuOpen } = useDataFrontContext();
+	const { data } = useDataContext();
+
+	// Verifica que data y data.userdata estén definidos antes de acceder a monedas
+	const monedas = data?.userdata?.monedas || 0; // Usa un valor por defecto en caso de que no esté definido
+
 	return (
 		<div className="flex justify-between items-center fixed z-10 w-full h-16 py-5 px-8 text-sm font-light top-0 bg-blueEmmagini">
 			<ul className="flex items-center gap-3">
@@ -33,7 +39,7 @@ const NavBar = () => {
 					</ConstantMovement>
 
 					<span className="text-black font-semibold text-sm lg:text-base ml-2">
-						500
+						{monedas}
 					</span>
 				</div>
 
