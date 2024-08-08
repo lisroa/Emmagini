@@ -162,6 +162,8 @@ export const AuthProvider = ({ children }) => {
 			value={{
 				userId,
 				token,
+				setToken,
+				setUserId,
 				signInWithEmailAndPassword,
 				singUpNewUser,
 				signInWithGoogle,
