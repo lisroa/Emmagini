@@ -84,7 +84,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 
-const GoogleLoginButton = ({ language, idTrivia }) => {
+const GoogleLoginButton = () => {
 	const router = useRouter();
 
 	const { token, userId, setToken, setUserId } = useAuthContext();
