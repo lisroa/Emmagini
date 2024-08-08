@@ -56,7 +56,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 						<div className="dot"></div>
 						<div className="dot"></div>
 					</section>
-					<h1 className="text-blueEmmagini text-center mt-4 font-semibold">
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold">
 						CARGANDO
 					</h1>
 				</div>
@@ -254,7 +254,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 						<div className="dot"></div>
 						<div className="dot"></div>
 					</section>
-					<h1 className="text-blueEmmagini text-center mt-4 font-semibold">
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold">
 						CARGANDO
 					</h1>
 				</div>
@@ -586,7 +586,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 						<div className="dot"></div>
 						<div className="dot"></div>
 					</section>
-					<h1 className="text-blueEmmagini text-center mt-4 font-semibold">
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold">
 						CARGANDO
 					</h1>
 				</div>

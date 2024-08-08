@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect } from "react";
 import React from "react";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import ImageBanner from "../components/home/ImageBanner";
@@ -7,23 +9,21 @@ import banner from "../../public/assets/bg/background.png";
 import "@/app/components/styles/loader.css";
 
 const Home = () => {
-	const { isLoading, error } = useDataContext();
+	const { isLoading, error, empresa, textos } = useDataContext();
 
-	if (isLoading) {
+	if (!empresa && !textos) {
 		return (
-			<div className="mt-20 text-black">
-				<div className="mt-96">
-					<section className="dots-container">
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-					</section>
-					<h1 className="text-blueEmmagini text-center mt-4 font-semibold text-xl">
-						CARGANDO
-					</h1>
-				</div>
+			<div className="mt-96">
+				<section className="dots-container">
+					<div className="dot"></div>
+					<div className="dot"></div>
+					<div className="dot"></div>
+					<div className="dot"></div>
+					<div className="dot"></div>
+				</section>
+				<h1 className="text-blueEmmagini text-center mt-4 font-bold">
+					CARGANDO
+				</h1>
 			</div>
 		);
 	}
@@ -32,17 +32,21 @@ const Home = () => {
 		return <div className="text-red-500 text-center mt-4">{error}</div>;
 	}
 
+	useEffect(() => {
+		console.log("textos", textos);
+	}, [textos]);
+
 	return (
-		<>
+		<main>
 			<ImageBanner
 				image={banner}
-				welcomText="Bienvenido a COPADO"
-				title="¿QUERÉS MIRAR EL PARTIDO DESDE ADENTRO DE LA CANCHA?"
-				subtitle="Entra a las subastas para participar"
-				buttonText="VER MAS"
+				welcomText={empresa.header_1}
+				title={empresa.header_2}
+				subtitle={empresa.header_contenido}
+				buttonText={textos.btn_header_mas}
 			/>
 			<Table />
-		</>
+		</main>
 	);
 };
 

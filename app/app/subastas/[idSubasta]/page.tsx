@@ -123,7 +123,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 						<div className="dot"></div>
 						<div className="dot"></div>
 					</section>
-					<h1 className="text-blueEmmagini text-center mt-4 font-semibold text-xl">
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold text-xl">
 						CARGANDO
 					</h1>
 				</div>
@@ -141,7 +141,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 		);
 	}
 
-	const { descripcion, imagen, user, actual, nombre, fin } =
+	const { descripcion, imagen, user, actual, nombre, fin, texto } =
 		auctionDetails.content;
 
 	function fixImageUrl(url: string | undefined) {
@@ -157,10 +157,10 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 
 	return (
 		<div className="lg:h-screen">
-			<h3 className="text-black mt-32 text-center text-xl font-bold">
+			<h3 className="text-black mt-32 text-center text-xl font-bold mb-6">
 				{nombre}
 			</h3>
-			<div className="flex flex-col lg:flex-row gap-10 w-full max-w-[1300px] lg:h-screen overflow-hidden p-2 items-center mx-auto pb-[190px]">
+			<div className="flex flex-col lg:flex-row gap-10 w-full max-w-[1300px] lg:h-screen overflow-hidden p-2 items-center mx-auto pb-[190px] mt-8">
 				<div className="flex flex-col lg:gap-5 w-full lg:w-[705px]">
 					<Image
 						src={fixImageUrl(imagen)}
@@ -171,9 +171,10 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 					/>
 				</div>
 				<div className="w-full lg:w-[537px] md:h-[542px] flex flex-col gap-5 pb-[80px]">
-					<p className="text-center text-base font-normal md:mt-20">
-						{descripcion}
-					</p>
+					<p
+						className="text-center text-sm md:mt-12"
+						dangerouslySetInnerHTML={{ __html: texto }}
+					></p>
 					<p className="text-center text-base font-semibold mt-4">
 						Ganador actual: {user}
 					</p>

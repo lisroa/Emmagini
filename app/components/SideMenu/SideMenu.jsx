@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 import { SlClose } from "react-icons/sl";
 import { BsGift } from "react-icons/bs";
 import { BsCartCheck } from "react-icons/bs";
@@ -10,10 +11,12 @@ import { AiOutlineTrophy } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDataFrontContext } from "@/app/context/FrontProvider";
+import ConfirmModal from "@/app/components/extras/ConfirmModal";
 
 const SideMenu = () => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { sideMenuOpen, setSideMenuOpen, setModalOpen } = useDataFrontContext();
-	const { logOut } = useDataFrontContext();
+	//const { logOut } = useDataFrontContext();
 
 	const router = useRouter();
 
@@ -53,15 +56,45 @@ const SideMenu = () => {
 		setModalOpen(true);
 	}
 
-	const onClick = useCallback(async () => {
+	const logOut = useCallback(async () => {
+		const token = localStorage.getItem("token");
+		const userId = localStorage.getItem("user_id");
 		try {
-			await logOut();
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/logout",
+				{
+					token: token,
+					userid: userId,
+					host: "demo9.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			localStorage.removeItem("token");
+			localStorage.removeItem("user_id");
 
 			router.push("/auth/login");
+
+			return response.data;
 		} catch (error) {
 			console.error("Error al cerrar sesion", error);
+			throw error;
 		}
-	}, [logOut]);
+	}, [router]);
+
+	const handleLogOutClick = () => {
+		setIsModalOpen(true);
+	};
+
+	const handleConfirm = async () => {
+		setIsModalOpen(false);
+		await logOut();
+	};
 
 	return (
 		<>
@@ -126,7 +159,7 @@ const SideMenu = () => {
 					<div className="mx-auto absolute bottom-28">
 						<button
 							className="w-[323px] h-12 bg-red mt-4 rounded-[50px] border-4 border-gray-500"
-							onClick={onClick}
+							onClick={handleLogOutClick}
 						>
 							<span className="text-base font-bold text-white">
 								Cerrar sesión
@@ -135,6 +168,11 @@ const SideMenu = () => {
 					</div>
 				</div>
 			)}
+			<ConfirmModal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				onConfirm={handleConfirm}
+			/>
 		</>
 	);
 };

@@ -5,7 +5,7 @@ function Cardtruco({ text, imageCard, href, onClick }) {
 	return (
 		<Link href={href}>
 			<div
-				className="bg-white rounded-md shadow-md p-4 w-[172.24px] h-[203.01px] lg:w-[233px] lg:h-auto flex flex-col items-center cursor-pointer lg:ml-[25px] drop-shadow-lg"
+				className="bg-white rounded-md shadow-md p-4 w-[260px] h-[263.01px] h-auto  flex flex-col items-center cursor-pointer  drop-shadow-lg max-h-[640px]"
 				onClick={onClick}
 			>
 				<div className="relative h-40 w-full">
@@ -17,7 +17,7 @@ function Cardtruco({ text, imageCard, href, onClick }) {
 						className="w-full h-full"
 					/>
 				</div>
-				<span className="text-black font-bold text-base leading-5 text-center mt-2">
+				<span className="text-black font-bold text-base leading-5 text-center mt-8 align-middle">
 					{text}
 				</span>
 			</div>

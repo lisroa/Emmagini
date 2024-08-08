@@ -1,114 +1,5 @@
-/*"use client";
-import { useRouter } from "next/navigation";
-import CardHome from "../cards/CardHome";
-import CardTruco from "@/app/components/cards/CardTruco";
-import { useDataContext } from "../../context/GameDataProvider";
-import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
-import { useDataAlbumContext } from "@/app/context/trivia/AlbumProvider";
-import WhileTap from "@/app/components/animations/WhileTap";
-
-function Table() {
-	const { infoGames, infoTruco } = useDataContext();
-	const { setIdTorneo } = useSeriesTrucoDataContext();
-	const { idAlbum, setIdAlbum } = useDataAlbumContext();
-	const router = useRouter();
-
-	const saveTournamentIdToCache = (tournamentId) => {
-		localStorage.setItem("tournamentId", tournamentId);
-	};
-
-	const handleTournamentCardClick = (tournamentId) => {
-		setIdTorneo(tournamentId);
-		saveTournamentIdToCache(tournamentId);
-	};
-
-	const handleCardClick = (id, tipo, nombre) => {
-		if (tipo === "museo") {
-			router.push(`/app/museo/${id}`);
-		} else if (tipo === "album") {
-			if (nombre === "Trivia Copa") {
-				router.push(`/app/trivia/${id}`);
-				setIdAlbum(id);
-			} else if (nombre === "stickers") {
-				router.push(`/app/stickers/${id}`);
-			} else {
-				router.push(`/app/album/${id}`);
-			}
-		} else if (tipo === "parejas") {
-			if (nombre === "specificName1") {
-				router.push(`/app/parejas/specificPath1/${id}`);
-			} else if (nombre === "specificName2") {
-				router.push(`/app/parejas/specificPath2/${id}`);
-			} else {
-				router.push(`/app/parejas/${id}`);
-			}
-		} else if (tipo === "memotest") {
-			if (nombre === "specificName1") {
-				router.push(`/app/memotest/specificPath1/${id}`);
-			} else if (nombre === "specificName2") {
-				router.push(`/app/memotest/specificPath2/${id}`);
-			} else {
-				router.push(`/app/memotest/${id}`);
-			}
-		} else if (tipo === "lineatiempo") {
-			if (nombre === "specificName1") {
-				router.push(`/app/lineatiempo/specificPath1/${id}`);
-			} else if (nombre === "specificName2") {
-				router.push(`/app/lineatiempo/specificPath2/${id}`);
-			} else {
-				router.push(`/app/lineatiempo/${id}`);
-			}
-		} else {
-			("");
-		}
-	};
-
-	return (
-		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[110px]">
-			<div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-				{infoGames &&
-					Object.values(infoGames).map((game) => (
-						<WhileTap key={game.id}>
-							<div className="flex justify-center" key={game.id}>
-								<CardHome
-									text={game.titulo}
-									imageCard={
-										game.image || game.imagen || game.imagen_1 || game.imagen_0
-									}
-									onClick={() =>
-										handleCardClick(game.id, game.tipo, game.titulo)
-									}
-								/>
-							</div>
-						</WhileTap>
-					))}
-				{infoTruco &&
-					Object.values(infoTruco).map((torneo) => (
-						<WhileTap key={torneo.id}>
-							<div className="flex justify-center" key={torneo.id}>
-								<CardTruco
-									href="/app/truco"
-									onClick={() => (
-										handleTournamentCardClick(torneo.id),
-										handleCardClick(torneo.id, torneo.tipo, torneo.titulo)
-									)}
-									text={torneo.titulo}
-									imageCard={
-										torneo.image ||
-										torneo.imagen ||
-										torneo.imagen_1 ||
-										torneo.imagen_0
-									}
-								/>
-							</div>
-						</WhileTap>
-					))}
-			</div>
-		</div>
-	);
-}
-
-export default Table; */
+// TO-DO: Armar funcion que haga la pegada para traer los sorteos y armar pages de los sorteos.
+// TO-DO: Agregar el truco a la demo25 para que venga todo en contenidos.
 
 "use client";
 import { useRouter } from "next/navigation";
@@ -183,7 +74,7 @@ function Table() {
 
 	return (
 		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[110px]">
-			<div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+			<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
 				{empresa && empresa.mostrar_sorteos === 1 && (
 					<WhileTap>
 						<div className="flex justify-center">
@@ -216,7 +107,7 @@ function Table() {
 								</div>
 							</WhileTap>
 						))}
-				{infoTruco &&
+				{/*infoTruco &&
 					Object.values(infoTruco)
 						.sort((a, b) => a.orden - b.orden)
 						.map((torneo) => (
@@ -238,7 +129,7 @@ function Table() {
 									/>
 								</div>
 							</WhileTap>
-						))}
+						))*/}
 			</div>
 		</div>
 	);

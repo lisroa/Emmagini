@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { RoundButton } from "@/app/components/buttons/RoundButton";
+import "@/app/components/styles/loader.css";
 
 interface ComponentProps {
 	params: {
@@ -16,7 +17,22 @@ function Page({ params: { idProducto } }: ComponentProps) {
 	const router = useRouter();
 
 	if (!data) {
-		return <div className="mt-20 text-black">Cargando...</div>;
+		return (
+			<div className="mt-20 text-black">
+				<div className="mt-96">
+					<section className="dots-container">
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+					</section>
+					<h1 className="text-blueEmmagini text-center mt-4 font-semibold">
+						CARGANDO
+					</h1>
+				</div>
+			</div>
+		);
 	}
 
 	const product = data.productos.otras.find(

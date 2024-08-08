@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import CardHome from "@/app/components/cards/CardHome";
 import WhileTap from "@/app/components/animations/WhileTap";
-
+import "@/app/components/styles/loader.css";
 interface ComponentProps {
 	params: {
 		idMuseo: string;
@@ -19,7 +19,22 @@ export default function Page({
 	const router = useRouter();
 
 	if (!infoGames) {
-		return <div className="mt-20 text-black">Cargando...</div>;
+		return (
+			<div className="mt-20 text-black">
+				<div className="mt-96">
+					<section className="dots-container">
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+					</section>
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold">
+						CARGANDO
+					</h1>
+				</div>
+			</div>
+		);
 	}
 	// @ts-ignore
 	const museo = infoGames.find((museoItem) => museoItem.id === idMuseo);

@@ -9,6 +9,11 @@ body {
 	box-sizing: border-box;
 	height: 100%;
 	background-color: #f0f6f9;
+	background-image: url("https://backend.emmagini.com/uploads/empresas/b3a9c425-ebcc-11ee-b964-fa163ef884a2.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
 }
 
 *,
