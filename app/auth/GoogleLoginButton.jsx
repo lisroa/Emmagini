@@ -82,8 +82,7 @@ import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { useAuthContext } from "@/context/AuthProvider";
-import "../components/styles/buttonGoogle.css";
+import { useAuthContext } from "@/app/context/AuthProvider";
 
 const GoogleLoginButton = ({ language, idTrivia }) => {
 	const router = useRouter();
