@@ -25,6 +25,32 @@ export default function Page({
 	const { infoGames } = useDataContext();
 	const router = useRouter();
 
+	// Definimos el hook useMemo antes de cualquier retorno
+	const extractImageUrls = () => {
+		const imageUrls: string[] = [];
+		if (infoGames) {
+			const museo = infoGames.find(
+				(museoItem: any) => museoItem.id === idMuseo
+			);
+			const product = museo?.productos.find(
+				// @ts-ignore
+				(productItem) => productItem.id === idProducto
+			);
+			if (product) {
+				for (let i = 1; i <= 10; i++) {
+					const imageUrl = product[`imagen_${i}`];
+					if (imageUrl) {
+						imageUrls.push(imageUrl);
+					}
+				}
+			}
+		}
+		return imageUrls;
+	};
+
+	const imageUrls = useMemo(extractImageUrls, [infoGames, idMuseo, idProducto]);
+
+	// Continuamos con los retornos condicionales
 	if (!infoGames) {
 		return (
 			<div className="mt-20 text-black">
@@ -111,19 +137,6 @@ export default function Page({
 		return url;
 	};
 
-	const extractImageUrls = (): string[] => {
-		const imageUrls: string[] = [];
-		for (let i = 1; i <= 10; i++) {
-			const imageUrl = product[`imagen_${i}`];
-			if (imageUrl) {
-				imageUrls.push(imageUrl);
-			}
-		}
-		return imageUrls;
-	};
-
-	const imageUrls = useMemo(extractImageUrls, [product]);
-
 	const handleCardClick = (idCategoria: string, idProducto: string) => {
 		router.push(`/${lang}/${idCategoria}/${idProducto}`);
 	};
@@ -144,7 +157,7 @@ export default function Page({
 									return (
 										<section
 											key={index}
-											className="descripcion text-black mt-6 bg-gray-300 mx-auto p-4 rounded"
+											className="descripcion text-white mt-6 mx-auto p-4 rounded"
 											dangerouslySetInnerHTML={{ __html: product?.descripcion }}
 										></section>
 									);
@@ -153,7 +166,7 @@ export default function Page({
 										product?.video && (
 											<section
 												key={index}
-												className="video w-full h-auto relative mt-6 mx-auto mb-8 p-4 rounded bg-gray-200"
+												className="video w-full h-auto relative mt-6 mx-auto mb-8 p-4 rounded"
 											>
 												<video className="w-full h-full" controls>
 													<source src={product.video} type="video/mp4" />
@@ -211,7 +224,7 @@ export default function Page({
 									return (
 										<section
 											key={index}
-											className="contenido text-black mt-6 bg-gray-400 mx-auto p-4 rounded"
+											className="contenido text-black mt-6  mx-auto p-4 rounded"
 											dangerouslySetInnerHTML={{ __html: product?.contenido }}
 										></section>
 									);

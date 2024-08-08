@@ -11,6 +11,10 @@ import "@/app/components/styles/loader.css";
 const Home = () => {
 	const { isLoading, error, empresa, textos } = useDataContext();
 
+	useEffect(() => {
+		console.log("textos", textos);
+	}, [textos]);
+
 	if (!empresa && !textos) {
 		return (
 			<div className="mt-96">
@@ -31,10 +35,6 @@ const Home = () => {
 	if (error) {
 		return <div className="text-red-500 text-center mt-4">{error}</div>;
 	}
-
-	useEffect(() => {
-		console.log("textos", textos);
-	}, [textos]);
 
 	return (
 		<main>

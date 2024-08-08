@@ -54,7 +54,7 @@ export default function Page({
 
 	return (
 		<div className="mt-20 container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32">
-			<h1 className="text-black font-bold text-2xl">{`${museo.titulo} - ${categoria.titulo}`}</h1>
+			<h1 className="text-white font-bold text-2xl">{`${museo.titulo} - ${categoria.titulo}`}</h1>
 			<div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
 				{productos &&
 					Object.values(productos).map((producto) => (

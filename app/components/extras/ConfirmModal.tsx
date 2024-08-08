@@ -1,4 +1,3 @@
-// components/ConfirmModal.tsx
 import React from "react";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { IoClose } from "react-icons/io5";
@@ -17,9 +16,9 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
 	onClose,
 	onConfirm,
 }) => {
-	if (!isOpen) return null;
-
 	const { textos } = useDataContext();
+
+	if (!isOpen) return null;
 
 	if (!textos) {
 		return (
