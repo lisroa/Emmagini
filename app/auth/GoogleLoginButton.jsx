@@ -76,77 +76,78 @@ const GoogleLoginButton = () => {
 };
 
 export default GoogleLoginButton; */
-
 "use client";
 
+import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { useAuthContext } from "@/app/context/AuthProvider";
+import { useAuthContext } from "@/context/AuthProvider";
+import "../components/styles/buttonGoogle.css";
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ language, idTrivia }) => {
 	const router = useRouter();
-	const { setToken, setUserId } = useAuthContext();
+
+	const { token, userId, setToken, setUserId } = useAuthContext();
 
 	const TOKEN_KEY = "token";
 	const USER_ID_KEY = "user_id";
 
-	const handleGoogleLoginSuccess = async (credentialResponse) => {
-		try {
-			const response = await axios.post(
-				"https://backend.emmagini.com/api2/google_login",
-				{
-					host: "demo5.emmagini.com",
-					client_id: credentialResponse.clientId,
-					credential: credentialResponse.credential,
-					fcm_token: "",
-					es_app: "0",
-					id_plataforma: "3",
-					lang: "es",
-					timezone: "-3",
-				},
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-					},
-				}
-			);
-
-			const { token, userid, error, mensaje } = response.data;
-
-			console.log("Datos recibidos:", response.data);
-
-			if (error !== 0) {
-				console.error("Error en la respuesta de login:", mensaje);
-				return;
-			}
-
-			// Guarda token y userid en el localStorage
-			localStorage.setItem(TOKEN_KEY, token);
-			localStorage.setItem(USER_ID_KEY, userid);
-
-			// Actualiza el contexto
-			setToken(token);
-			setUserId(userid);
-
-			// Redirecciona a /app
+	const handleGoogleLoginSuccess = useCallback(
+		async (credentialResponse) => {
+			console.log("Credential Response:", credentialResponse);
 			try {
-				router.push("/app");
-			} catch (redirectError) {
-				console.error("Error al redirigir:", redirectError);
+				const response = await axios.post(
+					"https://backend.emmagini.com/api2/google_login",
+					{
+						host: "demo5.emmagini.com",
+						client_id: credentialResponse.clientId,
+						credential: credentialResponse.credential,
+						fcm_token: "",
+						es_app: "0",
+						id_plataforma: "3",
+						lang: "es",
+						timezone: "-3",
+					},
+					{
+						headers: {
+							"Content-Type":
+								"application/x-www-form-urlencoded; charset=UTF-8",
+						},
+					}
+				);
+				console.log("Datos recibidos:", response.data);
+
+				const { token, userid, error, mensaje } = response.data;
+
+				if (error !== 0) {
+					return { error, mensaje };
+				}
+
+				localStorage.setItem(TOKEN_KEY, token);
+				localStorage.setItem(USER_ID_KEY, userid);
+
+				setToken(token);
+				setUserId(userid);
+				console.log("Redireccionando a /app...");
+				router.push(`/app`);
+
+				return { error, mensaje, token, userid };
+			} catch (error) {
+				console.error("Error al hacer la solicitud:", error);
+				throw error;
 			}
-		} catch (error) {
-			console.error("Error al hacer la solicitud:", error);
-		}
-	};
+		},
+		[router, language, idTrivia]
+	);
 
 	return (
 		<GoogleLogin
 			onSuccess={handleGoogleLoginSuccess}
 			onError={() => {
-				console.error("Login failed");
+				console.log("Login failed");
 			}}
-			className="border border-sky-700 rounded-full w-full h-[58px]"
+			className="border border-sky-700 rounded-full w-full"
 			theme="outline"
 			size="large"
 			shape="rectangular"
