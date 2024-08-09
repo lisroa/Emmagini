@@ -13,8 +13,12 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export const FrontDataContext = createContext();
 
 export const FrontDataProvider = ({ children }) => {
+	//Side Menu
 	const [sideMenuOpen, setSideMenuOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
+
+	//PRODUCTOS
+	const [productos, setProductos] = useState();
 
 	const logOut = useCallback(async () => {
 		const token = localStorage.getItem("token");
@@ -43,6 +47,41 @@ export const FrontDataProvider = ({ children }) => {
 		}
 	}, []);
 
+	// Traer los PRODUCTOS
+	// TO-DO: Armar la seccion de perfil del usuario para que pueda elegir el club y poder pasarlo dinamicamente a esta pegada
+
+	const getProducts = useCallback(async () => {
+		const token = localStorage.getItem("token");
+		const userId = localStorage.getItem("user_id");
+
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/get_productos",
+				{
+					token: token,
+					userid: userId,
+					host: "demo25.emmagini.com",
+					id_club: "e6b564b3-c526-11ee-bc84-ec15a2edbff6",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+			setProductos(response.data);
+			return response.data;
+		} catch (error) {
+			console.error("Error al hacer la solicitud:", error);
+			throw error;
+		}
+	}, []);
+
+	useEffect(() => {
+		console.log("productos", productos);
+	}, []);
+
 	return (
 		<FrontDataContext.Provider
 			value={{
@@ -51,6 +90,7 @@ export const FrontDataProvider = ({ children }) => {
 				modalOpen,
 				setModalOpen,
 				logOut,
+				getProducts,
 			}}
 		>
 			{children}

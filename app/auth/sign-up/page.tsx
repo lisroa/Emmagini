@@ -134,9 +134,9 @@ export default function Page() {
 				</div>
 
 				<RoundButton
-					type="submit" // Asegúrate de que el botón sea de tipo submit
+					type="submit"
 					text={"Submit"}
-					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 py-3 px-3"
+					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 py-3 px-3 w-full"
 					textClassName="text-white"
 				/>
 			</form>

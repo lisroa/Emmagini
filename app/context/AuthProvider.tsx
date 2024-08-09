@@ -123,11 +123,6 @@ export const AuthProvider = ({ children }) => {
 		getCacheData();
 	}, []);
 
-	/*useEffect(() => {
-    console.log("token:", token);
-    console.log("userId:", userId);
-  }, [token, userId]); */
-
 	const signInWithGoogle = useCallback(async (credential: string) => {
 		try {
 			const response = await axios.post(

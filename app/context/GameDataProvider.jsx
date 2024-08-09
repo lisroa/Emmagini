@@ -10,6 +10,8 @@ import {
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 
+// TO-DO: CREAR TORNEOS EN DEMO25 Y ACTUALIZAR HOST EN LA PEGADA
+
 export const GameDataContext = createContext();
 
 export const GameDataProvider = ({ children }) => {
@@ -66,13 +68,20 @@ export const GameDataProvider = ({ children }) => {
 
 	useEffect(() => {
 		getAppData();
-	}, [token, userId]);
+
+		const intervalId = setInterval(() => {
+			getAppData();
+		}, 5000);
+
+		return () => clearInterval(intervalId);
+	}, [getAppData]);
 
 	useEffect(() => {
-		console.log(data);
-		console.log(infoGames);
+		//console.log(data);
+		//console.log(infoGames);
+		//data, infoGames,
 		console.log(textos);
-	}, [data, infoGames, textos]);
+	}, [textos]);
 
 	//Pegamos a validate desde demo23 para traer los torneos de truco
 
@@ -131,6 +140,7 @@ export const GameDataProvider = ({ children }) => {
 				setIsLoading,
 				error,
 				empresa,
+				getAppData,
 			}}
 		>
 			{children}

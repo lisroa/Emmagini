@@ -9,7 +9,7 @@ import banner from "../../public/assets/bg/background.png";
 import "@/app/components/styles/loader.css";
 
 const Home = () => {
-	const { isLoading, error, empresa, textos } = useDataContext();
+	const { error, empresa, textos } = useDataContext();
 
 	useEffect(() => {
 		console.log("textos", textos);
@@ -25,7 +25,7 @@ const Home = () => {
 					<div className="dot"></div>
 					<div className="dot"></div>
 				</section>
-				<h1 className="text-blueEmmagini text-center mt-4 font-bold">
+				<h1 className="text-white text-center mt-4 font-bold text-xl">
 					CARGANDO
 				</h1>
 			</div>

@@ -2,9 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { RoundButton } from "../buttons/RoundButton";
-
-// En el orden por el que se utilizan
 
 interface CardGamesProps {
 	cardClassName?: string;
@@ -55,6 +52,7 @@ export const CardGames = ({
 	divText,
 	altText,
 	textSpan,
+	textSpanClassName,
 	divClassName,
 	titleClassName,
 	descriptionClassName,
@@ -67,68 +65,62 @@ export const CardGames = ({
 	onClick,
 }: CardGamesProps) => {
 	return (
-		<div
-			className={" flex p-4 rounded-lg bg-white ".concat(
-				" ",
-				cardClassName || ""
-			)}
-		>
-			<div className={"flex-none".concat(" ", imageContainer || "")}>
+		<div className={`flex p-4 rounded-lg bg-white ${cardClassName || ""}`}>
+			<div className={`flex-none ${imageContainer || ""}`}>
 				<Image
 					src={image}
 					alt={alt}
-					className={"".concat(" ", imageClassName || "")}
+					className={`w-[100px] h-[90px] md:w-[150px] md:h-[135px] lg:w-[200px] lg:h-[185px] ${
+						imageClassName || ""
+					}`}
 					width={200}
 					height={185}
 				/>
 			</div>
 
-			<div className="flex-grow ml-4 flex flex-col justify-center items-center">
+			<div className="flex-grow ml-4 flex flex-col justify-center items-start">
 				<h1
-					className={"text-black mb-2 mt-2 text-sm lg:text-base font-semibold".concat(
-						" ",
+					className={`text-black mb-2 mt-2 text-sm md:text-base lg:text-lg font-semibold ${
 						titleClassName || ""
-					)}
+					}`}
 				>
 					{title}
 				</h1>
 				<p
-					className={"font-normal text-[10px] lg:text-xs text-black".concat(
-						" ",
+					className={`font-normal text-xs md:text-sm lg:text-base text-black ${
 						descriptionClassName || ""
-					)}
+					}`}
 				>
 					{description}
 				</p>
-				<div className="">
+				<div className="mt-4">
 					<h2
-						className={"mb-2 mt-4 font-semibold text-xs  text-center text-black".concat(
-							" ",
+						className={`mb-2 font-semibold text-xs md:text-sm lg:text-base text-center text-black ${
 							subtitleClassName || ""
-						)}
+						}`}
 					>
 						{subtitle}
 					</h2>
 					<p
-						className={"text-[10px] font-normal text-center text-black".concat(
-							" ",
+						className={`text-xs md:text-sm lg:text-base font-normal text-center text-black ${
 							textClassName || ""
-						)}
+						}`}
 					>
 						{text}
 					</p>
 
 					{altText && (
-						<p className="text-[10px]  text-center text-black">{altText}</p>
+						<p className="text-xs md:text-sm lg:text-base text-center text-black">
+							{altText}
+						</p>
 					)}
 
 					{button && (
 						<Link href={link}>
 							<button
-								className={"mx-auto rounded-[50px] border-4 border-gray-200 ".concat(
-									" ",
+								className={`flex items-center justify-center mx-auto rounded-full border-4 border-gray-200 px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 ${
 									buttonClassName || ""
-								)}
+								}`}
 								type={type}
 								onClick={onClick}
 							>
@@ -138,34 +130,31 @@ export const CardGames = ({
 					)}
 					{buttonRouter && (
 						<button
-							className={"mx-auto rounded-[50px] border-4 border-gray-200 ".concat(
-								" ",
+							className={`flex items-center justify-center mx-auto rounded-full border-4 border-gray-200 px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 ${
 								buttonRouterClassName || ""
-							)}
+							}`}
 							type={type}
 							onClick={onClick}
 						>
-							<p
-								className={"align-middle text-center ".concat(
-									" ",
-									textRouterClassName || ""
-								)}
-							>
+							<p className={`text-center ${textRouterClassName || ""}`}>
 								{buttonText}
 							</p>
 						</button>
 					)}
 					{div && (
 						<div
-							className={"mx-auto rounded-[50px] border-4 border-gray-100 text-center".concat(
-								" ",
+							className={`flex items-center justify-center mx-auto rounded-full border-4 border-gray-100 text-center px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 ${
 								divClassName || ""
-							)}
+							}`}
 						>
 							<p className="text-center">{divText}</p>
 						</div>
 					)}
-					<p className="text-[10px] ml-10 text-black mt-2 align-middle text-center">
+					<p
+						className={`text-xs md:text-sm lg:text-base ml-0 md:ml-4 text-black mt-2 text-center ${
+							textSpanClassName || ""
+						}`}
+					>
 						{textSpan}
 					</p>
 				</div>
