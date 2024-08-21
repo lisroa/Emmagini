@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -583,4 +583,12 @@ function page() {
 	);
 }
 
-export default page;
+export default page; */
+
+function page() {
+	return (
+		<div className="mt-20">
+			<h1 className="text-white">Page in progress</h1>
+		</div>
+	);
+}
