@@ -1,14 +1,24 @@
 import Image from "next/image";
 
 interface ModalProps {
-	text: string;
+	text?: string;
 	onClick?: () => void;
 	isOpen: boolean;
 	textButton: string;
 	image: string;
+	width: number;
+	height: number;
 }
 
-const Modal = ({ text, onClick, isOpen, textButton, image }: ModalProps) => {
+const Modal = ({
+	text,
+	onClick,
+	isOpen,
+	textButton,
+	image,
+	width,
+	height,
+}: ModalProps) => {
 	if (!isOpen) {
 		return null;
 	}
@@ -23,8 +33,8 @@ const Modal = ({ text, onClick, isOpen, textButton, image }: ModalProps) => {
 						src={image}
 						alt="Modal Image"
 						className="object-cover max-w-full sm:w-[490px]"
-						width={490}
-						height={490}
+						width={width}
+						height={height}
 					/>
 				</div>
 				<button

@@ -1,152 +1,17 @@
-/*"use client";
-
-import { useCallback, useState, useEffect } from "react";
-import axios from "axios";
-import { useAuthContext } from "@/app/context/AuthProvider";
-import "@/app/components/styles/loader.css";
-import "@/app/components/styles/figuritas.css";
-
-interface ComponentProps {
-	params: {
-		idAlbum: string;
-	};
-}
-
-function Page({ params: { idAlbum } }: ComponentProps) {
-	const { token, userId } = useAuthContext();
-	const [loading, setLoading] = useState(true);
-	const [dataAlbum, setDataAlbum] = useState<any>(null);
-
-	const getAlbumData = useCallback(async () => {
-		try {
-			const response = await axios.post(
-				"https://backend.emmagini.com/api2/get_album",
-				{
-					token: token,
-					userid: userId,
-					id: idAlbum,
-					host: "demo5.emmagini.com",
-					callback: "https://demo5.emmagini.com/home.php#v=inicio",
-					lang: "es",
-				},
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-					},
-				}
-			);
-
-			return response.data;
-		} catch (error) {
-			console.error("Error al hacer la solicitud del álbum:", error);
-			throw error;
-		}
-	}, [token, userId, idAlbum]);
-
-	const fetchData = useCallback(async () => {
-		try {
-			setLoading(true);
-			const albumResponse = await getAlbumData();
-
-			albumResponse.content.paginas = albumResponse.content.paginas.map(
-				(pagina: any) => {
-					const parser = new DOMParser();
-					const doc = parser.parseFromString(pagina.code, "text/html");
-					const imgElements = doc.querySelectorAll("img");
-
-					imgElements.forEach((img: HTMLImageElement) => {
-						const imgId = img.id;
-						const imgIndex = parseInt(imgId.replace("figu_", ""), 10);
-
-						const imageUrls = pagina.figus.map((figu: any) => figu.path);
-
-						if (imageUrls[imgIndex - 1]) {
-							img.src = imageUrls[imgIndex - 1];
-
-							const hasSticker = albumResponse.content.mias.find(
-								(sticker: any) => {
-									return sticker.id === imgId;
-								}
-							);
-
-							console.log(hasSticker);
-							if (!hasSticker) {
-								img.classList.add("nola");
-							}
-						}
-					});
-
-					return {
-						...pagina,
-						code: doc.body.innerHTML,
-					};
-				}
-			);
-
-			setDataAlbum(albumResponse);
-
-			setLoading(false);
-		} catch (error) {
-			console.error("Error al obtener los datos:", error);
-			setLoading(false);
-		}
-	}, [getAlbumData]);
-
-	useEffect(() => {
-		if (token && userId) {
-			fetchData();
-		}
-	}, [fetchData, token, userId]);
-
-	if (loading) {
-		return (
-			<div className="mt-20 text-black">
-				<div className="mt-96">
-					<section className="dots-container">
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-					</section>
-					<h1 className="text-white text-center mt-4 font-bold text-xl">
-						CARGANDO
-					</h1>
-				</div>
-			</div>
-		);
-	}
-
-	if (dataAlbum) {
-		return (
-			<div className="text-white mt-20">
-				<h1 className="text-xl font-bold mb-4">{dataAlbum.nombre_album}</h1>
-				{dataAlbum.content.paginas.map((pagina: any) => (
-					<div key={pagina.id} className="page-container mb-8">
-						<div
-							className="page-content"
-							dangerouslySetInnerHTML={{ __html: pagina.code }}
-						/>
-					</div>
-				))}
-			</div>
-		);
-	}
-
-	return <div className="text-white mt-20">No se encontraron datos</div>;
-}
-
-export default Page; */
-
 "use client";
 
 import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
+import Modal from "@/app/components/extras/Modal";
+import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
+import { MdWorkspacePremium } from "react-icons/md";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { LuSticker } from "react-icons/lu";
 import "@/app/components/styles/loader.css";
 import "@/app/components/styles/figuritas.css";
-import tester from "@/./public/assets/tester.jpeg";
+import ModalStickers from "@/app/components/extras/ModalStickers";
 
 interface ComponentProps {
 	params: {
@@ -159,6 +24,8 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 	const [loading, setLoading] = useState(true);
 	const [modalImage, setModalImage] = useState(null);
 	const [dataAlbum, setDataAlbum] = useState<any>(null);
+	const [stickersPrices, setStickersPrices] = useState(null);
+	const [modalOpen, setModalOpen] = useState(false);
 
 	const getAlbumData = useCallback(async () => {
 		try {
@@ -212,7 +79,48 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 
 	const handleCloseModal = () => {
 		setModalImage(null);
+		setModalOpen(false);
 	};
+
+	const fetchPricesData = useCallback(async () => {
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/prices",
+				{
+					token: token,
+					userid: userId,
+					id: idAlbum,
+					host: "demo25.emmagini.com",
+					lang: "es",
+					callback:
+						"https://demo25.emmagini.com/home.php#v=album&id=" + idAlbum,
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			return response.data;
+		} catch (error) {
+			console.error("Error al hacer la solicitud de precios:", error);
+			throw error;
+		}
+	}, [token, userId, idAlbum]);
+
+	const handleButtonStickersClick = useCallback(async () => {
+		try {
+			setLoading(true);
+			const data = await fetchPricesData();
+			setStickersPrices(data);
+			setLoading(false);
+			setModalOpen(true);
+		} catch (error) {
+			console.error("Error al obtener los precios:", error);
+			setLoading(false);
+		}
+	}, [fetchPricesData]);
 
 	if (loading) {
 		return (
@@ -1330,26 +1238,37 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					</div>
 				))}
 				{modalImage && (
-					<div
-						className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70"
+					<Modal
 						onClick={handleCloseModal}
-					>
-						<div className="bg-white p-4 rounded relative">
-							<button
-								className="absolute top-2 right-2 text-black"
-								onClick={handleCloseModal}
-							>
-								&times;
-							</button>
-							<Image
-								src={modalImage}
-								alt="Imagen ampliada"
-								width={350}
-								height={350}
-								className="object-contain"
-							/>
-						</div>
-					</div>
+						image={modalImage}
+						textButton="Cerrar"
+						isOpen={modalImage}
+						width={300}
+						height={300}
+					/>
+				)}
+				<DinamicButtonNav
+					onClick1={handleButtonStickersClick}
+					onClick2={() => {
+						console.log("click");
+					}}
+					onClick3={() => {
+						console.log("click");
+					}}
+					icon1={<LuSticker size={25} />}
+					icon2={<MdWorkspacePremium size={25} />}
+					icon3={<IoMdArrowRoundBack size={25} />}
+					texto1="Stickers"
+					texto2="Premium"
+					texto3="Volver"
+				/>
+
+				{modalOpen && (
+					<ModalStickers
+						isOpen={modalOpen}
+						onClose={handleCloseModal}
+						stickersPrices={stickersPrices}
+					/>
 				)}
 			</div>
 		);
@@ -1357,3 +1276,5 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 }
 
 export default Page;
+
+<></>;

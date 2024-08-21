@@ -28,7 +28,7 @@
 		".next/types/**/*.ts",
 		"app/context/AuthProvider.tsx",
 		"app/context/FrontProvider.jsx",
-		"app/components/cards/CardHome.jsx",
+		"app/components/cards/CardHome.tsx",
 		"app/components/cards/CardGames.tsx",
 		"app/app/truco/[torneoId].jsx",
 		"app/components/modals/Modal.jsx"

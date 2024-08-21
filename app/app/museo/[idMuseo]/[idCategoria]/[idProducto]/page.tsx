@@ -7,6 +7,9 @@ import { useDataContext } from "@/app/context/GameDataProvider";
 import { Carousel } from "flowbite-react";
 import ButtonNav from "@/app/components/home/ButtonNav";
 import CardHome from "@/app/components/cards/CardHome";
+import { BsGift } from "react-icons/bs";
+import { BsCartCheck } from "react-icons/bs";
+import { AiOutlineTrophy } from "react-icons/ai";
 import "@/app/components/styles/loader.css";
 import "@/app/globals.css";
 
@@ -264,7 +267,17 @@ export default function Page({
 						})}
 				</div>
 			</div>
-			<ButtonNav />
+			<ButtonNav
+				link1="/app/subastas"
+				link2="/app/productos"
+				link3="/app/subastas"
+				icon1={<BsGift size={18} className="text-white" />}
+				icon2={<BsCartCheck size={18} className="text-white" />}
+				icon3={<AiOutlineTrophy size={18} className="text-white" />}
+				texto1={"Subastas"}
+				texto2={"Productos"}
+				texto3={"Premium"}
+			/>
 		</>
 	);
 }
