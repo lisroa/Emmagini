@@ -13,8 +13,7 @@ const NavBar = () => {
 	const { setSideMenuOpen } = useDataFrontContext();
 	const { data } = useDataContext();
 
-	// Verifica que data y data.userdata estén definidos antes de acceder a monedas
-	const monedas = data?.userdata?.monedas || 0; // Usa un valor por defecto en caso de que no esté definido
+	const monedas = data?.userdata?.monedas || 0;
 
 	return (
 		<div className="flex justify-between items-center fixed z-10 w-full h-16 py-5 px-8 text-sm font-light top-0 bg-blueEmmagini">

@@ -32,10 +32,10 @@ function Table() {
 			if (nombre === "Trivia Copa") {
 				router.push(`/app/trivia/${id}`);
 				setIdAlbum(id);
-			} else if (nombre === "stickers") {
+			} else if (nombre === "Stickers tester") {
 				router.push(`/app/stickers/${id}`);
 			} else {
-				router.push(`/app/album/${id}`);
+				router.push(`/app/stickers/${id}`);
 			}
 		} else if (tipo === "parejas") {
 			if (nombre === "specificName1") {

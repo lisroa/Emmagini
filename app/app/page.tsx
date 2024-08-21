@@ -7,6 +7,10 @@ import ImageBanner from "../components/home/ImageBanner";
 import Table from "../components/home/Table";
 import banner from "../../public/assets/bg/background.png";
 import "@/app/components/styles/loader.css";
+import ButtonNav from "../components/home/ButtonNav";
+import { BsGift } from "react-icons/bs";
+import { BsCartCheck } from "react-icons/bs";
+import { AiOutlineTrophy } from "react-icons/ai";
 
 const Home = () => {
 	const { error, empresa, textos } = useDataContext();
@@ -46,6 +50,17 @@ const Home = () => {
 				buttonText={textos.btn_header_mas}
 			/>
 			<Table />
+			<ButtonNav
+				link1="/app/subastas"
+				link2="/app/productos"
+				link3="/app/subastas"
+				icon1={<BsGift size={18} className="text-white" />}
+				icon2={<BsCartCheck size={18} className="text-white" />}
+				icon3={<AiOutlineTrophy size={18} className="text-white" />}
+				texto1={"Subastas"}
+				texto2={"Productos"}
+				texto3={"Premium"}
+			/>
 		</main>
 	);
 };

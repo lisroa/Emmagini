@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { RoundButton } from "@/app/components/buttons/RoundButton";
+import Modal from "@/app/components/extras/ModalMensajes";
 import axios from "axios";
 import "../../../components/styles/loader.css";
 
@@ -76,7 +77,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 	const [auctionDetails, setAuctionDetails] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
-
+	const [modalMessage, setModalMessage] = useState<string | null>(null);
 	const fetchData = async () => {
 		try {
 			const data = await fetchAuctionDetails(token, userId, idSubasta);
@@ -98,13 +99,15 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 			try {
 				const response = await placeBid(token, userId, idSubasta, oferta);
 				if (response.error === 0 && response.mensaje === "OK") {
-					alert("Oferta realizada con éxito");
+					setModalMessage("Oferta realizada con éxito");
 					setOferta("");
 					setError(null);
 				} else {
+					setModalMessage(response.mensaje);
 					setError(response.mensaje);
 				}
 			} catch (error) {
+				setModalMessage("Error al realizar la oferta");
 				setError("Error al realizar la oferta");
 			}
 		} else {
@@ -157,7 +160,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 
 	return (
 		<div className="lg:h-screen">
-			<h3 className="text-black mt-32 text-center text-xl font-bold mb-6">
+			<h3 className="text-white mt-32 text-center text-xl font-bold mb-6">
 				{nombre}
 			</h3>
 			<div className="flex flex-col lg:flex-row gap-10 w-full max-w-[1300px] lg:h-screen overflow-hidden p-2 items-center mx-auto pb-[190px] mt-8">
@@ -175,14 +178,14 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 						className="text-center text-sm md:mt-12"
 						dangerouslySetInnerHTML={{ __html: texto }}
 					></p>
-					<p className="text-center text-base font-semibold mt-4">
+					<p className="text-center text-base font-semibold mt-4 text-white">
 						Ganador actual: {user}
 					</p>
 
-					<p className="text-center text-base font-normal">
+					<p className="text-center text-base font-normal text-white">
 						{`${actual} monedas`}
 					</p>
-					<p className="text-center text-lg font-medium text-blueEmmagini mt-2">
+					<p className="text-center text-lg font-medium text-blueEmmagini mt-2 text-white">
 						Quiero ofertar
 					</p>
 					<div className="flex flex-col items-center">
@@ -195,7 +198,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 						{error && <p className="text-red mt-2">{error}</p>}
 						<div className="w-[230px] h-[39px] mt-2">
 							<RoundButton
-								buttonClassName="bg-blueEmmagini h-full"
+								buttonClassName="bg-blueEmmagini h-full w-full"
 								text="Ofertar"
 								textClassName="text-center text-white"
 								onClick={handleBid}
@@ -208,6 +211,8 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 					</div>
 				</div>
 			</div>
+
+			{modalMessage && <Modal message={modalMessage} />}
 		</div>
 	);
 }

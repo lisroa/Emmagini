@@ -1,0 +1,51 @@
+div.figurita-container {
+	height: 100px;
+	overflow-y: hidden;
+}
+
+label.figurita {
+	text-align: center;
+	width: 100%;
+	top: -20px;
+	position: relative;
+	height: 20px;
+	margin-bottom: 0;
+	display: none;
+}
+
+label.figurita.fondo-label {
+	background-color: rgb(255 215 0 / 50%) !important;
+}
+
+img.figurita.img-reponsive {
+	width: 150px;
+	max-width: calc(100vw / 4);
+	height: 150px;
+	max-height: calc(100vw / 4);
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-block;
+}
+
+div.page-body > div > div {
+	text-align: center;
+}
+
+div.page-body {
+	width: 380px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+div.celda {
+	margin: 5px;
+}
+
+div.pagina {
+	align-items: center;
+	align-content: center;
+}
+.nola {
+	opacity: 0.3;
+	background-color: white !important;
+}

@@ -30,7 +30,6 @@ export default function Layout({
 								<NavBar />
 								<SideMenu />
 								{children}
-								<ButtonNav />
 							</main>
 						</SeriesTrucoProvider>
 					</AlbumDataProvider>

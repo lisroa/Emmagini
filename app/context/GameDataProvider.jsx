@@ -77,11 +77,11 @@ export const GameDataProvider = ({ children }) => {
 	}, [getAppData]);
 
 	useEffect(() => {
-		//console.log(data);
-		//console.log(infoGames);
-		//data, infoGames,
+		console.log("data", data);
+		console.log("infoGames", infoGames);
+
 		console.log(textos);
-	}, [textos]);
+	}, [textos, data, infoGames]);
 
 	//Pegamos a validate desde demo23 para traer los torneos de truco
 

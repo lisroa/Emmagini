@@ -482,7 +482,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 			const [validateResponse, albumResponse, videoResponse] =
 				await Promise.all([getValidateData(), getAlbumData(), getVideoData()]);
 
-			setValidateData(validateResponse); // Establece el estado de validateData aquí
+			setValidateData(validateResponse);
 			setVideoData(videoResponse);
 			setLoading(false);
 		} catch (error) {
