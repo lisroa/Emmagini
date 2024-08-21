@@ -1,33 +1,73 @@
 "use client";
+import { useState, useCallback, useEffect } from "react";
+import axios from "axios";
+import { useAuthContext } from "@/app/context/AuthProvider";
 import CardHome from "../cards/CardHome";
 
 interface ModalStickersProps {
 	isOpen: boolean;
 	onClose: () => void;
 	stickersPrices: any;
+	idAlbum: any;
 }
 
 const ModalStickers = ({
 	isOpen,
 	onClose,
 	stickersPrices,
+	idAlbum,
 }: ModalStickersProps) => {
 	if (!isOpen) return null;
 
+	const { token, userId } = useAuthContext();
+
+	const buySticker = useCallback(
+		async (idSobre: any) => {
+			try {
+				const response = await axios.post(
+					"https://backend.emmagini.com/api2/buy",
+					{
+						album: idAlbum,
+						plan: idSobre,
+						es_monedas: 0,
+						host: "demo25.emmagini.com",
+						lang: "es",
+						callback: `https://demo25.emmagini.com/home.php#v=album&id=${idAlbum}`,
+						token: token,
+						userid: userId,
+					},
+					{
+						headers: {
+							"Content-Type":
+								"application/x-www-form-urlencoded; charset=UTF-8",
+						},
+					}
+				);
+
+				console.log("Compra exitosa:", response.data);
+			} catch (error) {
+				console.error("Error al realizar la compra:", error);
+			}
+		},
+		[idAlbum, token, userId]
+	);
+
+	const handleCardClick = (idSobre: any) => {
+		buySticker(idSobre);
+	};
+
 	return (
 		<div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50 w-full">
-			<div className="rounded-lg shadow-lg w-[550px] p-4">
+			<div className="rounded-lg shadow-lg md:w-[550px] p-4">
 				<h2 className="text-2xl font-bold mb-4 text-center">Sticker Prices</h2>
-				<div className="grid grid-cols-2 sm:grid-cols-2 gap-6 mb-4">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
 					{stickersPrices &&
 						stickersPrices.sobres.map((sobre: any) => (
 							<CardHome
 								key={sobre.id}
 								imageCard={`https:${sobre.imagen}`}
 								text={sobre.titulo}
-								onClick={() => {
-									console.log("click a comprar");
-								}}
+								onClick={() => handleCardClick(sobre.id)}
 								text2={sobre.price + " monedas"}
 							/>
 						))}

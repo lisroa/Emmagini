@@ -1268,6 +1268,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 						isOpen={modalOpen}
 						onClose={handleCloseModal}
 						stickersPrices={stickersPrices}
+						idAlbum={idAlbum}
 					/>
 				)}
 			</div>
