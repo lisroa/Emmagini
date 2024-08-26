@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
@@ -26,6 +26,8 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 	const [dataAlbum, setDataAlbum] = useState<any>(null);
 	const [stickersPrices, setStickersPrices] = useState(null);
 	const [modalOpen, setModalOpen] = useState(false);
+
+	const router = useRouter();
 
 	const getAlbumData = useCallback(async () => {
 		try {
@@ -122,6 +124,10 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 		}
 	}, [fetchPricesData]);
 
+	const handleClickBack = () => {
+		router.back();
+	};
+
 	if (loading) {
 		return (
 			<div className="mt-20 text-black">
@@ -146,7 +152,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 			<div className="text-white mt-20 flex flex-col items-center justify-center">
 				<h1 className="text-xl font-bold mb-4">{dataAlbum.nombre_album}</h1>
 				{dataAlbum.content.paginas.map((pagina: any) => (
-					<div key={pagina.id} className=" mb-8 sm:w-[150px] md:w-[500px]">
+					<div key={pagina.id} className=" mb-8  md:w-[500px]">
 						{pagina.template === "v2-1-1-1-1-1-1" ? (
 							<div className="grid grid-cols-3 gap-4 h-full ">
 								<div className="bg-white h-24">
@@ -1252,9 +1258,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					onClick2={() => {
 						console.log("click");
 					}}
-					onClick3={() => {
-						console.log("click");
-					}}
+					onClick3={handleClickBack}
 					icon1={<LuSticker size={25} />}
 					icon2={<MdWorkspacePremium size={25} />}
 					icon3={<IoMdArrowRoundBack size={25} />}

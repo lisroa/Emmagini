@@ -1,0 +1,84 @@
+.sticker-pack {
+	position: relative;
+	width: 100%;
+	max-width: 900px;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	padding: 20px;
+}
+.envelope {
+	width: 100%;
+	max-width: 300px;
+	height: 225px;
+	background-image: url("https://cnbguatemala.org/images/7/72/Sobre_azul.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 10px;
+	position: absolute;
+	transition: transform 1s ease-in-out;
+	transform: translateY(0);
+	border-top-style: dashed !important;
+}
+
+.sticker-pack.opened .envelope {
+	transform: translateY(-130%);
+}
+
+.stickers-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 10px;
+	margin-top: 170px;
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+	width: 100%;
+	max-width: 900px;
+}
+
+@media (min-width: 576px) {
+	.stickers-grid {
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 15px;
+	}
+}
+
+@media (min-width: 768px) {
+	.stickers-grid {
+		grid-template-columns: repeat(4, 1fr);
+		grid-gap: 20px;
+	}
+}
+
+@media (min-width: 992px) {
+	.stickers-grid {
+		grid-template-columns: repeat(5, 1fr);
+		grid-gap: 25px;
+	}
+}
+
+.sticker-pack.opened .stickers-grid {
+	opacity: 1;
+}
+
+.sticker {
+	width: 100%;
+	max-width: 210px;
+	height: 120px;
+	object-fit: cover;
+	animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-15px);
+	}
+}
