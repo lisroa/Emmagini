@@ -173,8 +173,13 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 			{confettiVisible && (
 				<ConfettiExplosion
 					particleCount={100}
-					duration={3000}
-					colors={["#ff0000", "#00ff00", "#0000ff"]}
+					particleSize={12}
+					duration={2200}
+					onComplete={() => console.log("Confetti explosion complete")}
+					colors={["#FFC700", "#FF0000", "#2E3191", "#41BBC7"]}
+					force={0.7}
+					height="120vh"
+					width={1000}
 				/>
 			)}
 			{modalOpen && <ModalMensajes message={modalContent.texto} />}
