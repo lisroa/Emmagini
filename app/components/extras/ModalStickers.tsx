@@ -135,9 +135,8 @@ const ModalStickers = ({
 					}
 				);
 
-				console.log("Compra exitosa:", response.data);
-				setStickers(response.data.stickers); // Asegúrate de que las imágenes estén en response.data.stickers
-				setIsAnimationVisible(true); // Muestra la animación
+				setStickers(response.data.stickers);
+				setIsAnimationVisible(true);
 			} catch (error) {
 				console.error("Error al realizar la compra:", error);
 			}
@@ -149,7 +148,6 @@ const ModalStickers = ({
 		buySticker(idSobre);
 	};
 
-	// Si el modal no está abierto, devuelve null después de los hooks
 	if (!isOpen) return null;
 
 	return (

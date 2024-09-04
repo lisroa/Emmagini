@@ -6,12 +6,12 @@ import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import Modal from "@/app/components/extras/Modal";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
+import ModalStickers from "@/app/components/extras/ModalStickers";
 import { MdWorkspacePremium } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { LuSticker } from "react-icons/lu";
 import "@/app/components/styles/loader.css";
 import "@/app/components/styles/figuritas.css";
-import ModalStickers from "@/app/components/extras/ModalStickers";
 
 interface ComponentProps {
 	params: {
@@ -1255,9 +1255,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 				)}
 				<DinamicButtonNav
 					onClick1={handleButtonStickersClick}
-					onClick2={() => {
-						console.log("click");
-					}}
+					onClick2={() => {}}
 					onClick3={handleClickBack}
 					icon1={<LuSticker size={25} />}
 					icon2={<MdWorkspacePremium size={25} />}

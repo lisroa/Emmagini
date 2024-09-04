@@ -78,9 +78,9 @@ export const FrontDataProvider = ({ children }) => {
 		}
 	}, []);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		console.log("productos", productos);
-	}, []);
+	}, []); */
 
 	return (
 		<FrontDataContext.Provider

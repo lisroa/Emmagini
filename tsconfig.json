@@ -31,7 +31,8 @@
 		"app/components/cards/CardHome.tsx",
 		"app/components/cards/CardGames.tsx",
 		"app/app/truco/[torneoId].jsx",
-		"app/components/modals/Modal.jsx"
+		"app/components/modals/Modal.jsx",
+		"app/app/memotest/[idJuego]/page.jsx"
 	],
 	"exclude": ["node_modules"]
 }

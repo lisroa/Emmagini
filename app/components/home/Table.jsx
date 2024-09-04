@@ -46,8 +46,8 @@ function Table() {
 				router.push(`/app/parejas/${id}`);
 			}
 		} else if (tipo === "memotest") {
-			if (nombre === "specificName1") {
-				router.push(`/app/memotest/specificPath1/${id}`);
+			if (nombre === "Desafio Naldo") {
+				router.push(`/app/memotest/${id}`);
 			} else if (nombre === "specificName2") {
 				router.push(`/app/memotest/specificPath2/${id}`);
 			} else {
