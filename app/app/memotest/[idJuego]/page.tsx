@@ -12,7 +12,7 @@ interface ComponentProps {
 	};
 }
 
-function page({ params: { idJuego } }: ComponentProps) {
+function Page({ params: { idJuego } }: ComponentProps) {
 	const { token, userId } = useAuthContext();
 	const [loading, setLoading] = useState(true);
 	const [response, setResponse] = useState<any>(null);
@@ -88,4 +88,4 @@ function page({ params: { idJuego } }: ComponentProps) {
 	);
 }
 
-export default page;
+export default Page;
