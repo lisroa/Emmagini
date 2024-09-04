@@ -1,10 +1,10 @@
-"use client";
-
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import Board from "./Board/Board";
+import ModalMensajes from "@/app/components/extras/ModalMensajes";
+import ConfettiExplosion from "react-confetti-explosion";
 import "../memotest/styles.css";
 
 interface AppProps {
@@ -21,32 +21,44 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 	const [successfulAttempts, setSuccessfulAttempts] = useState(0);
 	const [failedAttempts, setFailedAttempts] = useState(0);
 	const [pairsFound, setPairsFound] = useState(0);
+	const [modalOpen, setModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState<any>(null);
+	const [confettiVisible, setConfettiVisible] = useState(false);
+	const [cover, setCover] = useState<string>("");
 
 	useEffect(() => {
-		if (
-			data &&
-			data.contenidos &&
-			data.contenidos[3] &&
-			data.contenidos[3].data &&
-			data.contenidos[3].data.images
-		) {
-			const imagesList = data.contenidos[3].data.images.map((image: any) => ({
-				id: image.id,
-				img: image.img,
-			}));
+		if (data && data.contenidos) {
+			// Encuentra el contenido que coincida con el idDelJuego
+			const contenido = data.contenidos.find(
+				(contenido: any) => contenido.id === idDelJuego
+			);
 
-			const shuffledImageList = shuffleArray([...imagesList, ...imagesList]);
-
-			setShuffledMemoBlocks(
-				shuffledImageList.map((image, i) => ({
-					index: i,
+			// Si encontramos el contenido y tiene imágenes
+			if (contenido && contenido.data && contenido.data.images) {
+				// Extrae la lista de imágenes
+				const imagesList = contenido.data.images.map((image: any) => ({
 					id: image.id,
 					img: image.img,
-					flipped: false,
-				}))
-			);
+				}));
+
+				// Baraja las imágenes
+				const shuffledImageList = shuffleArray([...imagesList, ...imagesList]);
+
+				// Establece las imágenes en el estado
+				setShuffledMemoBlocks(
+					shuffledImageList.map((image, i) => ({
+						index: i,
+						id: image.id,
+						img: image.img,
+						flipped: false,
+					}))
+				);
+
+				// Establece el cover en el estado
+				setCover(contenido.data.cover);
+			}
 		}
-	}, [data]);
+	}, [data, idDelJuego]);
 
 	const shuffleArray = (a: any[]) => {
 		for (let i = a.length - 1; i > 0; i--) {
@@ -116,6 +128,16 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 			);
 
 			console.log("Partida finalizada exitosamente:", response.data);
+
+			const updatedText = response.data.texto.replace(
+				"%n",
+				response.data.premio
+			);
+			const updatedContent = { ...response.data, texto: updatedText };
+
+			setModalContent(updatedContent);
+			setConfettiVisible(true);
+			setModalOpen(true);
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -130,11 +152,32 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 
 	return (
 		<div>
+			<h1 className="mt-20 text-white text-center">
+				{
+					data?.contenidos.find((contenido: any) => contenido.id === idDelJuego)
+						?.nombre
+				}
+			</h1>
+			<h2 className="mt-6 text-white text-center">
+				{
+					data?.contenidos.find((contenido: any) => contenido.id === idDelJuego)
+						?.extra
+				}
+			</h2>
 			<Board
 				memoBlocks={shuffledMemoBlocks}
 				animating={animating}
 				handleMemoClick={handleMemoClick}
+				cover={cover}
 			/>
+			{confettiVisible && (
+				<ConfettiExplosion
+					particleCount={100}
+					duration={3000}
+					colors={["#ff0000", "#00ff00", "#0000ff"]}
+				/>
+			)}
+			{modalOpen && <ModalMensajes message={modalContent.texto} />}
 		</div>
 	);
 };

@@ -63,10 +63,6 @@ function page({ params: { idJuego } }: ComponentProps) {
 		}
 	}, [fetchData, token, userId]);
 
-	useEffect(() => {
-		console.log("response", response);
-	}, [response]);
-
 	if (loading) {
 		return (
 			<div className="mt-20 text-black">

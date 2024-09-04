@@ -2,7 +2,7 @@ import { useDataContext } from "@/app/context/GameDataProvider";
 import MemoBlock from "../MemoBlock/MemoBlock";
 import "./Board.css";
 
-const Board = ({ animating, handleMemoClick, memoBlocks }) => {
+const Board = ({ animating, handleMemoClick, memoBlocks, cover }) => {
 	const { data } = useDataContext();
 	return (
 		<main className="board">
@@ -13,7 +13,7 @@ const Board = ({ animating, handleMemoClick, memoBlocks }) => {
 						animating={animating}
 						handleMemoClick={handleMemoClick}
 						memoBlock={memoBlock}
-						cover={data?.contenidos[3].data.cover}
+						cover={cover}
 					/>
 				);
 			})}

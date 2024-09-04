@@ -48,8 +48,10 @@ function Table() {
 		} else if (tipo === "memotest") {
 			if (nombre === "Desafio Naldo") {
 				router.push(`/app/memotest/${id}`);
-			} else if (nombre === "specificName2") {
-				router.push(`/app/memotest/specificPath2/${id}`);
+			} else if (nombre === "desafio Chevrolet") {
+				router.push(`/app/memotest/${id}`);
+			} else if (nombre === "Desafio Rapicuotas") {
+				router.push(`/app/memotest/${id}`);
 			} else {
 				router.push(`/app/memotest/${id}`);
 			}

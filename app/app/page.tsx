@@ -15,9 +15,9 @@ import { AiOutlineTrophy } from "react-icons/ai";
 const Home = () => {
 	const { error, empresa, textos } = useDataContext();
 
-	/*useEffect(() => {
+	useEffect(() => {
 		console.log("textos", textos);
-	}, [textos]);*/
+	}, [textos]);
 
 	if (!empresa && !textos) {
 		return (
