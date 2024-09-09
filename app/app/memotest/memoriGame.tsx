@@ -21,7 +21,7 @@ interface AppProps {
 
 const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const router = useRouter();
-	const { data } = useDataContext();
+	const { data, fetchAppData } = useDataContext();
 	const { token, userId } = useAuthContext();
 	const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState<any[]>([]);
 	const [selectedMemoBlock, setSelectedMemoBlock] = useState<any | null>(null);
@@ -64,17 +64,21 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			}
 		}
 	}, [data, idDelJuego]);
+	const shuffleArray = (array: any[]) => {
+		let currentIndex = array.length,
+			randomIndex;
 
-	useEffect(() => {
-		console.log("cover", cover);
-	}, [data, cover]);
+		while (currentIndex !== 0) {
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex--;
 
-	const shuffleArray = (a: any[]) => {
-		for (let i = a.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[a[i], a[j]] = [a[j], a[i]];
+			[array[currentIndex], array[randomIndex]] = [
+				array[randomIndex],
+				array[currentIndex],
+			];
 		}
-		return a;
+
+		return array;
 	};
 
 	const handleMemoClick = (memoBlock: any) => {
@@ -145,7 +149,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			setModalContent(updatedContent);
 			setConfettiVisible(true);
 			setModalOpen(true);
-			setModalText(modalContent.texto);
+			setModalText(updatedContent.texto);
+
+			await fetchAppData();
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -156,7 +162,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 		idPartida,
 		successfulAttempts,
 		failedAttempts,
+		fetchAppData,
 	]);
+
 	const finalizarPartidaConTimeout = useCallback(async () => {
 		if (timeoutCalled) return;
 		setTimeoutCalled(true);
@@ -189,6 +197,8 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			setConfettiVisible(true);
 			setModalOpen(true);
 			setModalText("Oppss! Tiempo agotado");
+
+			await fetchAppData();
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -200,7 +210,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 		successfulAttempts,
 		failedAttempts,
 		timeoutCalled,
+		fetchAppData,
 	]);
+
 	const reiniciarJuego = async () => {
 		try {
 			await finalizarPartidaConTimeout();
@@ -208,16 +220,15 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			const nuevaPartida = await iniciarPartida();
 
 			if (nuevaPartida && nuevaPartida.id_partida) {
-				const shuffledImageList = shuffleArray([
-					...shuffledMemoBlocks.map((block) => ({
-						id: block.id,
-						img: block.img,
-					})),
-					...shuffledMemoBlocks.map((block) => ({
-						id: block.id,
-						img: block.img,
-					})),
-				]);
+				const imagesList =
+					data?.contenidos
+						.find((contenido: any) => contenido.id === idDelJuego)
+						?.data?.images.map((image: any) => ({
+							id: image.id,
+							img: image.img,
+						})) || [];
+
+				const shuffledImageList = shuffleArray([...imagesList, ...imagesList]);
 
 				setShuffledMemoBlocks(
 					shuffledImageList.map((image, i) => ({
@@ -243,11 +254,10 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			console.error("Error al reiniciar la partida", error);
 		}
 	};
+
 	const handleClickBack = () => {
 		router.back();
 	};
-
-	console.log("modal", modalContent);
 
 	return (
 		<div>
@@ -284,19 +294,8 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				onClick1={reiniciarJuego}
 				onClick3={handleClickBack}
 			/>
-			{confettiVisible && (
-				<ConfettiExplosion
-					particleCount={100}
-					particleSize={12}
-					duration={2200}
-					onComplete={() => console.log("Confetti explosion complete")}
-					colors={["#FFC700", "#FF0000", "#2E3191", "#41BBC7"]}
-					force={0.7}
-					height="120vh"
-					width={1000}
-				/>
-			)}
-			{modalOpen && <ModalMensajes message={modalText} />}
+
+			{modalOpen && <ModalMensajes message={modalText || modalContent.texto} />}
 		</div>
 	);
 };

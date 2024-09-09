@@ -11,7 +11,6 @@ export const AlbumDataProvider = ({ children }) => {
 	const [idAlbum, setIdAlbum] = useState(null);
 	const { userId, token } = useAuthContext();
 
-	// Función para hacer la solicitud a la API
 	const fetchAlbumData = async () => {
 		if (!idAlbum || !token || !userId) {
 			console.warn("idAlbum, token, or userId is missing");

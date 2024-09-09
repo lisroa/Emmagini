@@ -98,6 +98,7 @@ export const GameDataProvider = ({ children }) => {
 				dataTruco,
 				setDataTruco,
 				infoTruco,
+				fetchAppData,
 			}}
 		>
 			{children}
