@@ -12,7 +12,7 @@ interface ComponentProps {
 	};
 }
 
-function page({ params: { idJuego } }: ComponentProps) {
+function Page({ params: { idJuego } }: ComponentProps) {
 	const { token, userId } = useAuthContext();
 	const [loading, setLoading] = useState(true);
 	const [response, setResponse] = useState<any>(null);
@@ -100,8 +100,8 @@ function page({ params: { idJuego } }: ComponentProps) {
 	return response ? (
 		<MemoryGame idDelJuego={idJuego} idPartida={response.id_partida} />
 	) : (
-		<div>No se pudo iniciar la partida.</div>
+		<div>Oppps! No se pudo iniciar la partida.</div>
 	);
 }
 
-export default page;
+export default Page;
