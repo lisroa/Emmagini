@@ -29,7 +29,6 @@ function DinamicButtonNav({
 	return (
 		<div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4 sm:px-0">
 			<div className="flex justify-between px-5 sm:px-7 py-2 bg-blueEmmagini mt-4 rounded-full border-4 border-gray-100 shadow-xl">
-				{/* Primer botón (izquierda) */}
 				<button
 					className="flex-1 flex flex-col items-center justify-center"
 					onClick={onClick1}
@@ -40,7 +39,6 @@ function DinamicButtonNav({
 					</div>
 				</button>
 
-				{/* Segundo botón (centro) */}
 				<button
 					className="flex-1 flex flex-col items-center justify-center"
 					onClick={onClick2}
@@ -51,7 +49,6 @@ function DinamicButtonNav({
 					</div>
 				</button>
 
-				{/* Tercer botón (derecha) */}
 				<button
 					className="flex-1 flex flex-col items-center justify-center"
 					onClick={onClick3}

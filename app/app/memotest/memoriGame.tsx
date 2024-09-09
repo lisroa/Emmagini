@@ -1,10 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import Board from "./Board/Board";
+import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
+import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
 import ConfettiExplosion from "react-confetti-explosion";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { MdWorkspacePremium } from "react-icons/md";
+import { GrPowerReset } from "react-icons/gr";
 import "../memotest/styles.css";
 
 interface AppProps {
@@ -13,6 +19,7 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
+	const router = useRouter();
 	const { data } = useDataContext();
 	const { token, userId } = useAuthContext();
 	const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState<any[]>([]);
@@ -28,23 +35,18 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 
 	useEffect(() => {
 		if (data && data.contenidos) {
-			// Encuentra el contenido que coincida con el idDelJuego
 			const contenido = data.contenidos.find(
 				(contenido: any) => contenido.id === idDelJuego
 			);
 
-			// Si encontramos el contenido y tiene imágenes
 			if (contenido && contenido.data && contenido.data.images) {
-				// Extrae la lista de imágenes
 				const imagesList = contenido.data.images.map((image: any) => ({
 					id: image.id,
 					img: image.img,
 				}));
 
-				// Baraja las imágenes
 				const shuffledImageList = shuffleArray([...imagesList, ...imagesList]);
 
-				// Establece las imágenes en el estado
 				setShuffledMemoBlocks(
 					shuffledImageList.map((image, i) => ({
 						index: i,
@@ -54,11 +56,14 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 					}))
 				);
 
-				// Establece el cover en el estado
 				setCover(contenido.data.cover);
 			}
 		}
 	}, [data, idDelJuego]);
+
+	useEffect(() => {
+		console.log("cover", cover);
+	}, [data, cover]);
 
 	const shuffleArray = (a: any[]) => {
 		for (let i = a.length - 1; i > 0; i--) {
@@ -127,8 +132,6 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 				}
 			);
 
-			console.log("Partida finalizada exitosamente:", response.data);
-
 			const updatedText = response.data.texto.replace(
 				"%n",
 				response.data.premio
@@ -149,10 +152,53 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 		successfulAttempts,
 		failedAttempts,
 	]);
+	const finalizarPartidaConTimeout = useCallback(async () => {
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/fin_partida",
+				{
+					token: token,
+					userid: userId,
+					id_juego: idDelJuego,
+					id_partida: idPartida,
+					correctas: successfulAttempts,
+					incorrectas: failedAttempts,
+					timeout: 1,
+					host: "demo25.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			const updatedText = response.data.texto;
+			const updatedContent = { ...response.data, texto: updatedText };
+
+			setModalContent(updatedContent);
+			setConfettiVisible(true);
+			setModalOpen(true);
+		} catch (error) {
+			console.error("Error al hacer la solicitud", error);
+		}
+	}, [
+		token,
+		userId,
+		idDelJuego,
+		idPartida,
+		successfulAttempts,
+		failedAttempts,
+	]);
+
+	const handleClickBack = () => {
+		router.back();
+	};
 
 	return (
 		<div>
-			<h1 className="mt-20 text-white text-center">
+			<h1 className="mt-20 text-white text-center text-2xl font-bold">
 				{
 					data?.contenidos.find((contenido: any) => contenido.id === idDelJuego)
 						?.nombre
@@ -164,11 +210,21 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 						?.extra
 				}
 			</h2>
+			<CountdownTimer duration={300} onTimeOut={finalizarPartidaConTimeout} />
 			<Board
 				memoBlocks={shuffledMemoBlocks}
 				animating={animating}
 				handleMemoClick={handleMemoClick}
 				cover={cover}
+			/>
+			<DinamicButtonNav
+				icon1={<GrPowerReset size={25} className="text-white" />}
+				icon2={<MdWorkspacePremium size={25} className="text-white" />}
+				icon3={<IoMdArrowRoundBack size={25} className="text-white" />}
+				texto1="Reiniciar"
+				texto2="Premium"
+				texto3="Volver"
+				onClick3={handleClickBack}
 			/>
 			{confettiVisible && (
 				<ConfettiExplosion

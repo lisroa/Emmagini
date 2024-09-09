@@ -12,7 +12,7 @@ interface ComponentProps {
 	};
 }
 
-function Page({ params: { idJuego } }: ComponentProps) {
+function page({ params: { idJuego } }: ComponentProps) {
 	const { token, userId } = useAuthContext();
 	const [loading, setLoading] = useState(true);
 	const [response, setResponse] = useState<any>(null);
@@ -79,6 +79,22 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					</h1>
 				</div>
 			</div>
+			/*
+			<>
+				<div className="mt-96 ml-46">
+					<div className="wrapper">
+						<div className="circle"></div>
+						<div className="circle"></div>
+						<div className="circle"></div>
+						<div className="shadow"></div>
+						<div className="shadow"></div>
+						<div className="shadow"></div>
+					</div>
+					<h1 className="text-white text-center mt-4 font-bold text-xl">
+						CARGANDO
+					</h1>
+				</div>
+			</> */
 		);
 	}
 	return response ? (
@@ -88,4 +104,4 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	);
 }
 
-export default Page;
+export default page;
