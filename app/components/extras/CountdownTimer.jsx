@@ -2,9 +2,16 @@
 import { useEffect, useState } from "react";
 import { FaRegClock } from "react-icons/fa";
 
-const CountdownTimer = ({ duration, onTimeOut }) => {
+const CountdownTimer = ({ duration, onTimeOut, resetTimer }) => {
 	const [timeLeft, setTimeLeft] = useState(duration);
 	const [percentage, setPercentage] = useState(100);
+
+	useEffect(() => {
+		if (resetTimer) {
+			setTimeLeft(duration);
+			setPercentage(100);
+		}
+	}, [resetTimer, duration]);
 
 	useEffect(() => {
 		const endTime = Date.now() + timeLeft * 1000;
@@ -22,7 +29,7 @@ const CountdownTimer = ({ duration, onTimeOut }) => {
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [timeLeft, duration]);
+	}, [timeLeft, duration, onTimeOut]);
 
 	return (
 		<div className="flex items-center justify-center p-4">

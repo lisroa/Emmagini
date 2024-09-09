@@ -16,9 +16,10 @@ import "../memotest/styles.css";
 interface AppProps {
 	idDelJuego: string;
 	idPartida: string;
+	iniciarPartida: () => Promise<any>;
 }
 
-const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
+const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const router = useRouter();
 	const { data } = useDataContext();
 	const { token, userId } = useAuthContext();
@@ -29,7 +30,10 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 	const [failedAttempts, setFailedAttempts] = useState(0);
 	const [pairsFound, setPairsFound] = useState(0);
 	const [modalOpen, setModalOpen] = useState(false);
+	const [timeoutCalled, setTimeoutCalled] = useState(false);
+	const [resetTimer, setResetTimer] = useState(false);
 	const [modalContent, setModalContent] = useState<any>(null);
+	const [modalText, setModalText] = useState<any>(null);
 	const [confettiVisible, setConfettiVisible] = useState(false);
 	const [cover, setCover] = useState<string>("");
 
@@ -141,6 +145,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 			setModalContent(updatedContent);
 			setConfettiVisible(true);
 			setModalOpen(true);
+			setModalText(modalContent.texto);
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -153,6 +158,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 		failedAttempts,
 	]);
 	const finalizarPartidaConTimeout = useCallback(async () => {
+		if (timeoutCalled) return;
+		setTimeoutCalled(true);
+
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/fin_partida",
@@ -180,6 +188,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 			setModalContent(updatedContent);
 			setConfettiVisible(true);
 			setModalOpen(true);
+			setModalText("Oppss! Tiempo agotado");
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -190,11 +199,55 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 		idPartida,
 		successfulAttempts,
 		failedAttempts,
+		timeoutCalled,
 	]);
+	const reiniciarJuego = async () => {
+		try {
+			await finalizarPartidaConTimeout();
 
+			const nuevaPartida = await iniciarPartida();
+
+			if (nuevaPartida && nuevaPartida.id_partida) {
+				const shuffledImageList = shuffleArray([
+					...shuffledMemoBlocks.map((block) => ({
+						id: block.id,
+						img: block.img,
+					})),
+					...shuffledMemoBlocks.map((block) => ({
+						id: block.id,
+						img: block.img,
+					})),
+				]);
+
+				setShuffledMemoBlocks(
+					shuffledImageList.map((image, i) => ({
+						index: i,
+						id: image.id,
+						img: image.img,
+						flipped: false,
+					}))
+				);
+
+				setSelectedMemoBlock(null);
+				setSuccessfulAttempts(0);
+				setFailedAttempts(0);
+				setPairsFound(0);
+				setAnimating(false);
+				setConfettiVisible(false);
+				setModalOpen(false);
+				setTimeoutCalled(false);
+				setResetTimer(true);
+				setTimeout(() => setResetTimer(false), 100);
+			}
+		} catch (error) {
+			console.error("Error al reiniciar la partida", error);
+		}
+	};
 	const handleClickBack = () => {
 		router.back();
 	};
+
+	console.log("modal", modalContent);
 
 	return (
 		<div>
@@ -210,7 +263,11 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 						?.extra
 				}
 			</h2>
-			<CountdownTimer duration={300} onTimeOut={finalizarPartidaConTimeout} />
+			<CountdownTimer
+				duration={300}
+				onTimeOut={finalizarPartidaConTimeout}
+				resetTimer={resetTimer}
+			/>
 			<Board
 				memoBlocks={shuffledMemoBlocks}
 				animating={animating}
@@ -224,6 +281,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 				texto1="Reiniciar"
 				texto2="Premium"
 				texto3="Volver"
+				onClick1={reiniciarJuego}
 				onClick3={handleClickBack}
 			/>
 			{confettiVisible && (
@@ -238,7 +296,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida }) => {
 					width={1000}
 				/>
 			)}
-			{modalOpen && <ModalMensajes message={modalContent.texto} />}
+			{modalOpen && <ModalMensajes message={modalText} />}
 		</div>
 	);
 };

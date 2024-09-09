@@ -98,7 +98,11 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		);
 	}
 	return response ? (
-		<MemoryGame idDelJuego={idJuego} idPartida={response.id_partida} />
+		<MemoryGame
+			idDelJuego={idJuego}
+			idPartida={response.id_partida}
+			iniciarPartida={iniciarPartida}
+		/>
 	) : (
 		<div>Oppps! No se pudo iniciar la partida.</div>
 	);
