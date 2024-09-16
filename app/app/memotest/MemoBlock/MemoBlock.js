@@ -17,7 +17,7 @@ const MemoBlock = ({ animating, handleMemoClick, memoBlock, cover }) => (
 				<Image
 					src={cover}
 					alt="memo"
-					className="memo-image object-cover"
+					className="memo-image w-full h-full object-cover"
 					width={200}
 					height={200}
 				/>

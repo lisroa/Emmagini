@@ -32,7 +32,10 @@
 		"app/components/cards/CardGames.tsx",
 		"app/app/truco/[torneoId].jsx",
 		"app/components/modals/Modal.jsx",
-		"app/app/memotest/[idJuego]/page.jsx"
+		"app/app/memotest/[idJuego]/page.jsx",
+		"app/components/juego-parejas/Arrow.jsx",
+		"app/components/juego-parejas/GameBoard.jsx",
+		"app/app/parejas/Cards.jsx"
 	],
 	"exclude": ["node_modules"]
 }

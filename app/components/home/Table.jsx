@@ -16,6 +16,8 @@ function Table() {
 	const { idAlbum, setIdAlbum } = useDataAlbumContext();
 	const router = useRouter();
 
+	console.log("infoGames", infoGames);
+
 	const saveTournamentIdToCache = (tournamentId) => {
 		localStorage.setItem("tournamentId", tournamentId);
 	};
@@ -38,13 +40,7 @@ function Table() {
 				router.push(`/app/stickers/${id}`);
 			}
 		} else if (tipo === "parejas") {
-			if (nombre === "specificName1") {
-				router.push(`/app/parejas/specificPath1/${id}`);
-			} else if (nombre === "specificName2") {
-				router.push(`/app/parejas/specificPath2/${id}`);
-			} else {
-				router.push(`/app/parejas/${id}`);
-			}
+			router.push(`/app/parejas/${id}`);
 		} else if (tipo === "memotest") {
 			if (nombre === "Desafio Naldo") {
 				router.push(`/app/memotest/${id}`);

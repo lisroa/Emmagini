@@ -53,7 +53,7 @@ export const GameDataProvider = ({ children }) => {
 
 	//Pegamos a validate desde demo23 para traer los torneos de truco
 
-	const getTrucoData = useCallback(async () => {
+	/*const getTrucoData = useCallback(async () => {
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/validate",
@@ -84,7 +84,7 @@ export const GameDataProvider = ({ children }) => {
 
 	useEffect(() => {
 		getTrucoData();
-	}, [token, userId]);
+	}, [token, userId]); */
 
 	return (
 		<GameDataContext.Provider
