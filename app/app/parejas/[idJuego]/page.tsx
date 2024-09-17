@@ -53,23 +53,26 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			refetchOnWindowFocus: false,
 		}
 	);
+
 	const router = useRouter();
+
+	const [responseApi, setResponseApi] = useState<any>(null);
+	const [contenidoEncontrado, setContenidoEncontrado] = useState(null);
 	const [column1, setColumn1] = useState([]);
 	const [column2, setColumn2] = useState([]);
 	const [matchedDivs, setMatchedDivs] = useState([]);
 	const [clickedDivs, setClickedDivs] = useState([]);
-	const [responseApi, setResponseApi] = useState<any>(null);
-	const [loading, setLoading] = useState(true);
-	const [contenidoEncontrado, setContenidoEncontrado] = useState(null);
+	const [correctAttempts, setCorrectAttempts] = useState(0);
+	const [incorrectAttempts, setIncorrectAttempts] = useState(0);
 	const [modalContent, setModalContent] = useState<any>(null);
 	const [modalOpen, setModalOpen] = useState(false);
 	const [modalGameOpen, setModalGameOpen] = useState(false);
 	const [modalText, setModalText] = useState<any>(null);
 	const [resetTimer, setResetTimer] = useState(false);
-	const [correctAttempts, setCorrectAttempts] = useState(0);
-	const [incorrectAttempts, setIncorrectAttempts] = useState(0);
 	const [timeoutCalled, setTimeoutCalled] = useState(false);
+	const [loading, setLoading] = useState(true);
 
+	//Iniciar la partida y obtener el id_partida
 	const iniciarPartida = useCallback(async () => {
 		try {
 			const response = await axios.post(
@@ -121,6 +124,8 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		}
 	}, [token, userId, fetchData]);
 
+	//Buscamos en la respuesta de la api el contenido que coincide con el idJuego que recibimos por parametro.
+
 	useEffect(() => {
 		if (data?.contenidos) {
 			const contenido = data.contenidos.find(
@@ -156,6 +161,8 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			}
 		}
 	}, [data, idJuego]);
+
+	//Finalizamos la partida al encontrar todos los pares.
 
 	const finalizarPartida = useCallback(async () => {
 		try {
@@ -201,6 +208,9 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		responseApi,
 		fetchData,
 	]);
+
+	//Finalizar la partida si el tiempo se termino.
+
 	const finalizarPartidaConTimeout = useCallback(async () => {
 		if (timeoutCalled) return;
 		setTimeoutCalled(true);
@@ -248,54 +258,8 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		timeoutCalled,
 		fetchData,
 	]);
-	const reiniciarPartida = useCallback(async () => {
-		if (timeoutCalled) return;
-		setTimeoutCalled(true);
 
-		try {
-			const response = await axios.post(
-				"https://backend.emmagini.com/api2/fin_partida",
-				{
-					token: token,
-					userid: userId,
-					id_juego: idJuego,
-					id_partida: responseApi?.id_partida,
-					correctas: correctAttempts,
-					incorrectas: incorrectAttempts,
-					timeout: 0,
-					host: "demo25.emmagini.com",
-					lang: "es",
-				},
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-					},
-				}
-			);
-
-			const updatedText = response.data.texto;
-			const updatedContent = { ...response.data, texto: updatedText };
-
-			setModalContent(updatedContent);
-
-			setModalGameOpen(true);
-			setModalText("Partida reiniciada");
-			setLoading(true);
-
-			await fetchData();
-		} catch (error) {
-			console.error("Error al hacer la solicitud", error);
-		}
-	}, [
-		token,
-		userId,
-		idJuego,
-		responseApi,
-		correctAttempts,
-		incorrectAttempts,
-		timeoutCalled,
-		fetchData,
-	]);
+	// Verificamos si los divs seleccionados son pares o no, vamos contando los intentos correctos e incorrectos.
 
 	const handleDivClick = (item: any, index: any) => {
 		// @ts-ignore
@@ -365,6 +329,63 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const handleClickBack = () => {
 		router.back();
 	};
+
+	//Reiniciar la partida si el usuario lo desea.
+
+	const reiniciarPartida = useCallback(async () => {
+		if (timeoutCalled) return;
+		setTimeoutCalled(true);
+
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/fin_partida",
+				{
+					token: token,
+					userid: userId,
+					id_juego: idJuego,
+					id_partida: responseApi?.id_partida,
+					correctas: correctAttempts,
+					incorrectas: incorrectAttempts,
+					timeout: 0,
+					host: "demo25.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			setModalGameOpen(true);
+			setModalText("Partida reiniciada");
+			setLoading(true);
+
+			await fetchData();
+
+			setResetTimer(true);
+			setTimeout(() => {
+				setResetTimer(false);
+			}, 500);
+
+			setTimeoutCalled(false);
+		} catch (error) {
+			console.error("Error al hacer la solicitud", error);
+
+			setTimeoutCalled(false);
+		}
+	}, [
+		token,
+		userId,
+		idJuego,
+		responseApi,
+		correctAttempts,
+		incorrectAttempts,
+		timeoutCalled,
+		fetchData,
+		setResetTimer,
+	]);
+
 	const reiniciarJuego = useCallback(async () => {
 		try {
 			await reiniciarPartida();
