@@ -5,7 +5,6 @@ import { useDataContext } from "@/app/context/GameDataProvider";
 import { RoundButton } from "@/app/components/buttons/RoundButton";
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import "@/app/components/styles/drapAndDropAnimation.css";
 
 interface ComponentProps {
 	params: {
