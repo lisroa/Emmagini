@@ -52,13 +52,7 @@ function Table() {
 				router.push(`/app/memotest/${id}`);
 			}
 		} else if (tipo === "lineatiempo") {
-			if (nombre === "specificName1") {
-				router.push(`/app/lineatiempo/specificPath1/${id}`);
-			} else if (nombre === "specificName2") {
-				router.push(`/app/lineatiempo/specificPath2/${id}`);
-			} else {
-				router.push(`/app/lineatiempo/${id}`);
-			}
+			router.push(`/app/lineatiempo/${id}`);
 		} else {
 			("");
 		}

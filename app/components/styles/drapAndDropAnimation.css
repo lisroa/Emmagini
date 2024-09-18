@@ -1,0 +1,33 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background-color: #f0f0f0;
+}
+
+.grid {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.item {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	cursor: grab;
+	transition: transform 0.2s ease;
+}
+
+.item:active {
+	cursor: grabbing;
+}
+
+.item img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
