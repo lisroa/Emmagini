@@ -70,10 +70,8 @@ export const CardGames = ({
 				<Image
 					src={image}
 					alt={alt}
-					className={`w-[100px] h-[90px] md:w-[150px] md:h-[135px] lg:w-[200px] lg:h-[185px] ${
-						imageClassName || ""
-					}`}
-					width={200}
+					className={`w-full h-full object-cover ${imageClassName || ""}`}
+					width={100}
 					height={185}
 				/>
 			</div>

@@ -105,7 +105,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			const apiResponse = await iniciarPartida();
 
 			setResponseApi(apiResponse);
-			console.log("response", apiResponse);
+
 			setLoading(false);
 		} catch (error) {
 			console.error("Error al obtener los datos:", error);

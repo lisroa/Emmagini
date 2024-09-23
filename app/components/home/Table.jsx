@@ -53,6 +53,8 @@ function Table() {
 			}
 		} else if (tipo === "lineatiempo") {
 			router.push(`/app/lineatiempo/${id}`);
+		} else if (tipo === "torneotruco") {
+			router.push(`/app/truco`);
 		} else {
 			("");
 		}
@@ -63,6 +65,7 @@ function Table() {
 		}
 		return url;
 	}
+	console.log("infoTruco", infoTruco);
 
 	return (
 		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[110px]">
@@ -99,14 +102,13 @@ function Table() {
 								</div>
 							</WhileTap>
 						))}
-				{/*infoTruco &&
+				{infoTruco &&
 					Object.values(infoTruco)
 						.sort((a, b) => a.orden - b.orden)
 						.map((torneo) => (
 							<WhileTap key={torneo.id}>
 								<div className="flex justify-center" key={torneo.id}>
-									<CardTruco
-										href="/app/truco"
+									<CardHome
 										onClick={() => {
 											handleTournamentCardClick(torneo.id);
 											handleCardClick(torneo.id, torneo.tipo, torneo.titulo);
@@ -121,7 +123,7 @@ function Table() {
 									/>
 								</div>
 							</WhileTap>
-						))*/}
+						))}
 			</div>
 		</div>
 	);

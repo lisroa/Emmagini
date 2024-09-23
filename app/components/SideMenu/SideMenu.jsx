@@ -123,25 +123,29 @@ const SideMenu = () => {
 							<AiOutlineArrowRight />
 						</button>
 
-						<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-							<div className="flex items-center">
-								<BsGift className="mr-2" />
-								<span className="text-black ml-2 font-bold text-sm">
-									Subastas
-								</span>
-							</div>
-							<AiOutlineArrowRight />
-						</button>
+						<Link href="/app/subastas">
+							<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+								<div className="flex items-center">
+									<BsGift className="mr-2" />
+									<span className="text-black ml-2 font-bold text-sm">
+										Subastas
+									</span>
+								</div>
+								<AiOutlineArrowRight />
+							</button>
+						</Link>
 
-						<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-							<div className="flex items-center">
-								<BsCartCheck className="mr-2" />
-								<span className="text-black ml-2 font-bold text-sm">
-									Compras
-								</span>
-							</div>
-							<AiOutlineArrowRight />
-						</button>
+						<Link href="/app/productos">
+							<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+								<div className="flex items-center">
+									<BsCartCheck className="mr-2" />
+									<span className="text-black ml-2 font-bold text-sm">
+										Compras
+									</span>
+								</div>
+								<AiOutlineArrowRight />
+							</button>
+						</Link>
 
 						<Link href="/app/perfil">
 							<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">

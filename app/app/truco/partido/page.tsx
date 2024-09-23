@@ -113,13 +113,13 @@ function Page() {
 							infoJuegoTruco.miturno ? "border-b-4 border-green-500" : ""
 						}`}
 					>
-						<p className="text-black text-center">Yo:</p>
-						<p className="text-black text-center">
+						<p className="text-white text-center">Yo:</p>
+						<p className="text-white text-center">
 							Puntaje: {infoJuegoTruco.puntos_yo}
 						</p>
 					</div>
 					<div className="w-[20%] h-[50px] text-center">
-						<p className="text-black">Turno</p>
+						<p className="text-white">Turno</p>
 
 						<div className="flex flex-row items-center justify-center text-center">
 							<BsCaretLeftFill
@@ -139,10 +139,10 @@ function Page() {
 							!infoJuegoTruco.miturno ? "border-b-4 border-green-500" : ""
 						}`}
 					>
-						<p className="text-black text-center">
+						<p className="text-white text-center">
 							{infoJuegoTruco.contrincante}:
 						</p>
-						<p className="text-black text-center">
+						<p className="text-white text-center">
 							Puntaje: {infoJuegoTruco.puntos_el}
 						</p>
 					</div>
@@ -247,8 +247,8 @@ function Page() {
 
 									const messageClass =
 										lastMessage.jugador === "Yo"
-											? "text-black font-normal"
-											: "text-black font-bold";
+											? "text-white font-normal"
+											: "text-white font-bold";
 
 									return (
 										<p
@@ -272,8 +272,8 @@ function Page() {
 
 									const messageClass =
 										text.jugador === "Yo"
-											? "text-black font-normal"
-											: "text-black font-bold";
+											? "text-white font-normal"
+											: "text-white font-bold";
 
 									return (
 										<p key={text.id} className={`text-base ${messageClass}`}>

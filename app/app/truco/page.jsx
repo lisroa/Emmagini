@@ -18,7 +18,7 @@ export default function Page() {
 
 	return (
 		<>
-			<h1 className="text-black text-center mt-20 text-2xl font-bold">
+			<h1 className="text-white text-center mt-20 text-2xl font-bold">
 				Torneos de truco
 			</h1>
 			<div className="container mx-auto px-4 mb-32 mt-8">
@@ -31,7 +31,7 @@ export default function Page() {
 									link="/app/truco/partidas-disponibles"
 									image={serie.imagen}
 									imageClassName="w-[91px] h-[155px]"
-									cardClassName="w-[300px] h-[185px] drop-shadow-lg"
+									cardClassName="w-full h-[185px] drop-shadow-lg"
 									alt="serie.nombre"
 									title={serie.nombre}
 									description={serie.inicio_txt}

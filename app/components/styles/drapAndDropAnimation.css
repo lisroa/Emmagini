@@ -1,0 +1,24 @@
+/*.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.item {
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	cursor: grab;
+	transition: transform 0.2s ease;
+}
+
+.item:active {
+	cursor: grabbing;
+}
+
+.item img {
+	width: 100%;
+	height: auto;
+	display: block;
+} */

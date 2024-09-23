@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import CardHome from "@/app/components/cards/CardHome";
 import WhileTap from "@/app/components/animations/WhileTap";
+import "@/app/components/styles/loader.css";
 
 interface ComponentProps {
 	params: {
