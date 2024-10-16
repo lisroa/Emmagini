@@ -113,6 +113,24 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		}
 	};
 
+	// Mueve las imágenes correctas a su posición correcta
+	const reubicarImagenesCorrectas = useCallback(() => {
+		const correctas = resultErrors.filter((error: any) => error.error === 0);
+
+		const updatedImages = [...images];
+		correctas.forEach((correcta: any) => {
+			const indexCorrecto = updatedImages.findIndex(
+				(image) => image.id === correcta.id
+			);
+			if (indexCorrecto !== correcta.i - 1) {
+				const [movedImage] = updatedImages.splice(indexCorrecto, 1);
+				updatedImages.splice(correcta.i - 1, 0, movedImage);
+			}
+		});
+
+		setImages(updatedImages);
+	}, [images, resultErrors]);
+
 	const finalizarPartida = useCallback(async () => {
 		try {
 			const response = await axios.post(
@@ -176,7 +194,6 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			);
 
 			setResultErrors(response.data.result);
-			console.log("Respuesta de verificación", response.data);
 
 			const correct = response.data.result.filter(
 				(result: any) => result.error === 0
@@ -188,13 +205,23 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			setCorrectCount(correct);
 			setIncorrectCount(incorrect);
 
+			// Reubicar imágenes correctas
+			reubicarImagenesCorrectas();
+
 			if (incorrect === 0) {
 				await finalizarPartida();
 			}
 		} catch (error) {
 			console.error("Error al verificar el orden:", error);
 		}
-	}, [token, userId, idJuego, orden, finalizarPartida]);
+	}, [
+		token,
+		userId,
+		idJuego,
+		orden,
+		reubicarImagenesCorrectas,
+		finalizarPartida,
+	]);
 
 	function handleVerification() {
 		verificarOrden();
@@ -267,7 +294,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 										key={image.id}
 										draggableId={image.id}
 										index={index}
-										isDragDisabled={isCorrect}
+										isDragDisabled={isCorrect} // Deshabilitar el arrastre si es correcta
 									>
 										{(provided) => (
 											<div
@@ -307,3 +334,271 @@ function Page({ params: { idJuego } }: ComponentProps) {
 }
 
 export default Page;
+
+/*"use client";
+import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
+import axios from "axios";
+import { useAuthContext } from "@/app/context/AuthProvider";
+import { useDataContext } from "@/app/context/GameDataProvider";
+import { RoundButton } from "@/app/components/buttons/RoundButton";
+import ModalMensajes from "@/app/components/extras/ModalMensajes";
+import "@/app/components/styles/loader.css";
+
+interface ComponentProps {
+	params: {
+		idJuego: string;
+	};
+}
+
+function Page({ params: { idJuego } }: ComponentProps) {
+	const { infoGames } = useDataContext();
+	const { userId, token } = useAuthContext();
+	const [responseApi, setResponseApi] = useState<any>(null);
+	const [images, setImages] = useState<any[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [orden, setOrden] = useState<any[]>([]);
+	const [resultErrors, setResultErrors] = useState<any[]>([]);
+	const [correctCount, setCorrectCount] = useState(0);
+	const [incorrectCount, setIncorrectCount] = useState(0);
+	const [modalContent, setModalContent] = useState<any>(null);
+	const [modalOpen, setModalOpen] = useState(false);
+	const [modalText, setModalText] = useState<any>(null);
+	const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+
+	const game = infoGames?.find((gameItem: any) => gameItem.id === idJuego);
+
+	useEffect(() => {
+		if (game?.data?.images) {
+			setImages(game.data.images);
+		}
+	}, [game]);
+
+	const iniciarPartida = useCallback(async () => {
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/iniciar_partida",
+				{
+					token: token,
+					userid: userId,
+					id_juego: idJuego,
+					id_partida: "",
+					host: "demo25.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			console.error("Error al hacer la solicitud", error);
+			throw error;
+		}
+	}, [token, userId, idJuego]);
+
+	const fetchData = useCallback(async () => {
+		try {
+			setLoading(true);
+			const apiResponse = await iniciarPartida();
+			setResponseApi(apiResponse);
+			setLoading(false);
+		} catch (error) {
+			console.error("Error al obtener los datos:", error);
+			setLoading(false);
+		}
+	}, [iniciarPartida]);
+
+	useEffect(() => {
+		if (token && userId) {
+			fetchData();
+		}
+	}, [token, userId, fetchData]);
+
+	const handleDragStart = (index: number) => {
+		setDraggingIndex(index);
+	};
+
+	const handleDragOver = (index: number) => {
+		if (draggingIndex === null) return;
+
+		const newImages = [...images];
+		const draggedImage = newImages[draggingIndex];
+
+		newImages.splice(draggingIndex, 1);
+		newImages.splice(index, 0, draggedImage);
+
+		setDraggingIndex(index);
+		setImages(newImages);
+		setOrden(newImages.map((img, idx) => ({ i: idx + 1, o: img.id })));
+	};
+
+	const handleDragEnd = () => {
+		setDraggingIndex(null);
+	};
+
+	const finalizarPartida = useCallback(async () => {
+		try {
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/fin_partida",
+				{
+					token: token,
+					userid: userId,
+					id_juego: idJuego,
+					id_partida: responseApi?.id_partida,
+					correctas: correctCount,
+					incorrectas: incorrectCount,
+					timeout: 0,
+					host: "demo25.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			const updatedText = response.data.texto.replace(
+				"%n",
+				response.data.premio
+			);
+			const updatedContent = { ...response.data, texto: updatedText };
+
+			setModalContent(updatedContent);
+			setModalOpen(true);
+			setModalText(updatedContent.texto);
+
+			resetGameState();
+		} catch (error) {
+			console.error("Error al finalizar la partida:", error);
+		}
+	}, [token, userId, idJuego, correctCount, incorrectCount, responseApi]);
+
+	const verificarOrden = useCallback(async () => {
+		try {
+			const formattedData = orden.map((item) => ({
+				i: item.i,
+				o: item.o,
+			}));
+
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/lineatiempo_controlar",
+				{
+					token: token,
+					userid: userId,
+					id_juego: idJuego,
+					data: JSON.stringify(formattedData),
+					host: "demo25.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+
+			setResultErrors(response.data.result);
+
+			const correct = response.data.result.filter(
+				(result: any) => result.error === 0
+			).length;
+			const incorrect = response.data.result.filter(
+				(result: any) => result.error === 1
+			).length;
+
+			setCorrectCount(correct);
+			setIncorrectCount(incorrect);
+
+			if (incorrect === 0) {
+				await finalizarPartida();
+			}
+		} catch (error) {
+			console.error("Error al verificar el orden:", error);
+		}
+	}, [token, userId, idJuego, orden, finalizarPartida]);
+
+	function handleVerification() {
+		verificarOrden();
+	}
+
+	const resetGameState = () => {
+		setImages([]);
+		setOrden([]);
+		setResultErrors([]);
+		setCorrectCount(0);
+		setIncorrectCount(0);
+		setResponseApi(null);
+	};
+
+	if (!infoGames && loading) {
+		return (
+			<div className="mt-20 text-black">
+				<div className="mt-96">
+					<section className="dots-container">
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+						<div className="dot"></div>
+					</section>
+					<h1 className="text-white text-center mt-4 font-bold text-xl">
+						CARGANDO
+					</h1>
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className="flex flex-col items-center justify-center min-h-screen mt-20">
+			<h1 className="text-white text-center text-2xl font-bold">
+				{game?.titulo}
+			</h1>
+			<h1 className="text-white text-center text-base font-medium mt-4">
+				{game?.extra || ""}
+			</h1>
+
+			<RoundButton
+				buttonClassName="bg-lime-600 w-[240px] h-[29px] mt-4"
+				text="Validar"
+				textClassName="text-white"
+				onClick={handleVerification}
+			/>
+
+			<div className="grid grid-cols-1 gap-4 mt-8">
+				{images.map((image: any, index: number) => {
+					const error = resultErrors.find((result) => result.id === image.id);
+					const isCorrect = error && error.error === 0;
+
+					return (
+						<div
+							key={image.id}
+							draggable
+							onDragStart={() => handleDragStart(index)}
+							onDragOver={() => handleDragOver(index)}
+							onDragEnd={handleDragEnd}
+							className={`w-[200px] h-[120px] relative rounded-lg mx-auto transition-transform duration-300 hover:scale-105 ${
+								isCorrect ? "border-[4px] border-green-500" : ""
+							}`}
+						>
+							<Image
+								src={image.img}
+								alt={`product image ${index}`}
+								className="w-[200px] h-[120px] object-cover rounded-lg"
+								layout="fill"
+							/>
+						</div>
+					);
+				})}
+			</div>
+
+			{modalOpen && <ModalMensajes message={modalText || modalContent.texto} />}
+		</div>
+	);
+}
+
+export default Page; */

@@ -8,7 +8,6 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export const GameDataContext = createContext();
 
 export const GameDataProvider = ({ children }) => {
-	// Trae la info de los torneos de truco desde demo23
 	const { userId, token } = useAuthContext();
 
 	const fetchAppData = async () => {
@@ -29,15 +28,15 @@ export const GameDataProvider = ({ children }) => {
 		);
 		return response.data;
 	};
-
+	// Trae la info de los torneos de truco desde demo4.
 	const fetchTrucoData = async () => {
 		const response = await axios.post(
 			"https://backend.emmagini.com/api2/validate",
 			{
-				callback: "https://demo25.emmagini.com/home.php#v=inicio",
+				callback: "https://demo4.emmagini.com/home.php#v=inicio",
 				token,
 				userid: userId,
-				host: "demo23.emmagini.com",
+				host: "demo4.emmagini.com",
 				lang: "es",
 			},
 			{

@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+//Agregar el link del boton si lo tiene o que vaya a subastas.
+
 function ImageBanner(props) {
 	return (
 		<div className="relative overflow-hidden mt-16 h-[460px]">

@@ -3,7 +3,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { RoundButton } from "../../../components/buttons/RoundButton";
 import { useJuegoTrucoDataContext } from "@/app/context/truco/JuegoTrucoProvider";
 import { BsCaretLeftFill } from "react-icons/bs";
@@ -20,6 +20,11 @@ const tiltClasses = [
 function Page() {
 	const { infoJuegoTruco, catchActions, catchParam } =
 		useJuegoTrucoDataContext();
+	const [isExpanded, setIsExpanded] = useState(false);
+
+	const toggleExpand = () => {
+		setIsExpanded(!isExpanded);
+	};
 
 	function fixImageUrl(url: string) {
 		if (url.startsWith("//")) {
@@ -49,7 +54,6 @@ function Page() {
 
 	if (!infoJuegoTruco || !infoJuegoTruco.mesa) return null;
 
-	// Filtra las cartas para las posiciones superiores y las inferiores
 	const upperPositions = infoJuegoTruco.mesa.filter(
 		(naipe) => naipe.posicion >= 4 && naipe.posicion <= 6
 	);
@@ -57,7 +61,6 @@ function Page() {
 		(naipe) => naipe.posicion >= 1 && naipe.posicion <= 3
 	);
 
-	// Ordena las cartas dentro de cada grupo
 	upperPositions.sort((a, b) => a.posicion - b.posicion);
 	lowerPositions.sort((a, b) => a.posicion - b.posicion);
 
@@ -159,21 +162,21 @@ function Page() {
 								src={fixImageUrl(infoJuegoTruco.reverso)}
 								width={106}
 								height={0}
-								className={`w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ${tiltClasses[0]}`}
+								className={`w-[54px] h-[72px] ${tiltClasses[0]}`}
 								alt="dorso1"
 							/>
 							<Image
 								src={fixImageUrl(infoJuegoTruco.reverso)}
 								width={106}
 								height={0}
-								className={`w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ${tiltClasses[1]}`}
+								className={`w-[54px] h-[72px] ${tiltClasses[1]}`}
 								alt="dorso2"
 							/>
 							<Image
 								src={fixImageUrl(infoJuegoTruco.reverso)}
 								width={106}
 								height={0}
-								className={`w-[54px] h-[72px] md:w-[100px] md:h-[130px] lg:w-[106px] lg:h-[150px] ${tiltClasses[2]}`}
+								className={`w-[54px] h-[72px] ${tiltClasses[2]}`}
 								alt="dorso3"
 							/>
 						</div>
@@ -227,61 +230,71 @@ function Page() {
 					</div>
 				</div>
 			</div>
-
-			<div className="w-full lg:w-[200px] xl:w-[300px] lg:col-span-3 flex flex-col gap-5">
-				{/*
-					<div className="hidden lg:flex flex-col gap-5 h-[244px]">
-					<div className=" w-[144px] h-[144px] lg:w-full lg:h-[244px] bg-gray-400 rounded-[20px]" />
-				</div>
-				*/}
-				<div className="h-[39px] lg:w-full lg:min-h-[420px] lg:max-h-full flex flex-col items-center justify-center bg-zinc-300 rounded-[20px] p-2">
+			<div className="relative w-full lg:w-[200px] xl:w-[300px] lg:col-span-3  flex flex-col gap-5">
+				<div
+					className={`absolute bottom-0 w-full lg:h-[500px] transition-all duration-300 bg-zinc-300 rounded-[20px] p-2 ${
+						isExpanded
+							? "max-h-[200px] overflow-auto"
+							: "h-[39px] overflow-hidden"
+					} lg:static lg:h-auto lg:max-h-none`}
+					onClick={toggleExpand}
+					style={{ zIndex: 50 }}
+				>
 					{infoJuegoTruco && infoJuegoTruco.chat && (
 						<>
+							{/* Para pantallas pequeñas y medianas */}
 							<div className="lg:hidden">
 								{(() => {
-									const lastMessage = infoJuegoTruco.chat
+									const messages = infoJuegoTruco.chat
 										.filter((text) => text.jugador !== "system")
-										.pop();
+										.slice(isExpanded ? -3 : -1);
 
-									if (!lastMessage) return null;
+									if (messages.length === 0) return null;
 
-									const messageClass =
-										lastMessage.jugador === "Yo"
-											? "text-white font-normal"
-											: "text-white font-bold";
+									return messages.map((message) => {
+										const messageClass =
+											message.jugador === "Yo"
+												? "text-black font-normal"
+												: "text-black font-bold";
 
-									return (
-										<p
-											key={lastMessage.id}
-											className={`text-base ${messageClass}`}
-										>
-											{lastMessage.jugador === "Yo"
-												? "Yo: "
-												: `${lastMessage.jugador}: `}
-											{lastMessage.mensaje}
-										</p>
-									);
+										return (
+											<p
+												key={message.id}
+												className={`text-base ${messageClass}`}
+											>
+												{message.jugador === "Yo"
+													? "Yo: "
+													: `${message.jugador}: `}
+												{message.mensaje}
+											</p>
+										);
+									});
 								})()}
 							</div>
 
+							{/* Para pantallas grandes, siempre mostramos los últimos 5 mensajes */}
 							<div className="hidden lg:block">
-								{infoJuegoTruco.chat.map((text) => {
-									if (text.jugador === "system") {
-										return null;
-									}
+								{infoJuegoTruco.chat
+									.filter((text) => text.jugador !== "system")
+									.slice(-5)
+									.map((message) => {
+										const messageClass =
+											message.jugador === "Yo"
+												? "text-black font-normal"
+												: "text-black font-bold";
 
-									const messageClass =
-										text.jugador === "Yo"
-											? "text-white font-normal"
-											: "text-white font-bold";
-
-									return (
-										<p key={text.id} className={`text-base ${messageClass}`}>
-											{text.jugador === "Yo" ? "Yo: " : `${text.jugador}: `}
-											{text.mensaje}
-										</p>
-									);
-								})}
+										return (
+											<p
+												key={message.id}
+												className={`text-base ${messageClass}`}
+											>
+												{message.jugador === "Yo"
+													? "Yo: "
+													: `${message.jugador}: `}
+												{message.mensaje}
+											</p>
+										);
+									})}
 							</div>
 						</>
 					)}

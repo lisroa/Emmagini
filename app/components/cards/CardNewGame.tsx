@@ -45,7 +45,7 @@ export const CardNewGame = ({
 	onClick,
 }: CardNewGameProps) => {
 	return (
-		<div className="w-full flex p-2 rounded-lg	bg-white w-[389px] h-[187px] drop-shadow-lg">
+		<div className="flex p-2 rounded-lg bg-white w-[306px] h-[214px] drop-shadow-lg">
 			<div className="flex-none">
 				<Image
 					src={image}
@@ -75,7 +75,7 @@ export const CardNewGame = ({
 				</p>
 				<div className="">
 					<h2
-						className={"mb-2 mt-4 font-semibold text-xs  text-center text-black".concat(
+						className={"mb-2 mt-4 font-semibold text-xs text-center text-black".concat(
 							" ",
 							subtitleClassName || ""
 						)}
@@ -92,7 +92,7 @@ export const CardNewGame = ({
 					</p>
 
 					{altText && (
-						<p className="text-[10px]  text-center text-black">{altText}</p>
+						<p className="text-[10px] text-center text-black">{altText}</p>
 					)}
 
 					<button

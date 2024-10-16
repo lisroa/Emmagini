@@ -162,20 +162,123 @@ function Page() {
 					</div>
 				</div>
 			</div>
-			{infoSeriesTruco &&
+			<div className="container mx-auto py-8 px-4 lg:px-8">
+				{/* Mis partidas creadas */}
+				{infoSeriesTruco?.esperando?.length > 0 && (
+					<section className="mb-12">
+						<h2 className="text-white text-lg font-semibold mb-4">
+							Mis partidas creadas
+						</h2>
+						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
+							{infoSeriesTruco.esperando.map((partido) => (
+								<CardNewGame
+									key={partido.id}
+									image={tester}
+									alt="Partida creada"
+									title={partido.nombre_1}
+									description={partido.nombre_2}
+									buttonText="Eliminar"
+									buttonClassName="bg-red w-full h-[36px] text-white"
+									onClick={() => handleClickEliminarPartida(partido.id)}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+
+				{/* Partidas activas */}
+				{infoSeriesTruco?.actuales?.length > 0 && (
+					<section className="mb-12">
+						<h2 className="text-white text-lg font-semibold mb-4">Activos</h2>
+						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
+							{infoSeriesTruco.actuales.map((partido) => (
+								<CardGames
+									cardClassName="drop-shadow-lg"
+									image={tester}
+									imageClassName="w-[91px] h-[155px]"
+									link="/app/truco/partido"
+									title={`Oponente: ${partido.nombre_1}`}
+									description={`Puntaje:`}
+									button={true}
+									buttonText="Entrar"
+									buttonClassName="bg-blueEmmagini w-[160px] h-[36px] text-white"
+									onClick={() => handlePartidaClick(partido.id)}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+
+				{/* Partidas abiertas */}
+				{infoSeriesTruco?.abiertos?.length > 0 && (
+					<section className="mb-12">
+						<h2 className="text-white text-lg font-semibold mb-4">
+							Partidos disponibles
+						</h2>
+						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
+							{infoSeriesTruco.abiertos.map((partido) => (
+								<CardGames
+									cardClassName="drop-shadow-lg"
+									image={tester}
+									imageClassName="w-[91px] h-[155px]"
+									link="/app/truco/partido"
+									title={`Oponente: ${partido.nombre_1}`}
+									button={true}
+									buttonText="Unirme"
+									buttonClassName="bg-blueEmmagini w-[160px] h-[36px] text-white"
+									onClick={() => handleClickUnirmeAPartida(partido.id)}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+
+				{/* Partidas terminadas */}
+				{infoSeriesTruco?.terminados?.length > 0 && (
+					<section className="mb-12">
+						<h2 className="text-white text-lg font-semibold mb-4">
+							Terminados
+						</h2>
+						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
+							{infoSeriesTruco.terminados.map((partido) => (
+								<CardGames
+									key={partido.id}
+									cardClassName="drop-shadow-lg"
+									image={tester}
+									imageClassName="w-[91px] h-[155px]"
+									link="/#"
+									title={`Oponente: ${partido.nombre_2}`}
+									description="Puntaje:"
+									div
+									divText={partido.ganaste ? "Ganaste" : "Perdiste"}
+									divClassName={`w-full h-[36px] text-white ${
+										partido.ganaste ? "bg-green-500" : "bg-red-500"
+									}`}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+			</div>
+		</div>
+	);
+}
+
+export default Page;
+
+/*
+
+{infoSeriesTruco &&
 				infoSeriesTruco.esperando &&
 				infoSeriesTruco.esperando.length > 0 && (
-					<div className="w-[336px] lg:w-[1300px] h-auto lg:ml-24 mt-20">
+					<div className="w-[36px] lg:w-[1300px] h-auto lg:ml-24 mt-20">
 						<h2 className="text-white text-xs font-semibold ml-6">
 							Mis partidas creadas
 						</h2>
 						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-8">
 							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 								{infoSeriesTruco.esperando.map((partido) => (
-									<div
-										key={partido.id}
-										className="flex justify-center w-[306px] h-[214px]"
-									>
+									<div key={partido.id} className="flex justify-center">
 										<CardNewGame
 											image={tester}
 											alt="Partida creada"
@@ -197,7 +300,7 @@ function Page() {
 			{infoSeriesTruco &&
 				infoSeriesTruco.actuales &&
 				infoSeriesTruco.actuales.length > 0 && (
-					<div className="w-[336px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14">
+					<div className="w-[306px] lg:w-[1300px] mt-8 h-auto lg:ml-24 lg:mt-14 bg-green-500">
 						<h2 className="text-white text-xs font-semibold ml-6">Activos</h2>
 						<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-20 mt-6">
 							<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-4">
@@ -206,7 +309,7 @@ function Page() {
 									infoSeriesTruco.actuales.map((partido) => (
 										<div
 											key={partido.id}
-											className="flex justify-center w-full"
+											className="flex justify-center w-[306px] h-[214px]"
 										>
 											<CardGames
 												cardClassName="drop-shadow-lg"
@@ -300,8 +403,6 @@ function Page() {
 						</div>
 					</div>
 				)}
-		</div>
-	);
-}
 
-export default Page;
+
+				*/

@@ -8,7 +8,6 @@ interface CardGamesProps {
 	image?: ReactNode;
 	imageContainer?: string;
 	imageClassName?: string;
-	alt?: string;
 	title?: string;
 	description?: string;
 	subtitle?: string;
@@ -44,7 +43,6 @@ export const CardGames = ({
 	div,
 	text,
 	image,
-	alt,
 	title,
 	description,
 	subtitle,
@@ -66,11 +64,11 @@ export const CardGames = ({
 }: CardGamesProps) => {
 	return (
 		<div className={`flex p-4 rounded-lg bg-white ${cardClassName || ""}`}>
-			<div className={`flex-none ${imageContainer || ""}`}>
+			<div className={`flex-none w-[160px] ${imageContainer || ""}`}>
 				<Image
 					src={image}
-					alt={alt}
-					className={`w-full h-full object-cover ${imageClassName || ""}`}
+					alt="image game"
+					className={`w-full h-full object-contain ${imageClassName || ""}`}
 					width={100}
 					height={185}
 				/>
@@ -78,7 +76,7 @@ export const CardGames = ({
 
 			<div className="flex-grow ml-4 flex flex-col justify-center items-start">
 				<h1
-					className={`text-black mb-2 mt-2 text-sm md:text-base lg:text-lg font-semibold ${
+					className={`text-black mb-2  text-sm md:text-base lg:text-lg font-semibold ${
 						titleClassName || ""
 					}`}
 				>
@@ -116,7 +114,7 @@ export const CardGames = ({
 					{button && (
 						<Link href={link}>
 							<button
-								className={`flex items-center justify-center mx-auto rounded-full border-4 border-gray-200 px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 ${
+								className={`flex items-center justify-center mx-auto rounded-full border-4 border-gray-200 px-4 py-2 md:px-6 md:py-3 ${
 									buttonClassName || ""
 								}`}
 								type={type}
@@ -149,7 +147,7 @@ export const CardGames = ({
 						</div>
 					)}
 					<p
-						className={`text-xs md:text-sm lg:text-base ml-0 md:ml-4 text-black mt-2 text-center ${
+						className={`ml-0 md:ml-4 text-black mt-2 text-center ${
 							textSpanClassName || ""
 						}`}
 					>

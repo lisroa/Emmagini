@@ -14,7 +14,7 @@ interface ComponentProps {
 
 function Page({ params: { idJuego } }: ComponentProps) {
 	const { token, userId } = useAuthContext();
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [response, setResponse] = useState<any>(null);
 
 	const iniciarPartida = useCallback(async () => {

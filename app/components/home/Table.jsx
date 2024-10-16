@@ -11,12 +11,13 @@ import { useDataAlbumContext } from "@/app/context/trivia/AlbumProvider";
 import WhileTap from "@/app/components/animations/WhileTap";
 
 function Table() {
-	const { infoGames, infoTruco, empresa, textos } = useDataContext();
+	const { infoGames, infoTruco, empresa, textos, data } = useDataContext();
 	const { setIdTorneo } = useSeriesTrucoDataContext();
 	const { idAlbum, setIdAlbum } = useDataAlbumContext();
 	const router = useRouter();
 
 	console.log("infoGames", infoGames);
+	console.log("Data", data);
 
 	const saveTournamentIdToCache = (tournamentId) => {
 		localStorage.setItem("tournamentId", tournamentId);
@@ -65,7 +66,7 @@ function Table() {
 		}
 		return url;
 	}
-	console.log("infoTruco", infoTruco);
+	/*console.log("infoTruco", infoTruco);*/
 
 	return (
 		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[110px]">
