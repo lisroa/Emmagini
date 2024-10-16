@@ -7,7 +7,6 @@ import Board from "./Board/Board";
 import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
-import ConfettiExplosion from "react-confetti-explosion";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -93,7 +92,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			setSelectedMemoBlock(memoBlock);
 		} else if (selectedMemoBlock.id === memoBlock.id) {
 			setSelectedMemoBlock(null);
+			// @ts-ignore
 			setSuccessfulAttempts((prev) => prev + 1);
+			// @ts-ignore
 			setPairsFound((prev) => prev + 1);
 
 			if (pairsFound + 1 === shuffledMemoBlocks.length / 2) {
@@ -113,6 +114,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				setShuffledMemoBlocks(shuffledMemoBlocksCopy);
 				setSelectedMemoBlock(null);
 				setAnimating(false);
+				// @ts-ignore
 				setFailedAttempts((prev) => prev + 1);
 			}, 1000);
 		}
@@ -285,8 +287,11 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				cover={cover}
 			/>
 			<DinamicButtonNav
+				// @ts-ignore
 				icon1={<GrPowerReset size={25} className="text-white" />}
+				// @ts-ignore
 				icon2={<MdWorkspacePremium size={25} className="text-white" />}
+				// @ts-ignore
 				icon3={<IoMdArrowRoundBack size={25} className="text-white" />}
 				texto1="Reiniciar"
 				texto2="Premium"

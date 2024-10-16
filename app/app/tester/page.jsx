@@ -1,14 +1,47 @@
-"use client";
-//import CountdownTimer from "@/app/components/extras/CountdownTimer";
+" use client";
 
-function page() {
+import WheelComponent from "react-wheel-of-prizes";
+
+function Page() {
+	const segments = [
+		"better luck next time",
+		"won 70",
+		"won 10",
+		"better luck next time",
+		"won 2",
+		"won uber pass",
+		"better luck next time",
+		"won a voucher",
+	];
+	const segColors = [
+		"#EE4040",
+		"#F0CF50",
+		"#815CD1",
+		"#3DA5E0",
+		"#34A24F",
+		"#F9AA1F",
+		"#EC3F3F",
+		"#FF9000",
+	];
+	const onFinished = (winner) => {
+		console.log(winner);
+	};
 	return (
-		<>
-			<div className="bg-yellow-400 w-full h-[400px]">
-				<h1>Page in progress</h1>
-			</div>
-		</>
+		<WheelComponent
+			segments={segments}
+			segColors={segColors}
+			winningSegment="won 10"
+			onFinished={(winner) => onFinished(winner)}
+			primaryColor="black"
+			contrastColor="white"
+			buttonText="Spin"
+			isOnlyOnce={false}
+			size={290}
+			upDuration={100}
+			downDuration={1000}
+			fontFamily="Arial"
+		/>
 	);
 }
 
-export default page;
+export default Page;

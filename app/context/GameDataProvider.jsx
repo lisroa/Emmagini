@@ -71,6 +71,7 @@ export const GameDataProvider = ({ children }) => {
 	return (
 		<GameDataContext.Provider
 			value={{
+				fetchAppData,
 				data,
 				infoGames: data?.contenidos,
 				textos: data?.keytext,

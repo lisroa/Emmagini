@@ -172,7 +172,6 @@ function Page() {
 						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
 							{infoSeriesTruco.esperando.map((partido) => (
 								<CardNewGame
-									key={partido.id}
 									image={tester}
 									alt="Partida creada"
 									title={partido.nombre_1}
@@ -193,6 +192,7 @@ function Page() {
 						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
 							{infoSeriesTruco.actuales.map((partido) => (
 								<CardGames
+									key={partido.id}
 									cardClassName="drop-shadow-lg"
 									image={tester}
 									imageClassName="w-[91px] h-[155px]"
@@ -218,6 +218,7 @@ function Page() {
 						<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-4 gap-6">
 							{infoSeriesTruco.abiertos.map((partido) => (
 								<CardGames
+									key={partido.id}
 									cardClassName="drop-shadow-lg"
 									image={tester}
 									imageClassName="w-[91px] h-[155px]"
