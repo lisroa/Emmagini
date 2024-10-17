@@ -44,7 +44,6 @@ function Page() {
 										imageContainer="flex justify-center items-center"
 										imageClassName="w-full max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px] h-auto"
 										image={fixImageUrl(producto.imagen)}
-										alt={producto.nombre}
 										altText={`Precio: ${producto.monto_coins}`}
 										title={producto.nombre}
 										description={`${producto.descripcion}`}
@@ -74,7 +73,6 @@ function Page() {
 										imageContainer="flex justify-center items-center"
 										imageClassName="w-full max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px] h-auto"
 										image={fixImageUrl(producto.imagen)}
-										alt={producto.nombre}
 										altText={`Precio: ${producto.monto_coins}`}
 										title={producto.nombre}
 										description={`${producto.descripcion}`}
