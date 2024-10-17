@@ -7,6 +7,7 @@ import Board from "./Board/Board";
 import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
+import Ruleta from "@/app/components/ruleta/Ruleta";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -33,7 +34,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const [resetTimer, setResetTimer] = useState(false);
 	const [modalContent, setModalContent] = useState<any>(null);
 	const [modalText, setModalText] = useState<any>(null);
-	const [confettiVisible, setConfettiVisible] = useState(false);
+	const [showRuleta, setShowRuleta] = useState(false);
 	const [cover, setCover] = useState<string>("");
 
 	useEffect(() => {
@@ -149,9 +150,13 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			const updatedContent = { ...response.data, texto: updatedText };
 
 			setModalContent(updatedContent);
-			setConfettiVisible(true);
+
 			setModalOpen(true);
 			setModalText(updatedContent.texto);
+
+			if (response.data.ruleta === "1") {
+				setShowRuleta(true);
+			}
 
 			await fetchAppData();
 		} catch (error) {
@@ -196,7 +201,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			const updatedContent = { ...response.data, texto: updatedText };
 
 			setModalContent(updatedContent);
-			setConfettiVisible(true);
+
 			setModalOpen(true);
 			setModalText("Oppss! Tiempo agotado");
 
@@ -246,7 +251,6 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				setFailedAttempts(0);
 				setPairsFound(0);
 				setAnimating(false);
-				setConfettiVisible(false);
 				setModalOpen(false);
 				setTimeoutCalled(false);
 				setResetTimer(true);
@@ -299,8 +303,8 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				onClick1={reiniciarJuego}
 				onClick3={handleClickBack}
 			/>
-
 			{modalOpen && <ModalMensajes message={modalText || modalContent.texto} />}
+			{showRuleta && <Ruleta />}
 		</div>
 	);
 };

@@ -62,6 +62,9 @@ importers:
       react-toastify:
         specifier: ^10.0.5
         version: 10.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-wheel-of-prizes:
+        specifier: ^1.1.0
+        version: 1.1.0(react@18.3.1)
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -1861,6 +1864,12 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
+  react-wheel-of-prizes@1.1.0:
+    resolution: {integrity: sha512-ev72lZQNPmToqeiXaQlH7d9EIxzJJqj0VzDTk8wVl3UOEnORs1uyC2supZmVaNxE3aZwh+wXTyyT422F3IYmQA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16.0.0
+
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
@@ -2135,6 +2144,11 @@ packages:
   typed-array-length@1.0.6:
     resolution: {integrity: sha512-/OxDN6OtAk5KBpGb28T+HZc2M+ADtvRxXrKKbUwtsLgdoxgX13hyy7ek6bFRl5+aBs2yZzB0c4CnQfAtVypW/g==}
     engines: {node: '>= 0.4'}
+
+  typescript@3.9.10:
+    resolution: {integrity: sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
 
   typescript@5.4.3:
     resolution: {integrity: sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==}
@@ -4381,6 +4395,12 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  react-wheel-of-prizes@1.1.0(react@18.3.1):
+    dependencies:
+      '@babel/runtime': 7.24.1
+      react: 18.3.1
+      typescript: 3.9.10
+
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
@@ -4711,6 +4731,8 @@ snapshots:
       has-proto: 1.0.3
       is-typed-array: 1.1.13
       possible-typed-array-names: 1.0.0
+
+  typescript@3.9.10: {}
 
   typescript@5.4.3: {}
 
