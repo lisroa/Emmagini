@@ -2,8 +2,8 @@ import React from "react";
 
 interface ModalProps {
 	message: string;
-	buttonText: string;
-	onButtonClick: () => void;
+	buttonText?: string;
+	onButtonClick?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({

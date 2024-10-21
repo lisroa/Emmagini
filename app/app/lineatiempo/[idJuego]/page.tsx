@@ -8,6 +8,7 @@ import { RoundButton } from "@/app/components/buttons/RoundButton";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";
+import Ruleta from "@/app/components/ruleta/Ruleta";
 import "@/app/components/styles/loader.css";
 
 interface ComponentProps {
@@ -294,7 +295,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 										key={image.id}
 										draggableId={image.id}
 										index={index}
-										isDragDisabled={isCorrect} // Deshabilitar el arrastre si es correcta
+										isDragDisabled={isCorrect}
 									>
 										{(provided) => (
 											<div
