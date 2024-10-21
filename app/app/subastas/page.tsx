@@ -95,7 +95,6 @@ function Page() {
 											imageContainer="flex justify-start items-center"
 											imageClassName="w-[80px] h-[130px] sm:w-[150px] sm:h-[155px] md:w-[180px] md:h-[180px] lg:w-[191px] lg:h-[191px]"
 											image={fixImageUrl(subasta.imagen)}
-											alt={subasta.nombre}
 											title={subasta.nombre}
 											description={subasta.descripcion}
 											altText={`Ganador actual: ${subasta.usuario}`}
@@ -127,7 +126,6 @@ function Page() {
 												imageContainer="flex justify-start items-center"
 												imageClassName="w-[80px] h-[130px] sm:w-[150px] sm:h-[155px] md:w-[180px] md:h-[180px] lg:w-[191px] lg:h-[191px]"
 												image={fixImageUrl(subasta.imagen)}
-												alt={subasta.nombre}
 												altText={`Ganador actual: ${subasta.usuario}`}
 												title={subasta.nombre}
 												description={subasta.descripcion}

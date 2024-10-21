@@ -35,6 +35,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const [modalContent, setModalContent] = useState<any>(null);
 	const [modalText, setModalText] = useState<any>(null);
 	const [showRuleta, setShowRuleta] = useState(false);
+	const [modalButtonText, setModalButtonText] = useState<string>("Volver");
+	const [buttonText, setButtonText] = useState<string>("Volver");
+	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
 	const [cover, setCover] = useState<string>("");
 
 	useEffect(() => {
@@ -154,9 +157,13 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			setModalOpen(true);
 			setModalText(updatedContent.texto);
 
-			if (response.data.ruleta === "1") {
-				setShowRuleta(true);
-			}
+			if (response.data.ruleta === 1) {
+				setButtonText("Multiplica tu premio");
+				setShowRuletaButton(true); // Mostrar la opción de ruleta
+			} else {
+				setButtonText("Volver");
+				setShowRuletaButton(false);
+			} // No mostrar ruleta
 
 			await fetchAppData();
 		} catch (error) {
@@ -264,7 +271,14 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const handleClickBack = () => {
 		router.back();
 	};
-
+	const handleModalButtonClick = () => {
+		if (showRuletaButton) {
+			setModalOpen(false);
+			setTimeout(() => setShowRuleta(true), 200);
+		} else {
+			router.back();
+		}
+	};
 	return (
 		<div>
 			<h1 className="mt-20 text-white text-center text-2xl font-bold">
@@ -303,8 +317,15 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				onClick1={reiniciarJuego}
 				onClick3={handleClickBack}
 			/>
-			{modalOpen && <ModalMensajes message={modalText || modalContent.texto} />}
-			{showRuleta && <Ruleta />}
+			{/* Otros componentes */}
+			{modalOpen && (
+				<ModalMensajes
+					message={modalText || ""}
+					buttonText={buttonText}
+					onButtonClick={handleModalButtonClick}
+				/>
+			)}
+			{showRuleta && <Ruleta idPartida={idPartida} />}
 		</div>
 	);
 };
