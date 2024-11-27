@@ -1,11 +1,10 @@
-// TO-DO: Armar funcion que haga la pegada para traer los sorteos y armar pages de los sorteos.
-// TO-DO: Agregar el truco a la demo25 para que venga todo en contenidos.
-
 "use client";
+import { useState } from "react";
+import ModalMensaje from "@/app/components/extras/ModalMensajes";
+import { useDataContext } from "../../context/GameDataProvider";
 import { useRouter } from "next/navigation";
 import CardHome from "../cards/CardHome";
 import CardTruco from "@/app/components/cards/CardTruco";
-import { useDataContext } from "../../context/GameDataProvider";
 import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
 import { useDataAlbumContext } from "@/app/context/trivia/AlbumProvider";
 import WhileTap from "@/app/components/animations/WhileTap";
@@ -15,9 +14,22 @@ function Table() {
 	const { setIdTorneo } = useSeriesTrucoDataContext();
 	const { idAlbum, setIdAlbum } = useDataAlbumContext();
 	const router = useRouter();
+	const [showModal, setShowModal] = useState(false);
+	const [modalMessage, setModalMessage] = useState("");
+	const userModoPremium = data?.premium === true;
 
 	console.log("infoGames", infoGames);
 	console.log("Data", data);
+	//console.log("Empresa", empresa);
+
+	const showModalMessage = (message) => {
+		setModalMessage(message);
+		setShowModal(true);
+	};
+
+	const closeModal = () => {
+		setShowModal(false);
+	};
 
 	const saveTournamentIdToCache = (tournamentId) => {
 		localStorage.setItem("tournamentId", tournamentId);
@@ -32,26 +44,16 @@ function Table() {
 		if (tipo === "museo") {
 			router.push(`/app/museo/${id}`);
 		} else if (tipo === "album") {
-			if (nombre === "Trivia Copa") {
+			if (nombre === "Trivia Copa ") {
 				router.push(`/app/trivia/${id}`);
 				setIdAlbum(id);
-			} else if (nombre === "Stickers tester") {
-				router.push(`/app/stickers/${id}`);
 			} else {
 				router.push(`/app/stickers/${id}`);
 			}
 		} else if (tipo === "parejas") {
 			router.push(`/app/parejas/${id}`);
 		} else if (tipo === "memotest") {
-			if (nombre === "Desafio Naldo") {
-				router.push(`/app/memotest/${id}`);
-			} else if (nombre === "desafio Chevrolet") {
-				router.push(`/app/memotest/${id}`);
-			} else if (nombre === "Desafio Rapicuotas") {
-				router.push(`/app/memotest/${id}`);
-			} else {
-				router.push(`/app/memotest/${id}`);
-			}
+			router.push(`/app/memotest/${id}`);
 		} else if (tipo === "lineatiempo") {
 			router.push(`/app/lineatiempo/${id}`);
 		} else if (tipo === "torneotruco") {
@@ -60,16 +62,41 @@ function Table() {
 			("");
 		}
 	};
-	function fixImageUrl(url) {
+
+	const fixImageUrl = (url) => {
 		if (url && url.startsWith("//")) {
 			return `https:${url}`;
 		}
 		return url;
-	}
-	/*console.log("infoTruco", infoTruco);*/
+	};
+
+	const isPremiumContent = (content) =>
+		content?.solo_premium === true || content?.solo_premium === "1";
+
+	const handleCardClickWithModal = (game, tipo) => {
+		if (isPremiumContent(game) && !userModoPremium) {
+			showModalMessage(
+				"Upss! Este contenido es exclusivo para usuarios premium."
+			);
+		} else {
+			handleCardClick(game.id, tipo, game.titulo);
+		}
+	};
+
+	const handleButtonCLick = () => {
+		router.push(`/app/premium`);
+	};
 
 	return (
 		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[110px]">
+			{showModal && (
+				<ModalMensaje
+					message={modalMessage}
+					buttonText="Suscribirme"
+					onButtonClick={handleButtonCLick}
+				/>
+			)}
+
 			<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
 				{empresa && empresa.mostrar_sorteos === 1 && (
 					<WhileTap>
@@ -82,12 +109,13 @@ function Table() {
 						</div>
 					</WhileTap>
 				)}
+
 				{infoGames &&
 					Object.values(infoGames)
 						.sort((a, b) => a.orden - b.orden)
 						.map((game) => (
 							<WhileTap key={game.id}>
-								<div className="flex justify-center" key={game.id}>
+								<div className="flex justify-center">
 									<CardHome
 										text={game.titulo}
 										imageCard={
@@ -96,30 +124,38 @@ function Table() {
 											game.imagen_1 ||
 											game.imagen_0
 										}
-										onClick={() =>
-											handleCardClick(game.id, game.tipo, game.titulo)
+										imageClassName={
+											isPremiumContent(game) && !userModoPremium
+												? "blur-sm"
+												: ""
 										}
+										onClick={() => handleCardClickWithModal(game, game.tipo)}
 									/>
 								</div>
 							</WhileTap>
 						))}
+
 				{infoTruco &&
 					Object.values(infoTruco)
 						.sort((a, b) => a.orden - b.orden)
 						.map((torneo) => (
 							<WhileTap key={torneo.id}>
-								<div className="flex justify-center" key={torneo.id}>
+								<div className="flex justify-center">
 									<CardHome
-										onClick={() => {
-											handleTournamentCardClick(torneo.id);
-											handleCardClick(torneo.id, torneo.tipo, torneo.titulo);
-										}}
+										onClick={() =>
+											handleCardClickWithModal(torneo, torneo.tipo)
+										}
 										text={torneo.titulo}
 										imageCard={
 											torneo.image ||
 											torneo.imagen ||
 											torneo.imagen_1 ||
 											torneo.imagen_0
+										}
+										imageClassName={
+											isPremiumContent(game) && !userModoPremium
+												? "blur-sm"
+												: ""
 										}
 									/>
 								</div>

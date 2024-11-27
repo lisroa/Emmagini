@@ -4,10 +4,17 @@ interface ComponentProps {
 	text: string;
 	onClick?: () => void;
 	imageCard: string;
+	imageClassName: string;
 	text2?: string;
 }
 
-function CardHome({ text, imageCard, onClick, text2 }: ComponentProps) {
+function CardHome({
+	text,
+	imageCard,
+	imageClassName,
+	onClick,
+	text2,
+}: ComponentProps) {
 	return (
 		<div
 			className="bg-white rounded-md shadow-md p-4 w-[260px] h-[263.01px] h-auto  flex flex-col items-center cursor-pointer  drop-shadow-lg max-h-[640px]"
@@ -18,8 +25,9 @@ function CardHome({ text, imageCard, onClick, text2 }: ComponentProps) {
 					src={imageCard}
 					alt="Card"
 					layout="fill"
-					objectFit="cover"
-					className="w-full h-full"
+					style={{ objectFit: "cover" }}
+					className={"w-full h-full".concat(" ", imageClassName || "")}
+					sizes="80"
 				/>
 			</div>
 			<span className="text-black font-bold text-base leading-5 text-center mt-8 align-middle">

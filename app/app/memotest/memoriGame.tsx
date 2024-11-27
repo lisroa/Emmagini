@@ -159,11 +159,11 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 
 			if (response.data.ruleta === 1) {
 				setButtonText("Multiplica tu premio");
-				setShowRuletaButton(true); // Mostrar la opción de ruleta
+				setShowRuletaButton(true);
 			} else {
 				setButtonText("Volver");
 				setShowRuletaButton(false);
-			} // No mostrar ruleta
+			}
 
 			await fetchAppData();
 		} catch (error) {
@@ -317,7 +317,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				onClick1={reiniciarJuego}
 				onClick3={handleClickBack}
 			/>
-			{/* Otros componentes */}
+
 			{modalOpen && (
 				<ModalMensajes
 					message={modalText || ""}

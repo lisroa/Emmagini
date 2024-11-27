@@ -42,7 +42,7 @@ function Ruleta({ idPartida }) {
 				}
 			);
 
-			console.log(response.data);
+			//console.log(response.data);
 			setResultadoRuleta(response.data);
 
 			const premioX = response.data.premio_x;

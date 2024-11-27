@@ -68,6 +68,11 @@ export const GameDataProvider = ({ children }) => {
 		refetchOnWindowFocus: false,
 	});
 
+	const empresaModoPremium = data?.empresa?.modo_premium === 1;
+	const userModoPremium = data?.premium === true;
+
+	//console.log("Es usuario Premium:", userModoPremium);
+
 	return (
 		<GameDataContext.Provider
 			value={{
@@ -82,6 +87,8 @@ export const GameDataProvider = ({ children }) => {
 				isLoadingTruco,
 				errorTruco,
 				infoTruco: dataTruco?.contenidos,
+				empresaModoPremium,
+				userModoPremium,
 			}}
 		>
 			{children}

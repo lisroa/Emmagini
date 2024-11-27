@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
@@ -8,7 +9,11 @@ import { RoundButton } from "@/app/components/buttons/RoundButton";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";
+import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
 import Ruleta from "@/app/components/ruleta/Ruleta";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { MdWorkspacePremium } from "react-icons/md";
+import { GrPowerReset } from "react-icons/gr";
 import "@/app/components/styles/loader.css";
 
 interface ComponentProps {
@@ -18,6 +23,7 @@ interface ComponentProps {
 }
 
 function Page({ params: { idJuego } }: ComponentProps) {
+	const router = useRouter();
 	const { infoGames } = useDataContext();
 	const { userId, token } = useAuthContext();
 	const [responseApi, setResponseApi] = useState<any>(null);
@@ -206,7 +212,6 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			setCorrectCount(correct);
 			setIncorrectCount(incorrect);
 
-			// Reubicar imágenes correctas
 			reubicarImagenesCorrectas();
 
 			if (incorrect === 0) {
@@ -239,6 +244,10 @@ function Page({ params: { idJuego } }: ComponentProps) {
 
 	const handleCloseModalGame = () => {
 		setModalGameOpen(false);
+	};
+
+	const handleClickBack = () => {
+		router.back();
 	};
 
 	if (!infoGames && loading) {
@@ -282,7 +291,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						<div
 							ref={provided.innerRef}
 							{...provided.droppableProps}
-							className="grid grid-cols-1 gap-4 mt-8"
+							className="grid grid-cols-1 gap-4 mt-8 pb-[100px]"
 						>
 							{images.map((image: any, index: number) => {
 								const error = resultErrors.find(
@@ -322,7 +331,13 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					)}
 				</Droppable>
 			</DragDropContext>
-			{modalOpen && <ModalMensajes message={modalText || modalContent.texto} />}
+			{modalOpen && (
+				<ModalMensajes
+					message={modalText || modalContent.texto}
+					buttonText="Volver"
+					onButtonClick={handleClickBack}
+				/>
+			)}
 			{modalGameOpen && (
 				<ModalGame
 					message={modalText}
@@ -330,11 +345,23 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					onClick={handleCloseModalGame}
 				/>
 			)}
+
+			<DinamicButtonNav
+				icon1={<GrPowerReset size={25} className="text-white" />}
+				icon2={<MdWorkspacePremium size={25} className="text-white" />}
+				icon3={<IoMdArrowRoundBack size={25} className="text-white" />}
+				texto1="Reiniciar"
+				texto2="Premium"
+				texto3="Volver"
+				onClick3={handleClickBack}
+			/>
 		</div>
 	);
 }
 
 export default Page;
+
+// Juego sin el dragg and drop
 
 /*"use client";
 import { useEffect, useState, useCallback } from "react";

@@ -31,6 +31,7 @@ const config: Config = {
 				blueEmmagini: "#1C75BC",
 				red: "#BC1C1C",
 				backgroundGray: "#F0F6F9",
+				gris: "#D9D9D9",
 			},
 		},
 	},

@@ -31,7 +31,7 @@ export const RoundButton = ({
 			{logo ? logo : null}
 
 			<p
-				className={"text-black font-medium text-center text-md".concat(
+				className={"font-medium text-center text-md".concat(
 					" ",
 					textClassName || ""
 				)}
