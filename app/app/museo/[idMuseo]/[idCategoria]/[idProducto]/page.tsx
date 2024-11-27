@@ -28,7 +28,6 @@ export default function Page({
 	const { infoGames } = useDataContext();
 	const router = useRouter();
 
-	// Definimos el hook useMemo antes de cualquier retorno
 	const extractImageUrls = () => {
 		const imageUrls: string[] = [];
 		if (infoGames) {
@@ -53,7 +52,6 @@ export default function Page({
 
 	const imageUrls = useMemo(extractImageUrls, [infoGames, idMuseo, idProducto]);
 
-	// Continuamos con los retornos condicionales
 	if (!infoGames) {
 		return (
 			<div className="mt-20 text-black">

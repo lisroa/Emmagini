@@ -4,7 +4,7 @@ interface ComponentProps {
 	text: string;
 	onClick?: () => void;
 	imageCard: string;
-	imageClassName: string;
+	imageClassName?: string;
 	text2?: string;
 }
 
