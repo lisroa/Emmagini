@@ -53,7 +53,7 @@ const Home = () => {
 			<ButtonNav
 				link1="/app/subastas"
 				link2="/app/productos"
-				link3="/app/subastas"
+				link3="/app/premium"
 				icon1={<BsGift size={18} className="text-white" />}
 				icon2={<BsCartCheck size={18} className="text-white" />}
 				icon3={<AiOutlineTrophy size={18} className="text-white" />}
