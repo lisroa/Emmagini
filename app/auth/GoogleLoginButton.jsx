@@ -20,7 +20,7 @@ const GoogleLoginButton = () => {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/google_login",
 					{
-						host: "demo25.emmagini.com",
+						host: "demo14.emmagini.com",
 						client_id: credentialResponse.clientId,
 						credential: credentialResponse.credential,
 						fcm_token: "",

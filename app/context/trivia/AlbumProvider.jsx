@@ -23,8 +23,8 @@ export const AlbumDataProvider = ({ children }) => {
 				id: idAlbum,
 				token,
 				userid: userId,
-				host: "demo25.emmagini.com",
-				callback: "https://demo25.emmagini.com/home.php#v=inicio",
+				host: "demo14.emmagini.com",
+				callback: "https://demo14.emmagini.com/home.php#v=inicio",
 				lang: "es",
 			},
 			{

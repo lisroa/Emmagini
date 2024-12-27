@@ -136,7 +136,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 					correctas: successfulAttempts,
 					incorrectas: failedAttempts,
 					timeout: 0,
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{
@@ -194,7 +194,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 					correctas: successfulAttempts,
 					incorrectas: failedAttempts,
 					timeout: 1,
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{

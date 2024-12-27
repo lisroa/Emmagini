@@ -26,7 +26,7 @@ const fetchAuctionDetails = async (
 			token,
 			userid: userId,
 			id: idSubasta,
-			host: "demo25.emmagini.com",
+			host: "demo14.emmagini.com",
 			lang: "es",
 		},
 		{
@@ -50,9 +50,9 @@ const placeBid = async (
 			new URLSearchParams({
 				q: idSubasta,
 				w: oferta,
-				host: "demo25.emmagini.com",
+				host: "demo14.emmagini.com",
 				callback:
-					"https://demo25.emmagini.com/home.php#v=detalle-subastas&id=a0f94f4a-c050-11ee-bc84-ec15a2edbff6",
+					"https://demo14.emmagini.com/home.php#v=detalle-subastas&id=a0f94f4a-c050-11ee-bc84-ec15a2edbff6",
 				token,
 				userid: userId,
 				lang: "es",

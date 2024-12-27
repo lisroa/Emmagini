@@ -60,7 +60,7 @@ export const FrontDataProvider = ({ children }) => {
 				{
 					token: token,
 					userid: userId,
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					id_club: "e6b564b3-c526-11ee-bc84-ec15a2edbff6",
 					lang: "es",
 				},

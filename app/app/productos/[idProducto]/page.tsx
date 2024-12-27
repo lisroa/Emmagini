@@ -28,8 +28,8 @@ const fetchProduct = async (
 			token,
 			userid: userId,
 			id: idProducto,
-			host: "demo25.emmagini.com",
-			callback: `https://demo25.emmagini.com/home.php#v=detalle-productos&id=${idProducto}`,
+			host: "demo14.emmagini.com",
+			callback: `https://demo14.emmagini.com/home.php#v=detalle-productos&id=${idProducto}`,
 			lang: "es",
 		},
 		{
@@ -54,8 +54,8 @@ const purchaseProduct = async (
 			{
 				q: productId,
 				w: price,
-				host: "demo25.emmagini.com",
-				callback: `https://demo25.emmagini.com/home.php#v=detalle-productos&id=${productId}`,
+				host: "demo14.emmagini.com",
+				callback: `https://demo14.emmagini.com/home.php#v=detalle-productos&id=${productId}`,
 				token,
 				userid: userId,
 				lang: "es",

@@ -55,7 +55,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					userid: userId,
 					id_juego: idJuego,
 					id_partida: "",
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{
@@ -150,7 +150,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					correctas: correctCount,
 					incorrectas: incorrectCount,
 					timeout: 0,
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{
@@ -190,7 +190,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					userid: userId,
 					id_juego: idJuego,
 					data: JSON.stringify(formattedData),
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{

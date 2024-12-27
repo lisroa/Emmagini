@@ -14,10 +14,10 @@ export const GameDataProvider = ({ children }) => {
 		const response = await axios.post(
 			"https://backend.emmagini.com/api2/validate",
 			{
-				callback: "https://demo25.emmagini.com/home.php#v=inicio",
+				callback: "https://demo14.emmagini.com/home.php#v=inicio",
 				token,
 				userid: userId,
-				host: "demo25.emmagini.com",
+				host: "demo14.emmagini.com",
 				lang: "es",
 			},
 			{

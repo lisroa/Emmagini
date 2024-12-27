@@ -40,8 +40,8 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					token: token,
 					userid: userId,
 					id: idAlbum,
-					host: "demo5.emmagini.com",
-					callback: "https://demo5.emmagini.com/home.php#v=inicio",
+					host: "demo14.emmagini.com",
+					callback: "https://demo14.emmagini.com/home.php#v=inicio",
 					lang: "es",
 				},
 				{
@@ -97,10 +97,10 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					token: token,
 					userid: userId,
 					id: idAlbum,
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 					callback:
-						"https://demo25.emmagini.com/home.php#v=album&id=" + idAlbum,
+						"https://demo14.emmagini.com/home.php#v=album&id=" + idAlbum,
 				},
 				{
 					headers: {

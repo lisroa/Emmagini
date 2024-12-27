@@ -46,7 +46,7 @@ function Page() {
 				"https://backend.emmagini.com/api2/bepremium_club",
 				{
 					code: inputValue,
-					host: "demo25.emmagini.com/home.php#v=inicio",
+					host: "demo14.emmagini.com/home.php#v=inicio",
 					token: token,
 					userid: userId,
 					lang: "es",

@@ -65,7 +65,7 @@ const SideMenu = () => {
 				{
 					token: token,
 					userid: userId,
-					host: "demo9.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{
@@ -113,15 +113,17 @@ const SideMenu = () => {
 					</div>
 
 					<div className="mt-20">
-						<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
-							<div className="flex items-center">
-								<AiOutlineTrophy className="mr-2" />
-								<span className="text-black ml-2 font-bold text-sm">
-									Premium
-								</span>
-							</div>
-							<AiOutlineArrowRight />
-						</button>
+						<Link href="/app/premium">
+							<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
+								<div className="flex items-center">
+									<AiOutlineTrophy className="mr-2" />
+									<span className="text-black ml-2 font-bold text-sm">
+										Premium
+									</span>
+								</div>
+								<AiOutlineArrowRight />
+							</button>
+						</Link>
 
 						<Link href="/app/subastas">
 							<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
@@ -147,7 +149,7 @@ const SideMenu = () => {
 							</button>
 						</Link>
 
-						<Link href="/app/perfil">
+						<Link href="/app">
 							<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
 								<div className="flex items-center">
 									<FaRegUserCircle className="mr-2" />

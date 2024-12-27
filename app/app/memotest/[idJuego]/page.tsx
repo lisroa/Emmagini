@@ -26,7 +26,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					userid: userId,
 					id_juego: idJuego,
 					id_partida: "",
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 				},
 				{

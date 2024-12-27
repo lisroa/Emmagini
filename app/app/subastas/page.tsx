@@ -13,7 +13,7 @@ const fetchAuctions = async (token: any, userId: any) => {
 		{
 			token,
 			userid: userId,
-			host: "demo25.emmagini.com",
+			host: "demo62.emmagini.com",
 			id_club: null,
 			lang: "es",
 		},
