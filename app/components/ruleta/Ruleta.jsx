@@ -31,7 +31,7 @@ function Ruleta({ idPartida }) {
 				{
 					token: token,
 					userid: userId,
-					host: "demo25.emmagini.com",
+					host: "demo14.emmagini.com",
 					lang: "es",
 					id: idPartida,
 				},
@@ -91,27 +91,27 @@ function Ruleta({ idPartida }) {
 					<div className="number" style={{ "--i": 2, "--clr": "#f7be57" }}>
 						<span>x2</span>
 					</div>
-					{/* @ts-ignore */}
+
 					<div className="number" style={{ "--i": 3, "--clr": "#4eaf46" }}>
 						<span>x3</span>
 					</div>
-					{/* @ts-ignore */}
+
 					<div className="number" style={{ "--i": 4, "--clr": "#7568ae" }}>
 						<span>x10</span>
 					</div>
-					{/* @ts-ignore */}
+
 					<div className="number" style={{ "--i": 5, "--clr": "#a2cadf" }}>
 						<span>x1</span>
 					</div>
-					{/* @ts-ignore */}
+
 					<div className="number" style={{ "--i": 6, "--clr": "#f7be57" }}>
 						<span>x2</span>
 					</div>
-					{/* @ts-ignore */}
+
 					<div className="number" style={{ "--i": 7, "--clr": "#4eaf46" }}>
 						<span>x3</span>
 					</div>
-					{/* @ts-ignore */}
+
 					<div className="number" style={{ "--i": 8, "--clr": "#7568ae" }}>
 						<span>x10</span>
 					</div>

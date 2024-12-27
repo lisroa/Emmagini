@@ -43,7 +43,7 @@ const Home = () => {
 	return (
 		<main>
 			<ImageBanner
-				image={banner}
+				image={empresa.header_imagen}
 				welcomText={empresa.header_1}
 				title={empresa.header_2}
 				subtitle={empresa.header_contenido}

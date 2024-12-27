@@ -132,7 +132,7 @@ export default function Page({
 	);
 
 	const fixImageUrl = (url: string) => {
-		if (url.startsWith("//")) {
+		if (url?.startsWith("//")) {
 			return `https:${url}`;
 		}
 		return url;
@@ -242,7 +242,17 @@ export default function Page({
 															<CardHome
 																text={relatedProduct.titulo}
 																imageCard={
+																	fixImageUrl(relatedProduct.imagen_0) ||
 																	fixImageUrl(relatedProduct.imagen_1) ||
+																	fixImageUrl(relatedProduct.imagen_2) ||
+																	fixImageUrl(relatedProduct.imagen_3) ||
+																	fixImageUrl(relatedProduct.imagen_4) ||
+																	fixImageUrl(relatedProduct.imagen_5) ||
+																	fixImageUrl(relatedProduct.imagen_6) ||
+																	fixImageUrl(relatedProduct.imagen_7) ||
+																	fixImageUrl(relatedProduct.imagen_8) ||
+																	fixImageUrl(relatedProduct.imagen_9) ||
+																	fixImageUrl(relatedProduct.imagen_10) ||
 																	fixImageUrl(relatedProduct.imagen) ||
 																	fixImageUrl(relatedProduct.image)
 																}
@@ -260,7 +270,7 @@ export default function Page({
 										</section>
 									);
 								default:
-									return <p key={index}>Case por defecto: Sin contenido</p>;
+									return <p key={index}>Sin contenido</p>;
 							}
 						})}
 				</div>

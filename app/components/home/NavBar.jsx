@@ -11,7 +11,7 @@ import ConstantMovement from "@/app/components/animations/ConstantMovement";
 
 const NavBar = () => {
 	const { setSideMenuOpen } = useDataFrontContext();
-	const { data } = useDataContext();
+	const { data, empresa } = useDataContext();
 
 	const monedas = data?.userdata?.monedas || 0;
 
@@ -20,7 +20,12 @@ const NavBar = () => {
 			<ul className="flex items-center gap-3">
 				<li className="font-semibold text-lg text-white">
 					<Link href="/app">
-						<Image src={logo} width={106} height={53} alt="logo" />
+						<Image
+							src={`https://backend.emmagini.com/uploads/${empresa?.logo}`}
+							width={106}
+							height={53}
+							alt="logo"
+						/>
 					</Link>
 				</li>
 			</ul>

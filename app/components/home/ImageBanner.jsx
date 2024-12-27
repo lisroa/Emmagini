@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function ImageBanner(props) {
 	return (
-		<div className="relative overflow-hidden mt-16 h-[460px]">
+		<div className="relative overflow-hidden mt-16 h-[460px] w-full">
 			<div className="absolute inset-0">
 				<Image
 					src={props.image}

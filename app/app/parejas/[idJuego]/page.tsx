@@ -299,9 +299,9 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			// @ts-ignore
 			const isMatched = matchedDivs.includes(realIndex);
 			const borderColor = isMatched
-				? "border-green-500"
+				? "border-green-700"
 				: isSelected
-				? "border-red"
+				? "border-blueEmmagini"
 				: "border-gray-500";
 
 			return (
@@ -309,7 +309,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					key={realIndex}
 					onClick={() => handleDivClick(item, realIndex)}
 					className={`w-full h-28 rounded-lg border-4 ${borderColor} ${
-						isMatched ? "blur-sm cursor-not-allowed" : ""
+						isMatched ? "cursor-not-allowed" : ""
 					}`}
 				>
 					<Image
@@ -500,7 +500,13 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 				onClick1={reiniciarJuego}
 				onClick3={handleClickBack}
 			/>
-			{modalOpen && <ModalMensajes message={modalText || modalContent.texto} />}
+			{modalOpen && (
+				<ModalMensajes
+					message={modalText || modalContent.texto}
+					buttonText="Aceptar"
+					onButtonClick={handleClickBack}
+				/>
+			)}
 			{modalGameOpen && (
 				<ModalGame
 					message={modalText}

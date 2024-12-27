@@ -37,7 +37,7 @@ function Page() {
 	};
 
 	const handleButton = () => {
-		router.back();
+		setShowModal(false);
 	};
 
 	const subscribeToPremium = useCallback(async () => {
@@ -57,8 +57,23 @@ function Page() {
 					},
 				}
 			);
+
+			if (response.data.error === 1) {
+				setModalText(response.data.message);
+				setShowModal(true);
+				setInputValue("");
+			} else {
+				setModalText("Código aceptado, premium activado.");
+				setShowModal(true);
+				setInputValue("");
+			}
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
+			setModalText(
+				"Hubo un error al procesar tu solicitud. Inténtalo nuevamente."
+			);
+			setShowModal(true);
+			setInputValue("");
 		}
 	}, [token, userId, inputValue]);
 
@@ -104,14 +119,15 @@ function Page() {
 					<RoundButton
 						text="Cargar"
 						buttonClassName="bg-blueEmmagini text-white w-[202px] h-[29px] mt-[30px]"
+						onClick={subscribeToPremium}
 					/>
 				</div>
 			</div>
 
 			{showModal && (
 				<Modal
-					message="Ya eres usuario premium"
-					buttonText="Volver"
+					message={modalText}
+					buttonText="Cerrar"
 					onButtonClick={handleButton}
 				/>
 			)}
