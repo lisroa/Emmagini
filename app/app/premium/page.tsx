@@ -29,10 +29,11 @@ function Page() {
 			setShowModal(true);
 			setModalText("Ya eres usuario premium");
 		} else {
-			window.open(
-				"https://backend.emmagini.com/es/payments/b54ced38-fc34-11ee-b964-fa163ef884a2/E-76cf0eac-57d2-11ee-afc6-ece1a595fc2f?callback=https%3A%2F%2Fdemo25.emmagini.com%2Fhome.php%23v%3Dinicio&host=demo25.emmagini.com&lang=es",
-				"_blank"
-			);
+			if (data.gatewayurl) {
+				window.open(data.gatewayurl, "_blank");
+			} else {
+				console.error("Error");
+			}
 		}
 	};
 
