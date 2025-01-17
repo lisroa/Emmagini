@@ -19,6 +19,24 @@ const Home = () => {
 		console.log("textos", textos);
 	}, [textos]);*/
 
+	useEffect(() => {
+		if (empresa) {
+			const backgroundImage = empresa
+				? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+				: null;
+
+			if (backgroundImage) {
+				document.body.style.backgroundImage = `url(${backgroundImage})`;
+				document.body.style.backgroundSize = "cover";
+				document.body.style.backgroundPosition = "center";
+				document.body.style.backgroundRepeat = "no-repeat";
+			} else {
+				document.body.style.backgroundImage = "";
+				document.body.style.backgroundColor = "white";
+			}
+		}
+	}, [empresa]);
+
 	if (!empresa && !textos) {
 		return (
 			<div className="mt-96">

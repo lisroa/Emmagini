@@ -1,10 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import CardHome from "@/app/components/cards/CardHome";
 import WhileTap from "@/app/components/animations/WhileTap";
 import "@/app/components/styles/loader.css";
+
 interface ComponentProps {
 	params: {
 		idMuseo: string;
@@ -15,8 +17,16 @@ interface ComponentProps {
 export default function Page({
 	params: { idMuseo, idCategoria },
 }: ComponentProps) {
-	const { infoGames } = useDataContext();
+	const { infoGames, empresa } = useDataContext();
 	const router = useRouter();
+
+	useEffect(() => {
+		// Limpiar la imagen de fondo al desmontar el componente
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, []);
 
 	if (!infoGames) {
 		return (
@@ -36,19 +46,34 @@ export default function Page({
 			</div>
 		);
 	}
-	// @ts-ignore
-	const museo = infoGames.find((museoItem) => museoItem.id === idMuseo);
+
+	const museo = infoGames.find((museoItem: any) => museoItem.id === idMuseo);
 
 	const productos = museo.productos.filter(
-		// @ts-ignore
-		(productItem) => productItem.id_categoria === idCategoria
+		(productItem: any) => productItem.id_categoria === idCategoria
 	);
 	const categoria = museo.categorias.find(
-		// @ts-ignore
-		(categoria) => categoria.id === idCategoria
+		(categoria: any) => categoria.id === idCategoria
 	);
-	// @ts-ignore
-	const handleCardClick = (idProducto) => {
+
+	useEffect(() => {
+		if (categoria?.imagen_0 && categoria.imagen_0 !== "") {
+			document.body.style.backgroundImage = `url(${categoria.imagen_0})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else if (empresa?.fondo) {
+			document.body.style.backgroundImage = `url(https://backend.emmagini.com/uploads/${empresa.fondo})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+	}, [categoria, museo]);
+
+	const handleCardClick = (idProducto: any) => {
 		router.push(`/app/museo/${idMuseo}/${idCategoria}/${idProducto}`);
 	};
 
@@ -57,17 +82,12 @@ export default function Page({
 			<h1 className="text-white font-bold text-2xl">{`${museo.titulo} - ${categoria.titulo}`}</h1>
 			<div className="grid grid-cols-2 sm:grid-cols- md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
 				{productos &&
-					Object.values(productos).map((producto) => (
-						// @ts-ignore
+					Object.values(productos).map((producto: any) => (
 						<WhileTap key={producto.id}>
-							{/*// @ts-ignore */}
 							<div className="flex justify-center" key={producto.id}>
 								<CardHome
-									// @ts-ignore
 									onClick={() => handleCardClick(producto.id)}
-									// @ts-ignore
 									text={producto.titulo}
-									// @ts-ignore
 									imageCard={producto.imagen_0 || producto.imagen_1}
 								/>
 							</div>

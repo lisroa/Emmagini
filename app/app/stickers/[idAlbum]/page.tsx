@@ -23,7 +23,7 @@ interface ComponentProps {
 
 function Page({ params: { idAlbum } }: ComponentProps) {
 	const { token, userId } = useAuthContext();
-	const { empresaModoPremium, userModoPremium } = useDataContext();
+	const { empresaModoPremium, userModoPremium, empresa } = useDataContext();
 	const [loading, setLoading] = useState(true);
 	const [modalImage, setModalImage] = useState(null);
 	const [dataAlbum, setDataAlbum] = useState<any>(null);
@@ -78,7 +78,27 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 		}
 	}, [fetchData, token, userId]);
 
-	console.log("album", dataAlbum);
+	useEffect(() => {
+		if (dataAlbum?.content?.imagen_0) {
+			document.body.style.backgroundImage = `url(${dataAlbum.content.imagen_0})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else if (empresa?.fondo) {
+			document.body.style.backgroundImage = `url(https://backend.emmagini.com/uploads/${empresa.fondo})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [dataAlbum, empresa]);
 
 	const handleOpenModal = (src: any) => {
 		setModalImage(src);

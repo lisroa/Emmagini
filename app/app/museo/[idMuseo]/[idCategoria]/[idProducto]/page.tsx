@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import Image from "next/image";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { Carousel } from "flowbite-react";
@@ -25,7 +25,7 @@ interface ComponentProps {
 export default function Page({
 	params: { idMuseo, idCategoria, idProducto, lang },
 }: ComponentProps) {
-	const { infoGames } = useDataContext();
+	const { infoGames, empresa } = useDataContext();
 	const router = useRouter();
 
 	const extractImageUrls = () => {
@@ -35,8 +35,7 @@ export default function Page({
 				(museoItem: any) => museoItem.id === idMuseo
 			);
 			const product = museo?.productos.find(
-				// @ts-ignore
-				(productItem) => productItem.id === idProducto
+				(productItem: any) => productItem.id === idProducto
 			);
 			if (product) {
 				for (let i = 1; i <= 10; i++) {
@@ -51,6 +50,33 @@ export default function Page({
 	};
 
 	const imageUrls = useMemo(extractImageUrls, [infoGames, idMuseo, idProducto]);
+
+	useEffect(() => {
+		const museo = infoGames?.find((museoItem: any) => museoItem.id === idMuseo);
+		const product = museo?.productos.find(
+			(productItem: any) => productItem.id === idProducto
+		);
+
+		if (product?.imagen_0 && product.imagen_0 !== "") {
+			document.body.style.backgroundImage = `url(${product.imagen_0})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else if (empresa?.fondo) {
+			document.body.style.backgroundImage = `url(https://backend.emmagini.com/uploads/${empresa.fondo})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [infoGames, idMuseo, idProducto]);
 
 	if (!infoGames) {
 		return (
@@ -115,16 +141,14 @@ export default function Page({
 	}
 
 	const product = museo.productos.find(
-		// @ts-ignore
-		(productItem) => productItem.id === idProducto
+		(productItem: any) => productItem.id === idProducto
 	);
 	if (!product) {
 		return <div className="mt-20 text-black">Producto no encontrado.</div>;
 	}
 
 	const relatedProducts = museo.productos.filter(
-		// @ts-ignore
-		(item) =>
+		(item: any) =>
 			item.id !== idProducto &&
 			(product.rel_1 === item.id ||
 				product.rel_2 === item.id ||
