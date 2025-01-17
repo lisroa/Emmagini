@@ -21,7 +21,6 @@ export default function Page({
 	const router = useRouter();
 
 	useEffect(() => {
-		// Limpiar la imagen de fondo al desmontar el componente
 		return () => {
 			document.body.style.backgroundImage = "";
 			document.body.style.backgroundColor = "white";
@@ -71,7 +70,7 @@ export default function Page({
 			document.body.style.backgroundImage = "";
 			document.body.style.backgroundColor = "white";
 		}
-	}, [categoria, museo]);
+	}, [categoria, empresa]);
 
 	const handleCardClick = (idProducto: any) => {
 		router.push(`/app/museo/${idMuseo}/${idCategoria}/${idProducto}`);
