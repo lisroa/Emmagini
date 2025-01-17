@@ -20,12 +20,37 @@ export default function Page({
 	const { infoGames, empresa } = useDataContext();
 	const router = useRouter();
 
+	// Limpieza del fondo al desmontar
 	useEffect(() => {
 		return () => {
 			document.body.style.backgroundImage = "";
 			document.body.style.backgroundColor = "white";
 		};
 	}, []);
+
+	// Configurar fondo dinámico
+	useEffect(() => {
+		if (infoGames) {
+			const museo = infoGames.find(
+				(museoItem: any) => museoItem.id === idMuseo
+			);
+			const categoria = museo?.categorias.find(
+				(categoria: any) => categoria.id === idCategoria
+			);
+
+			if (categoria?.imagen_0 && categoria.imagen_0 !== "") {
+				document.body.style.backgroundImage = `url(${categoria.imagen_0})`;
+			} else if (empresa?.fondo) {
+				document.body.style.backgroundImage = `url(https://backend.emmagini.com/uploads/${empresa.fondo})`;
+			} else {
+				document.body.style.backgroundImage = "";
+				document.body.style.backgroundColor = "white";
+			}
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		}
+	}, [infoGames, idMuseo, idCategoria, empresa]);
 
 	if (!infoGames) {
 		return (
@@ -54,23 +79,6 @@ export default function Page({
 	const categoria = museo.categorias.find(
 		(categoria: any) => categoria.id === idCategoria
 	);
-
-	useEffect(() => {
-		if (categoria?.imagen_0 && categoria.imagen_0 !== "") {
-			document.body.style.backgroundImage = `url(${categoria.imagen_0})`;
-			document.body.style.backgroundSize = "cover";
-			document.body.style.backgroundPosition = "center";
-			document.body.style.backgroundRepeat = "no-repeat";
-		} else if (empresa?.fondo) {
-			document.body.style.backgroundImage = `url(https://backend.emmagini.com/uploads/${empresa.fondo})`;
-			document.body.style.backgroundSize = "cover";
-			document.body.style.backgroundPosition = "center";
-			document.body.style.backgroundRepeat = "no-repeat";
-		} else {
-			document.body.style.backgroundImage = "";
-			document.body.style.backgroundColor = "white";
-		}
-	}, [categoria, empresa]);
 
 	const handleCardClick = (idProducto: any) => {
 		router.push(`/app/museo/${idMuseo}/${idCategoria}/${idProducto}`);

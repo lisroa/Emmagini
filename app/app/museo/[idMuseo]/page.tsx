@@ -17,11 +17,39 @@ export default function Page({ params: { idMuseo } }: ComponentProps) {
 	const { infoGames, empresa } = useDataContext();
 	const router = useRouter();
 
+	// Limpieza del fondo al desmontar
 	useEffect(() => {
 		return () => {
 			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
 		};
 	}, []);
+
+	// Configurar fondo dinámico
+	useEffect(() => {
+		if (infoGames) {
+			const museo = infoGames.find(
+				(museoItem: any) => museoItem.id === idMuseo
+			);
+
+			const backgroundImage =
+				museo?.imagen_0 && museo.imagen_0 !== ""
+					? museo.imagen_0
+					: empresa?.fondo
+					? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+					: null;
+
+			if (backgroundImage) {
+				document.body.style.backgroundImage = `url(${backgroundImage})`;
+				document.body.style.backgroundSize = "cover";
+				document.body.style.backgroundPosition = "center";
+				document.body.style.backgroundRepeat = "no-repeat";
+			} else {
+				document.body.style.backgroundImage = "";
+				document.body.style.backgroundColor = "white";
+			}
+		}
+	}, [infoGames, idMuseo, empresa]);
 
 	if (!infoGames) {
 		return (
@@ -43,27 +71,6 @@ export default function Page({ params: { idMuseo } }: ComponentProps) {
 	}
 
 	const museo = infoGames.find((museoItem: any) => museoItem.id === idMuseo);
-
-	useEffect(() => {
-		if (museo) {
-			const backgroundImage =
-				museo.imagen_0 && museo.imagen_0 !== ""
-					? museo.imagen_0
-					: empresa
-					? `https://backend.emmagini.com/uploads/${empresa.fondo}`
-					: null;
-
-			if (backgroundImage) {
-				document.body.style.backgroundImage = `url(${backgroundImage})`;
-				document.body.style.backgroundSize = "cover";
-				document.body.style.backgroundPosition = "center";
-				document.body.style.backgroundRepeat = "no-repeat";
-			} else {
-				document.body.style.backgroundImage = "";
-				document.body.style.backgroundColor = "white";
-			}
-		}
-	}, [museo]);
 
 	const handleCardClick = (idCategoria: any) => {
 		router.push(`/app/museo/${idMuseo}/${idCategoria}`);
