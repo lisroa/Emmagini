@@ -8,6 +8,7 @@ import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
 import Ruleta from "@/app/components/ruleta/Ruleta";
+import ModalAyuda from "@/app/components/extras/modalAyuda";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -23,6 +24,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const router = useRouter();
 	const { data, fetchAppData } = useDataContext();
 	const { token, userId } = useAuthContext();
+	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 	const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState<any[]>([]);
 	const [selectedMemoBlock, setSelectedMemoBlock] = useState<any | null>(null);
 	const [animating, setAnimating] = useState(false);
@@ -279,8 +281,26 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			router.back();
 		}
 	};
+
+	const handleStartGame = () => {
+		setIsHelpModalOpen(false);
+	};
 	return (
 		<div>
+			<ModalAyuda
+				isOpen={isHelpModalOpen}
+				text={
+					data?.contenidos.find((contenido: any) => contenido.id === idDelJuego)
+						?.extra
+				}
+				textButton="Jugar"
+				image={
+					data?.contenidos.find((contenido: any) => contenido.id === idDelJuego)
+						?.imagen_ayuda
+				}
+				onClick={handleStartGame}
+				idJuego={idDelJuego}
+			/>
 			<h1 className="mt-20 text-white text-center text-2xl font-bold">
 				{
 					data?.contenidos.find((contenido: any) => contenido.id === idDelJuego)

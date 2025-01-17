@@ -92,7 +92,7 @@ import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import CardHome from "../cards/CardHome";
 import StickerPackOpener from "../animations/StickerPackOpener";
-import "@/app/components/styles/stickersAnimation.css"; // Importa los estilos
+import "@/app/components/styles/stickersAnimation.css";
 
 interface ModalStickersProps {
 	isOpen: boolean;
@@ -107,7 +107,6 @@ const ModalStickers = ({
 	stickersPrices,
 	idAlbum,
 }: ModalStickersProps) => {
-	// Mueve el uso de hooks fuera de cualquier condición
 	const { token, userId } = useAuthContext();
 	const [isAnimationVisible, setIsAnimationVisible] = useState(false);
 	const [stickers, setStickers] = useState([]);

@@ -10,7 +10,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
-import Ruleta from "@/app/components/ruleta/Ruleta";
+import ModalAyuda from "@/app/components/extras/modalAyuda";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -26,6 +26,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const router = useRouter();
 	const { infoGames } = useDataContext();
 	const { userId, token } = useAuthContext();
+
 	const [responseApi, setResponseApi] = useState<any>(null);
 	const [images, setImages] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -37,8 +38,13 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [modalGameOpen, setModalGameOpen] = useState(false);
 	const [modalText, setModalText] = useState<any>(null);
+	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 
 	const game = infoGames?.find((gameItem: any) => gameItem.id === idJuego);
+
+	const handleStartGame = () => {
+		setIsHelpModalOpen(false);
+	};
 
 	useEffect(() => {
 		if (game?.data?.images) {
@@ -120,23 +126,49 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		}
 	};
 
-	// Mueve las imágenes correctas a su posición correcta
-	const reubicarImagenesCorrectas = useCallback(() => {
-		const correctas = resultErrors.filter((error: any) => error.error === 0);
+	const verificarOrden = useCallback(async () => {
+		try {
+			const formattedData = orden.map((item) => ({
+				i: item.i,
+				o: item.o,
+			}));
 
-		const updatedImages = [...images];
-		correctas.forEach((correcta: any) => {
-			const indexCorrecto = updatedImages.findIndex(
-				(image) => image.id === correcta.id
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/lineatiempo_controlar",
+				{
+					token: token,
+					userid: userId,
+					id_juego: idJuego,
+					data: JSON.stringify(formattedData),
+					host: "demo14.emmagini.com",
+					lang: "es",
+				},
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
 			);
-			if (indexCorrecto !== correcta.i - 1) {
-				const [movedImage] = updatedImages.splice(indexCorrecto, 1);
-				updatedImages.splice(correcta.i - 1, 0, movedImage);
-			}
-		});
 
-		setImages(updatedImages);
-	}, [images, resultErrors]);
+			setResultErrors(response.data.result);
+
+			const correct = response.data.result.filter(
+				(result: any) => result.error === 0
+			).length;
+			const incorrect = response.data.result.filter(
+				(result: any) => result.error === 1
+			).length;
+
+			setCorrectCount(correct);
+			setIncorrectCount(incorrect);
+
+			if (incorrect === 0) {
+				await finalizarPartida();
+			}
+		} catch (error) {
+			console.error("Error al verificar el orden:", error);
+		}
+	}, [token, userId, idJuego, orden]);
 
 	const finalizarPartida = useCallback(async () => {
 		try {
@@ -176,63 +208,6 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		}
 	}, [token, userId, idJuego, correctCount, incorrectCount, responseApi]);
 
-	const verificarOrden = useCallback(async () => {
-		try {
-			const formattedData = orden.map((item) => ({
-				i: item.i,
-				o: item.o,
-			}));
-
-			const response = await axios.post(
-				"https://backend.emmagini.com/api2/lineatiempo_controlar",
-				{
-					token: token,
-					userid: userId,
-					id_juego: idJuego,
-					data: JSON.stringify(formattedData),
-					host: "demo14.emmagini.com",
-					lang: "es",
-				},
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-					},
-				}
-			);
-
-			setResultErrors(response.data.result);
-
-			const correct = response.data.result.filter(
-				(result: any) => result.error === 0
-			).length;
-			const incorrect = response.data.result.filter(
-				(result: any) => result.error === 1
-			).length;
-
-			setCorrectCount(correct);
-			setIncorrectCount(incorrect);
-
-			reubicarImagenesCorrectas();
-
-			if (incorrect === 0) {
-				await finalizarPartida();
-			}
-		} catch (error) {
-			console.error("Error al verificar el orden:", error);
-		}
-	}, [
-		token,
-		userId,
-		idJuego,
-		orden,
-		reubicarImagenesCorrectas,
-		finalizarPartida,
-	]);
-
-	function handleVerification() {
-		verificarOrden();
-	}
-
 	const resetGameState = () => {
 		setImages([]);
 		setOrden([]);
@@ -242,13 +217,16 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		setResponseApi(null);
 	};
 
-	const handleCloseModalGame = () => {
-		setModalGameOpen(false);
-	};
-
 	const handleClickBack = () => {
 		router.back();
 	};
+
+	const handleCloseModalGame = () => {
+		setModalGameOpen(false);
+	};
+	function handleVerification() {
+		verificarOrden();
+	}
 
 	if (!infoGames && loading) {
 		return (
@@ -270,92 +248,103 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen mt-20">
-			<h1 className="text-white text-center text-2xl font-bold">
-				{game?.titulo}
-			</h1>
-			<h1 className="text-white text-center text-base font-medium mt-4">
-				{game?.extra || ""}
-			</h1>
-
-			<RoundButton
-				buttonClassName="bg-lime-600 w-[240px] h-[29px] mt-4"
-				text="Validar"
-				textClassName="text-white"
-				onClick={handleVerification}
+		<>
+			<ModalAyuda
+				isOpen={isHelpModalOpen}
+				text={game?.extra}
+				textButton="Jugar"
+				image={game?.imagen_ayuda}
+				onClick={handleStartGame}
+				idJuego={idJuego}
 			/>
 
-			<DragDropContext onDragEnd={onDragEnd}>
-				<Droppable droppableId="droppable">
-					{(provided) => (
-						<div
-							ref={provided.innerRef}
-							{...provided.droppableProps}
-							className="grid grid-cols-1 gap-4 mt-8 pb-[100px]"
-						>
-							{images.map((image: any, index: number) => {
-								const error = resultErrors.find(
-									(result) => result.id === image.id
-								);
-								const isCorrect = error && error.error === 0;
+			<div className="flex flex-col items-center justify-center min-h-screen mt-20">
+				<h1 className="text-white text-center text-2xl font-bold">
+					{game?.titulo}
+				</h1>
+				<h1 className="text-white text-center text-base font-medium mt-4">
+					{game?.extra || ""}
+				</h1>
 
-								return (
-									<Draggable
-										key={image.id}
-										draggableId={image.id}
-										index={index}
-										isDragDisabled={isCorrect}
-									>
-										{(provided) => (
-											<div
-												ref={provided.innerRef}
-												{...provided.draggableProps}
-												{...provided.dragHandleProps}
-												className={`w-[200px] h-[120px] relative rounded-lg mx-auto ${
-													isCorrect ? "border-[4px] border-green-500" : ""
-												}`}
-											>
-												<Image
-													src={image.img}
-													alt={`product image ${index}`}
-													className="w-[200px] h-[120px] object-cover rounded-lg"
-													layout="fill"
-												/>
-											</div>
-										)}
-									</Draggable>
-								);
-							})}
-							{provided.placeholder}
-						</div>
-					)}
-				</Droppable>
-			</DragDropContext>
-			{modalOpen && (
-				<ModalMensajes
-					message={modalText || modalContent.texto}
-					buttonText="Volver"
-					onButtonClick={handleClickBack}
+				<RoundButton
+					buttonClassName="bg-lime-600 w-[240px] h-[29px] mt-4"
+					text="Validar"
+					textClassName="text-white"
+					onClick={handleVerification}
 				/>
-			)}
-			{modalGameOpen && (
-				<ModalGame
-					message={modalText}
-					textButton="Jugar"
-					onClick={handleCloseModalGame}
-				/>
-			)}
 
-			<DinamicButtonNav
-				icon1={<GrPowerReset size={25} className="text-white" />}
-				icon2={<MdWorkspacePremium size={25} className="text-white" />}
-				icon3={<IoMdArrowRoundBack size={25} className="text-white" />}
-				texto1="Reiniciar"
-				texto2="Premium"
-				texto3="Volver"
-				onClick3={handleClickBack}
-			/>
-		</div>
+				<DragDropContext onDragEnd={onDragEnd}>
+					<Droppable droppableId="droppable">
+						{(provided) => (
+							<div
+								ref={provided.innerRef}
+								{...provided.droppableProps}
+								className="grid grid-cols-1 gap-4 mt-8 pb-[100px]"
+							>
+								{images.map((image: any, index: number) => {
+									const error = resultErrors.find(
+										(result) => result.id === image.id
+									);
+									const isCorrect = error && error.error === 0;
+
+									return (
+										<Draggable
+											key={image.id}
+											draggableId={image.id}
+											index={index}
+											isDragDisabled={isCorrect}
+										>
+											{(provided) => (
+												<div
+													ref={provided.innerRef}
+													{...provided.draggableProps}
+													{...provided.dragHandleProps}
+													className={`w-[200px] h-[120px] relative rounded-lg mx-auto ${
+														isCorrect ? "border-[4px] border-green-500" : ""
+													}`}
+												>
+													<Image
+														src={image.img}
+														alt={`product image ${index}`}
+														className="w-[200px] h-[120px] object-cover rounded-lg"
+														layout="fill"
+													/>
+												</div>
+											)}
+										</Draggable>
+									);
+								})}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+				</DragDropContext>
+				{modalOpen && (
+					<ModalMensajes
+						message={modalText || modalContent.texto}
+						buttonText="Volver"
+						onButtonClick={handleClickBack}
+					/>
+				)}
+				{modalGameOpen && (
+					<ModalGame
+						message={modalText}
+						textButton="Jugar"
+						onClick={handleCloseModalGame}
+					/>
+				)}
+
+				<DinamicButtonNav
+					icon1={<GrPowerReset size={25} className="text-white" />}
+					icon2={<MdWorkspacePremium size={25} className="text-white" />}
+					icon3={<IoMdArrowRoundBack size={25} className="text-white" />}
+					texto1="Reiniciar"
+					texto2="Premium"
+					texto3="Volver"
+					onClick3={handleClickBack}
+				/>
+			</div>
+		</>
 	);
 }
 

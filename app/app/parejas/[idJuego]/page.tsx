@@ -10,6 +10,7 @@ import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
 import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";
+import ModalAyuda from "@/app/components/extras/modalAyuda";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -71,6 +72,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const [resetTimer, setResetTimer] = useState(false);
 	const [timeoutCalled, setTimeoutCalled] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 
 	//Iniciar la partida y obtener el id_partida
 	const iniciarPartida = useCallback(async () => {
@@ -156,6 +158,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 				setColumn2(shuffledColumn2);
 
 				setContenidoEncontrado(contenido);
+				console.log("Contenido encontrado:", contenidoEncontrado);
 			} else {
 				console.log("No se encontró contenido para el idJuego:", idJuego);
 			}
@@ -439,6 +442,9 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const handleCloseModalGame = () => {
 		setModalGameOpen(false);
 	};
+	const handleStartGame = () => {
+		setIsHelpModalOpen(false);
+	};
 
 	if (isLoading) {
 		return (
@@ -465,6 +471,16 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 
 	return (
 		<>
+			<ModalAyuda
+				isOpen={isHelpModalOpen}
+				// @ts-ignore
+				text={contenidoEncontrado?.extra}
+				textButton="Jugar"
+				// @ts-ignore
+				image={contenidoEncontrado?.imagen_ayuda}
+				onClick={handleStartGame}
+				idJuego={idJuego}
+			/>
 			<div className="mt-24">
 				<h1 className="text-white text-center text-2xl font-bold">
 					{/*// @ts-ignore */}
