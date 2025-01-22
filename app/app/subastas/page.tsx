@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import CardGames from "@/app/components/cards/CardGames";
+import ButtonNav from "@/app/components/home/ButtonNav";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { BsCartCheck } from "react-icons/bs";
+import { AiOutlineTrophy } from "react-icons/ai";
 import "../../components/styles/loader.css";
 
 const fetchAuctions = async (token: any, userId: any) => {
@@ -75,7 +79,7 @@ function Page() {
 	if (error) return <div>Error al cargar los datos de subastas</div>;
 
 	return (
-		<div className="pb-4 overflow-x-hidden">
+		<div className="pb-[80px] overflow-x-hidden">
 			<div className="mx-auto max-w-screen-lg px-4">
 				<h1 className="mt-20 text-white text-left font-bold text-xl sm:text-2xl md:text-3xl">
 					Subastas
@@ -100,7 +104,7 @@ function Page() {
 											altText={`Ganador actual: ${subasta.usuario}`}
 											buttonRouter={true}
 											buttonRouterClassName="bg-blueEmmagini text-white text-xs sm:text-sm lg:text-base w-full max-w-[200px] h-[36px] flex items-center justify-center"
-											buttonText={textos.subasta_pujar}
+											buttonText={textos?.subasta_pujar}
 											onClick={() => handleCardClick(subasta.id)}
 										/>
 									</div>
@@ -131,7 +135,7 @@ function Page() {
 												description={subasta.descripcion}
 												buttonRouter={true}
 												buttonRouterClassName="bg-blueEmmagini text-white text-xs sm:text-sm lg:text-base w-full max-w-[200px] h-[36px] flex items-center justify-center"
-												buttonText={textos.subasta_pujar}
+												buttonText={textos?.subasta_pujar}
 												onClick={() => handleCardClick(subasta.id)}
 											/>
 										</div>
@@ -140,6 +144,18 @@ function Page() {
 							</div>
 						</div>
 					)}
+
+				<ButtonNav
+					link1="/app/"
+					link2="/app/productos"
+					link3="/app/premium"
+					icon1={<IoMdArrowRoundBack size={18} className="text-white" />}
+					icon2={<BsCartCheck size={18} className="text-white" />}
+					icon3={<AiOutlineTrophy size={18} className="text-white" />}
+					texto1={"Volver"}
+					texto2={"Productos"}
+					texto3={"Premium"}
+				/>
 			</div>
 		</div>
 	);

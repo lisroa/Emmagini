@@ -28,6 +28,17 @@ export const GameDataProvider = ({ children }) => {
 		);
 		return response.data;
 	};
+
+	const { data, error, isLoading, refetch } = useQuery(
+		["appData", token, userId],
+		fetchAppData,
+		{
+			enabled: !!token && !!userId,
+			staleTime: 60000,
+			refetchOnWindowFocus: false, // No refetchear al cambiar de ventana
+		}
+	);
+
 	// Trae la info de los torneos de truco desde demo4.
 	const fetchTrucoData = async () => {
 		const response = await axios.post(
@@ -48,16 +59,6 @@ export const GameDataProvider = ({ children }) => {
 		return response.data;
 	};
 
-	const { data, error, isLoading } = useQuery(
-		["appData", token, userId],
-		fetchAppData,
-		{
-			enabled: !!token && !!userId,
-			staleTime: 60000,
-			refetchOnWindowFocus: false,
-		}
-	);
-
 	const {
 		data: dataTruco,
 		isLoading: isLoadingTruco,
@@ -68,15 +69,16 @@ export const GameDataProvider = ({ children }) => {
 		refetchOnWindowFocus: false,
 	});
 
-	const empresaModoPremium = data?.empresa?.modo_premium === 1;
-	const userModoPremium = data?.premium === true;
-
-	//console.log("Es usuario Premium:", userModoPremium);
+	const empresaModoPremium = isLoading
+		? false
+		: data?.empresa?.modo_premium !== 0;
+	const userModoPremium = isLoading ? false : data?.premium === true;
 
 	return (
 		<GameDataContext.Provider
 			value={{
 				fetchAppData,
+				refetchAppData: refetch,
 				data,
 				infoGames: data?.contenidos,
 				textos: data?.keytext,

@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
+import { useDataContext } from "@/app/context/GameDataProvider";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
 import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";
 import ModalAyuda from "@/app/components/extras/modalAyuda";
+import Ruleta from "@/app/components/ruleta/Ruleta";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -45,6 +47,7 @@ interface ComponentProps {
 
 const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const { userId, token } = useAuthContext();
+	const { refetchAppData } = useDataContext();
 
 	const { data, error, isLoading } = useQuery(
 		["validateData", token, userId],
@@ -73,6 +76,9 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const [timeoutCalled, setTimeoutCalled] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
+	const [buttonText, setButtonText] = useState<string>("Volver");
+	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
+	const [showRuleta, setShowRuleta] = useState(false);
 
 	//Iniciar la partida y obtener el id_partida
 	const iniciarPartida = useCallback(async () => {
@@ -199,6 +205,14 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 
 			setModalOpen(true);
 			setModalText(updatedContent.texto);
+			refetchAppData();
+			if (response.data.ruleta === 1) {
+				setButtonText("Multiplica tu premio");
+				setShowRuletaButton(true);
+			} else {
+				setButtonText("Volver");
+				setShowRuletaButton(false);
+			}
 		} catch (error) {
 			console.error("Error al finalizar la partida:", error);
 		}
@@ -246,6 +260,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 
 			setModalOpen(true);
 			setModalText("Oppss! Tiempo agotado");
+			refetchAppData();
 
 			await fetchData();
 		} catch (error) {
@@ -445,7 +460,14 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const handleStartGame = () => {
 		setIsHelpModalOpen(false);
 	};
-
+	const handleModalButtonClick = () => {
+		if (showRuletaButton) {
+			setModalOpen(false);
+			setTimeout(() => setShowRuleta(true), 200);
+		} else {
+			router.back();
+		}
+	};
 	if (isLoading) {
 		return (
 			<div className="mt-20 text-black">
@@ -518,11 +540,12 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			/>
 			{modalOpen && (
 				<ModalMensajes
-					message={modalText || modalContent.texto}
-					buttonText="Aceptar"
-					onButtonClick={handleClickBack}
+					message={modalText || ""}
+					buttonText={buttonText}
+					onButtonClick={handleModalButtonClick}
 				/>
 			)}
+			{showRuleta && <Ruleta idPartida={responseApi?.id_partida} />}
 			{modalGameOpen && (
 				<ModalGame
 					message={modalText}

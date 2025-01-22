@@ -11,6 +11,7 @@ import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
 import ModalAyuda from "@/app/components/extras/modalAyuda";
+import Ruleta from "@/app/components/ruleta/Ruleta";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
@@ -24,7 +25,7 @@ interface ComponentProps {
 
 function Page({ params: { idJuego } }: ComponentProps) {
 	const router = useRouter();
-	const { infoGames } = useDataContext();
+	const { refetchAppData, infoGames } = useDataContext();
 	const { userId, token } = useAuthContext();
 
 	const [responseApi, setResponseApi] = useState<any>(null);
@@ -39,6 +40,9 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const [modalGameOpen, setModalGameOpen] = useState(false);
 	const [modalText, setModalText] = useState<any>(null);
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
+	const [showRuleta, setShowRuleta] = useState(false);
+	const [buttonText, setButtonText] = useState<string>("Volver");
+	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
 
 	const game = infoGames?.find((gameItem: any) => gameItem.id === idJuego);
 
@@ -201,12 +205,27 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			setModalContent(updatedContent);
 			setModalOpen(true);
 			setModalText(updatedContent.texto);
-
 			resetGameState();
+			refetchAppData();
+			if (response.data.ruleta === 1) {
+				setButtonText("Multiplica tu premio");
+				setShowRuletaButton(true);
+			} else {
+				setButtonText("Volver");
+				setShowRuletaButton(false);
+			}
 		} catch (error) {
 			console.error("Error al finalizar la partida:", error);
 		}
-	}, [token, userId, idJuego, correctCount, incorrectCount, responseApi]);
+	}, [
+		token,
+		userId,
+		idJuego,
+		correctCount,
+		incorrectCount,
+		responseApi,
+		refetchAppData,
+	]);
 
 	const resetGameState = () => {
 		setImages([]);
@@ -227,6 +246,14 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	function handleVerification() {
 		verificarOrden();
 	}
+	const handleModalButtonClick = () => {
+		if (showRuletaButton) {
+			setModalOpen(false);
+			setTimeout(() => setShowRuleta(true), 200);
+		} else {
+			router.back();
+		}
+	};
 
 	if (!infoGames && loading) {
 		return (
@@ -333,6 +360,14 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						onClick={handleCloseModalGame}
 					/>
 				)}
+				{modalOpen && (
+					<ModalMensajes
+						message={modalText || ""}
+						buttonText={buttonText}
+						onButtonClick={handleModalButtonClick}
+					/>
+				)}
+				{showRuleta && <Ruleta idPartida={responseApi?.id_partida} />}
 
 				<DinamicButtonNav
 					icon1={<GrPowerReset size={25} className="text-white" />}

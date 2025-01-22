@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -6,7 +7,10 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { RoundButton } from "@/app/components/buttons/RoundButton";
 import Modal from "@/app/components/extras/ModalMensajes";
-import axios from "axios";
+import ButtonNav from "@/app/components/home/ButtonNav";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { BsCartCheck } from "react-icons/bs";
+import { AiOutlineTrophy } from "react-icons/ai";
 import "../../../components/styles/loader.css";
 
 interface ComponentProps {
@@ -71,6 +75,7 @@ const placeBid = async (
 };
 
 function Page({ params: { idSubasta } }: ComponentProps) {
+	const router = useRouter();
 	const { token, userId } = useAuthContext();
 	const { data, textos } = useDataContext();
 	const [oferta, setOferta] = useState("");
@@ -158,6 +163,10 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 		return url;
 	}
 
+	const handleClickBack = () => {
+		router.back();
+	};
+
 	return (
 		<div className="lg:h-screen">
 			<h3 className="text-white mt-32 text-center text-xl font-bold mb-6">
@@ -212,7 +221,24 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 				</div>
 			</div>
 
-			{modalMessage && <Modal message={modalMessage} />}
+			{modalMessage && (
+				<Modal
+					message={modalMessage}
+					onButtonClick={handleClickBack}
+					buttonText="Volver"
+				/>
+			)}
+			<ButtonNav
+				link1="/app/subastas"
+				link2="/app/productos"
+				link3="/app/premium"
+				icon1={<IoMdArrowRoundBack size={18} className="text-white" />}
+				icon2={<BsCartCheck size={18} className="text-white" />}
+				icon3={<AiOutlineTrophy size={18} className="text-white" />}
+				texto1={"Volver"}
+				texto2={"Productos"}
+				texto3={"Premium"}
+			/>
 		</div>
 	);
 }

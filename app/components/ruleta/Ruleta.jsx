@@ -1,5 +1,131 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "@/app/context/AuthProvider";
+import { useDataContext } from "@/app/context/GameDataProvider";
+import Board from "@/app/components/ruleta/Board/Board";
+import Modal from "../extras/ModalMensajes";
+import "@/app/components/ruleta/styles.css";
+
+const multiplierList = ["x1", "x2", "x3", "x1", "x1", "x1", "x2", "x3", "x10"];
+
+const App = ({ idPartida }) => {
+	const { token, userId } = useAuthContext();
+	const { refetchAppData } = useDataContext();
+	const router = useRouter();
+	const [shuffledBlocks, setShuffledBlocks] = useState([]);
+	const [animating, setAnimating] = useState(false);
+	const [gameLocked, setGameLocked] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
+	const [modalText, setModalText] = useState("");
+
+	const initializeGame = () => {
+		const shuffledList = multiplierList.map((value, index) => ({
+			index,
+			value,
+			flipped: false,
+			premio: "",
+		}));
+		setShuffledBlocks(shuffledList);
+		setAnimating(false);
+		setGameLocked(false);
+		setModalVisible(false);
+	};
+
+	useEffect(() => {
+		initializeGame();
+	}, []);
+
+	const girarRuleta = useCallback(
+		async (clickedBlock) => {
+			try {
+				const response = await axios.post(
+					"https://backend.emmagini.com/api2/tirar_ruleta",
+					{
+						token: token,
+						userid: userId,
+						host: "demo14.emmagini.com",
+						lang: "es",
+						id: idPartida,
+					},
+					{
+						headers: {
+							"Content-Type":
+								"application/x-www-form-urlencoded; charset=UTF-8",
+						},
+					}
+				);
+
+				const { mensaje, premio_x, premio } = response.data;
+
+				const updatedBlocks = shuffledBlocks.map((block) =>
+					block.index === clickedBlock.index
+						? { ...block, flipped: true, premio: premio_x }
+						: { ...block, flipped: true }
+				);
+
+				setShuffledBlocks(updatedBlocks);
+
+				setTimeout(() => {
+					setModalText(
+						`${mensaje}. Tu premio x${premio_x}\nPremio total: ${premio}`
+					);
+					setModalVisible(true);
+				}, 1000);
+
+				refetchAppData();
+				setAnimating(false);
+			} catch (error) {
+				console.error("Error al hacer la solicitud", error);
+				setAnimating(false);
+			}
+		},
+		[token, userId, idPartida, shuffledBlocks]
+	);
+
+	const handleMemoClick = (clickedBlock) => {
+		if (animating || clickedBlock.flipped || gameLocked) return;
+
+		setAnimating(true);
+		setGameLocked(true);
+
+		girarRuleta(clickedBlock);
+	};
+
+	const handleModalClose = () => {
+		setModalVisible(false);
+		router.back();
+	};
+
+	return (
+		<div className="container-app">
+			<div className="container">
+				<h1 className="text-center text-white text-3xl font-bold">
+					Elige una carta para multiplicar tu premio
+				</h1>
+				<Board
+					memoBlocks={shuffledBlocks}
+					animating={animating}
+					handleMemoClick={handleMemoClick}
+				/>
+			</div>
+			{modalVisible && (
+				<Modal
+					onButtonClick={handleModalClose}
+					message={modalText}
+					buttonText="Volver"
+				/>
+			)}
+		</div>
+	);
+};
+
+export default App;
+
+/*"use client";
+
 import { useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/context/AuthProvider";
@@ -83,11 +209,11 @@ function Ruleta({ idPartida }) {
 					Girar
 				</div>
 				<div className="wheel" ref={wheelRef}>
-					{/* @ts-ignore */}
+					
 					<div className="number" style={{ "--i": 1, "--clr": "#a2cadf" }}>
 						<span>x1</span>
 					</div>
-					{/* @ts-ignore */}
+					
 					<div className="number" style={{ "--i": 2, "--clr": "#f7be57" }}>
 						<span>x2</span>
 					</div>
@@ -125,7 +251,6 @@ function Ruleta({ idPartida }) {
 				Cerrar
 			</button>
 
-			{/* Modal */}
 			{modalOpen && (
 				<Modal
 					onButtonClick={handleButtonCloseClick}
@@ -137,4 +262,4 @@ function Ruleta({ idPartida }) {
 	);
 }
 
-export default Ruleta;
+export default Ruleta; */

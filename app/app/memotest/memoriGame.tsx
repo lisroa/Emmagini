@@ -22,7 +22,7 @@ interface AppProps {
 
 const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const router = useRouter();
-	const { data, fetchAppData } = useDataContext();
+	const { data, refetchAppData } = useDataContext();
 	const { token, userId } = useAuthContext();
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 	const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState<any[]>([]);
@@ -37,7 +37,6 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const [modalContent, setModalContent] = useState<any>(null);
 	const [modalText, setModalText] = useState<any>(null);
 	const [showRuleta, setShowRuleta] = useState(false);
-	const [modalButtonText, setModalButtonText] = useState<string>("Volver");
 	const [buttonText, setButtonText] = useState<string>("Volver");
 	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
 	const [cover, setCover] = useState<string>("");
@@ -158,6 +157,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 
 			setModalOpen(true);
 			setModalText(updatedContent.texto);
+			refetchAppData();
 
 			if (response.data.ruleta === 1) {
 				setButtonText("Multiplica tu premio");
@@ -166,8 +166,6 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				setButtonText("Volver");
 				setShowRuletaButton(false);
 			}
-
-			await fetchAppData();
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -178,7 +176,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 		idPartida,
 		successfulAttempts,
 		failedAttempts,
-		fetchAppData,
+		refetchAppData,
 	]);
 
 	const finalizarPartidaConTimeout = useCallback(async () => {
@@ -214,7 +212,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			setModalOpen(true);
 			setModalText("Oppss! Tiempo agotado");
 
-			await fetchAppData();
+			refetchAppData();
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -226,7 +224,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 		successfulAttempts,
 		failedAttempts,
 		timeoutCalled,
-		fetchAppData,
+		refetchAppData,
 	]);
 
 	const reiniciarJuego = async () => {
@@ -264,6 +262,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 				setTimeoutCalled(false);
 				setResetTimer(true);
 				setTimeout(() => setResetTimer(false), 100);
+				refetchAppData();
 			}
 		} catch (error) {
 			console.error("Error al reiniciar la partida", error);

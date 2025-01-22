@@ -90,6 +90,7 @@ export default ModalStickers; */
 import { useState, useCallback } from "react";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
+import { useDataContext } from "@/app/context/GameDataProvider";
 import CardHome from "../cards/CardHome";
 import StickerPackOpener from "../animations/StickerPackOpener";
 import "@/app/components/styles/stickersAnimation.css";
@@ -108,6 +109,7 @@ const ModalStickers = ({
 	idAlbum,
 }: ModalStickersProps) => {
 	const { token, userId } = useAuthContext();
+	const { refetchAppData } = useDataContext();
 	const [isAnimationVisible, setIsAnimationVisible] = useState(false);
 	const [stickers, setStickers] = useState([]);
 
@@ -136,6 +138,7 @@ const ModalStickers = ({
 
 				setStickers(response.data.stickers);
 				setIsAnimationVisible(true);
+				refetchAppData();
 			} catch (error) {
 				console.error("Error al realizar la compra:", error);
 			}
