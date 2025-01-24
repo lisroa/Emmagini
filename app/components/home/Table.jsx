@@ -40,6 +40,9 @@ function Table() {
 		saveTournamentIdToCache(tournamentId);
 	};
 
+	const handleSorteoCardClick = () => {
+		router.push(`/app/sorteos`);
+	};
 	const handleCardClick = (id, tipo, nombre) => {
 		if (tipo === "museo") {
 			router.push(`/app/museo/${id}`);
@@ -104,7 +107,7 @@ function Table() {
 							<CardHome
 								text={textos.titulo_sorteos}
 								imageCard={fixImageUrl(empresa.imagen_sorteos)}
-								onClick={() => handleCardClick(game.id, game.tipo, game.titulo)}
+								onClick={handleSorteoCardClick}
 							/>
 						</div>
 					</WhileTap>

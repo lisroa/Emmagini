@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 interface CardGamesProps {
 	cardClassName?: string;
+	backgroundColor?: string;
 	image?: ReactNode;
 	imageContainer?: string;
 	imageClassName?: string;
@@ -35,6 +36,7 @@ interface CardGamesProps {
 
 export const CardGames = ({
 	cardClassName,
+	backgroundColor,
 	link = "",
 	button,
 	buttonRouter,
@@ -63,7 +65,10 @@ export const CardGames = ({
 	onClick,
 }: CardGamesProps) => {
 	return (
-		<div className={`flex p-4 rounded-lg bg-white ${cardClassName || ""}`}>
+		<div
+			className={`flex p-4 rounded-lg ${cardClassName || ""}`}
+			style={{ backgroundColor }}
+		>
 			<div className={`flex-none w-[160px] ${imageContainer || ""}`}>
 				<Image
 					src={image}

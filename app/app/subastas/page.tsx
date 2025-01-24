@@ -17,7 +17,7 @@ const fetchAuctions = async (token: any, userId: any) => {
 		{
 			token,
 			userid: userId,
-			host: "demo62.emmagini.com",
+			host: "demo14.emmagini.com",
 			id_club: null,
 			lang: "es",
 		},
@@ -96,6 +96,7 @@ function Page() {
 									<div key={subasta.id} className="flex justify-start w-full">
 										<CardGames
 											cardClassName="drop-shadow-lg w-full max-w-[450px] md:max-w-[500px]"
+											backgroundColor={subasta.color_portada}
 											imageContainer="flex justify-start items-center"
 											imageClassName="w-[80px] h-[130px] sm:w-[150px] sm:h-[155px] md:w-[180px] md:h-[180px] lg:w-[191px] lg:h-[191px]"
 											image={fixImageUrl(subasta.imagen)}
@@ -127,6 +128,7 @@ function Page() {
 										<div key={subasta.id} className="flex justify-start w-full">
 											<CardGames
 												cardClassName="drop-shadow-lg w-full max-w-[450px] md:max-w-[500px]"
+												backgroundColor={subasta.color_portada}
 												imageContainer="flex justify-start items-center"
 												imageClassName="w-[80px] h-[130px] sm:w-[150px] sm:h-[155px] md:w-[180px] md:h-[180px] lg:w-[191px] lg:h-[191px]"
 												image={fixImageUrl(subasta.imagen)}
@@ -147,13 +149,13 @@ function Page() {
 
 				<ButtonNav
 					link1="/app/"
-					link2="/app/productos"
+					link2="/app/sorteos"
 					link3="/app/premium"
 					icon1={<IoMdArrowRoundBack size={18} className="text-white" />}
 					icon2={<BsCartCheck size={18} className="text-white" />}
 					icon3={<AiOutlineTrophy size={18} className="text-white" />}
 					texto1={"Volver"}
-					texto2={"Productos"}
+					texto2={"Sorteos"}
 					texto3={"Premium"}
 				/>
 			</div>

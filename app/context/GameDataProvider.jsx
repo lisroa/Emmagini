@@ -40,7 +40,7 @@ export const GameDataProvider = ({ children }) => {
 	);
 
 	// Trae la info de los torneos de truco desde demo4.
-	const fetchTrucoData = async () => {
+	/*const fetchTrucoData = async () => {
 		const response = await axios.post(
 			"https://backend.emmagini.com/api2/validate",
 			{
@@ -67,7 +67,7 @@ export const GameDataProvider = ({ children }) => {
 		enabled: !!token && !!userId,
 		staleTime: 60000,
 		refetchOnWindowFocus: false,
-	});
+	}); */
 
 	const empresaModoPremium = isLoading
 		? false
@@ -85,10 +85,10 @@ export const GameDataProvider = ({ children }) => {
 				empresa: data?.empresa,
 				isLoading,
 				error,
-				dataTruco,
-				isLoadingTruco,
-				errorTruco,
-				infoTruco: dataTruco?.contenidos,
+				//dataTruco,
+				//isLoadingTruco,
+				//errorTruco,
+				//infoTruco: dataTruco?.contenidos,
 				empresaModoPremium,
 				userModoPremium,
 			}}

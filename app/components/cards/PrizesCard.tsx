@@ -8,16 +8,16 @@ import { ReactNode } from "react";
 
 interface PrizesCardProps {
 	cardClassName?: string;
-	image?: ReactNode;
+	image: string;
 	imageClassName?: string;
-	title: string;
+	title?: string;
 	titleClassName?: string;
-	description: string;
+	description?: string;
 	descriptionClassName?: string;
-	textAlt1: string;
-	textAlt2: string;
-	textAlt1ClassName: string;
-	textAlt2ClassName: string;
+	textAlt1?: string;
+	textAlt2?: string;
+	textAlt1ClassName?: string;
+	textAlt2ClassName?: string;
 }
 
 export const PrizesCard = ({
@@ -42,9 +42,11 @@ export const PrizesCard = ({
 		>
 			<div className="flex-none w-[101px] rounded-lg relative overflow-hidden ">
 				<Image
-					src={tester}
+					src={image}
 					alt="tester"
 					className={"absolute  ".concat("", imageClassName || "")}
+					width={200}
+					height={200}
 				/>
 			</div>
 

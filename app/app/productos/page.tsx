@@ -41,6 +41,7 @@ function Page() {
 								<div key={producto.id} className="flex justify-center w-full">
 									<CardGames
 										cardClassName="drop-shadow-lg w-full"
+										backgroundColor={producto.color_portada}
 										imageContainer="flex justify-center items-center"
 										imageClassName="w-full max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px] h-auto"
 										image={fixImageUrl(producto.imagen)}
@@ -70,6 +71,7 @@ function Page() {
 								<div key={producto.id} className="flex justify-center w-full">
 									<CardGames
 										cardClassName="drop-shadow-lg w-full"
+										backgroundColor={producto.color_portada}
 										imageContainer="flex justify-center items-center"
 										imageClassName="w-full max-w-[100px] sm:max-w-[150px] md:max-w-[200px] lg:max-w-[250px] h-auto"
 										image={fixImageUrl(producto.imagen)}

@@ -17,7 +17,6 @@ export default function Page({ params: { idMuseo } }: ComponentProps) {
 	const { infoGames, empresa } = useDataContext();
 	const router = useRouter();
 
-	// Limpieza del fondo al desmontar
 	useEffect(() => {
 		return () => {
 			document.body.style.backgroundImage = "";
@@ -25,7 +24,6 @@ export default function Page({ params: { idMuseo } }: ComponentProps) {
 		};
 	}, []);
 
-	// Configurar fondo dinámico
 	useEffect(() => {
 		if (infoGames) {
 			const museo = infoGames.find(
