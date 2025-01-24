@@ -40,7 +40,7 @@ interface ComponentProps {
 	};
 }
 
-function page({ params: { idSorteo } }: ComponentProps) {
+function Page({ params: { idSorteo } }: ComponentProps) {
 	const { empresa, textos } = useDataContext();
 	const { token, userId } = useAuthContext();
 	const router = useRouter();
@@ -177,4 +177,4 @@ function page({ params: { idSorteo } }: ComponentProps) {
 	);
 }
 
-export default page;
+export default Page;
