@@ -1,10 +1,15 @@
 "use client";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import CardGames from "@/app/components/cards/CardGames";
+import ButtonNav from "@/app/components/home/ButtonNav";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { AiOutlineTrophy } from "react-icons/ai";
+import { BsGift } from "react-icons/bs";
 
 function Page() {
-	const { data, textos } = useDataContext();
+	const { data, textos, empresa } = useDataContext();
 	const router = useRouter();
 
 	function fixImageUrl(url: string | undefined) {
@@ -18,6 +23,26 @@ function Page() {
 
 		return url;
 	}
+	useEffect(() => {
+		const backgroundImage = empresa?.fondo
+			? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+			: null;
+
+		if (backgroundImage) {
+			document.body.style.backgroundImage = `url(${backgroundImage})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [empresa]);
 
 	const handleCardClick = (idProducto: string) => {
 		router.push(`/app/productos/${idProducto}`);
@@ -89,6 +114,17 @@ function Page() {
 					</div>
 				</div>
 			)}
+			<ButtonNav
+				link1="/app/"
+				link2="/app/subastas"
+				link3="/app/premium"
+				icon1={<IoMdArrowRoundBack size={18} className="text-white" />}
+				icon2={<BsGift size={18} className="text-white" />}
+				icon3={<AiOutlineTrophy size={18} className="text-white" />}
+				texto1={"Volver"}
+				texto2={"Subastas"}
+				texto3={"Premium"}
+			/>
 		</div>
 	);
 }

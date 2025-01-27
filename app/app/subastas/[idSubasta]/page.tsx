@@ -77,12 +77,33 @@ const placeBid = async (
 function Page({ params: { idSubasta } }: ComponentProps) {
 	const router = useRouter();
 	const { token, userId } = useAuthContext();
-	const { data, textos } = useDataContext();
+	const { data, textos, empresa } = useDataContext();
 	const [oferta, setOferta] = useState("");
 	const [auctionDetails, setAuctionDetails] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [modalMessage, setModalMessage] = useState<string | null>(null);
+
+	useEffect(() => {
+		const backgroundImage = empresa?.fondo
+			? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+			: null;
+
+		if (backgroundImage) {
+			document.body.style.backgroundImage = `url(${backgroundImage})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [empresa]);
 	const fetchData = async () => {
 		try {
 			const data = await fetchAuctionDetails(token, userId, idSubasta);
@@ -213,7 +234,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 								onClick={handleBid}
 							/>
 						</div>
-						<span className="mt-2 text-xs">
+						<span className="mt-2 text-xs text-white">
 							{" "}
 							{`${textos.subasta_finaliza}  ${fin}`}
 						</span>

@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -31,7 +32,7 @@ const fetchAuctions = async (token: any, userId: any) => {
 };
 
 function Page() {
-	const { data, textos } = useDataContext();
+	const { data, textos, empresa } = useDataContext();
 	const { token, userId } = useAuthContext();
 	const router = useRouter();
 
@@ -54,6 +55,27 @@ function Page() {
 
 		return url;
 	}
+
+	useEffect(() => {
+		const backgroundImage = empresa?.fondo
+			? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+			: null;
+
+		if (backgroundImage) {
+			document.body.style.backgroundImage = `url(${backgroundImage})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [empresa]);
 
 	const handleCardClick = (idSubasta: any) => {
 		router.push(`/app/subastas/${idSubasta}`);

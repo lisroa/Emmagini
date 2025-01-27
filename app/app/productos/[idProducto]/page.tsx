@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -10,6 +10,10 @@ import { RoundButton } from "@/app/components/buttons/RoundButton";
 import { BsCashCoin, BsCoin } from "react-icons/bs";
 import "@/app/components/styles/loader.css";
 import Modal from "@/app/components/extras/ModalMensajes";
+import ButtonNav from "@/app/components/home/ButtonNav";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { AiOutlineTrophy } from "react-icons/ai";
+import { BsGift } from "react-icons/bs";
 
 interface ComponentProps {
 	params: {
@@ -77,13 +81,33 @@ const purchaseProduct = async (
 
 function Page({ params: { idProducto } }: ComponentProps) {
 	const { token, userId } = useAuthContext();
-	const { getAppData } = useDataContext();
+	const { getAppData, empresa } = useDataContext();
 	const router = useRouter();
 
 	const { data, error, isLoading } = useQuery(
 		["productData", token, userId, idProducto],
 		() => fetchProduct(token, userId, idProducto)
 	);
+	useEffect(() => {
+		const backgroundImage = empresa?.fondo
+			? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+			: null;
+
+		if (backgroundImage) {
+			document.body.style.backgroundImage = `url(${backgroundImage})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [empresa]);
 
 	const [modalMessage, setModalMessage] = useState<string | null>(null);
 	const [hasPurchased, setHasPurchased] = useState(false);
@@ -206,6 +230,17 @@ function Page({ params: { idProducto } }: ComponentProps) {
 				// @ts-ignore
 				<Modal message={modalMessage} onClose={() => setModalMessage(null)} />
 			)}
+			<ButtonNav
+				link1="/app/productos"
+				link2="/app/subastas"
+				link3="/app/premium"
+				icon1={<IoMdArrowRoundBack size={18} className="text-white" />}
+				icon2={<BsGift size={18} className="text-white" />}
+				icon3={<AiOutlineTrophy size={18} className="text-white" />}
+				texto1={"Volver"}
+				texto2={"Subastas"}
+				texto3={"Premium"}
+			/>
 		</>
 	);
 }
