@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import React, { createContext, useState, useContext, useCallback, useEffect } from "react";
 import axios from "axios";
@@ -187,4 +187,4 @@ export const JuegoTrucoProvider = ({ children }) => {
 };
 
 export const useJuegoTrucoDataContext = () =>
-  useContext(JuegoTrucoContext);
+  useContext(JuegoTrucoContext); */

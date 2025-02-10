@@ -20,8 +20,8 @@ const NavBar = () => {
 					<Link href="/app">
 						<Image
 							src={`https://backend.emmagini.com/uploads/${empresa?.logo}`}
-							width={106}
-							height={53}
+							width={200}
+							height={153}
 							alt="logo"
 						/>
 					</Link>

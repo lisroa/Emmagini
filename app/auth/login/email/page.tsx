@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { LockKeyhole, User } from "lucide-react";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import { useCallback, useState } from "react";
 import { ToggleInputVisionButton } from "@/app/components/buttons/ToggleInputVisionButton";
 import Link from "next/link";

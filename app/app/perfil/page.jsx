@@ -1,9 +1,34 @@
 "use client";
-
+import { useEffect, useState } from "react";
+import { useDataContext } from "@/app/context/GameDataProvider";
+import { useAuthContext } from "@/app/context/AuthProvider";
 import { FloatingLabel } from "flowbite-react";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 
 function Perfil() {
+	const { infoGames, empresa } = useDataContext();
+	const { token, userId } = useAuthContext();
+
+	useEffect(() => {
+		const backgroundImage = empresa?.fondo
+			? `https://backend.emmagini.com/uploads/${empresa.fondo}`
+			: null;
+
+		if (backgroundImage) {
+			document.body.style.backgroundImage = `url(${backgroundImage})`;
+			document.body.style.backgroundSize = "cover";
+			document.body.style.backgroundPosition = "center";
+			document.body.style.backgroundRepeat = "no-repeat";
+		} else {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		}
+
+		return () => {
+			document.body.style.backgroundImage = "";
+			document.body.style.backgroundColor = "white";
+		};
+	}, [empresa]);
 	return (
 		<>
 			<div className="flex flex-col justify-center items-center">

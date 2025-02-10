@@ -10,7 +10,7 @@ interface RoundButtonProps {
 	type?: "button" | "submit" | "reset";
 }
 
-export const RoundButton = ({
+const RoundButton = ({
 	isDisabled = false,
 	onClick,
 	logo,
@@ -41,3 +41,5 @@ export const RoundButton = ({
 		</button>
 	);
 };
+
+export default RoundButton;

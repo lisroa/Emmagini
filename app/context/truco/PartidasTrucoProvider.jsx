@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
@@ -129,4 +129,4 @@ export const PartidasTrucoProvider = ({ children }) => {
 };
 
 export const usePartidasTrucoDataContext = () =>
-	useContext(PartidasTrucoContext);
+	useContext(PartidasTrucoContext); */

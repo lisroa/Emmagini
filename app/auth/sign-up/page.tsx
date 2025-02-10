@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { LockKeyhole, User } from "lucide-react";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import { ToggleInputVisionButton } from "@/app/components/buttons/ToggleInputVisionButton";
 import { useRouter } from "next/navigation";
 

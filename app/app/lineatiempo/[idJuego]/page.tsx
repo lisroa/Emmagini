@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import ModalGame from "@/app/components/extras/ModalGame";

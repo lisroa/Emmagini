@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import {createContext,useState,useContext,useEffect,useCallback,} from "react";
 import axios from "axios";
@@ -61,11 +61,9 @@ export const SeriesTrucoProvider = ({ children }) => {
     console.log("este es el id del torneo", idTorneo)
   }, [idTorneo]);  */
 
-
-
 // Traer las series del torneo seleccionado
 
-  const getSeriesData = useCallback(async () => {
+/*const getSeriesData = useCallback(async () => {
     try {
       const serieId = localStorage.getItem("serieId");
       const response = await axios.post(
@@ -103,10 +101,7 @@ export const SeriesTrucoProvider = ({ children }) => {
         console.log(infoSeriesTruco)
       }, [dataSeries, infoSeriesTruco]); */
 
-
-
-
-  return (
+/*return (
     <SeriesTrucoContext.Provider
       value={{
         data,
@@ -128,7 +123,4 @@ export const SeriesTrucoProvider = ({ children }) => {
   );
 };
 
-export const useSeriesTrucoDataContext = () => useContext(SeriesTrucoContext);
-
-
-
+export const useSeriesTrucoDataContext = () => useContext(SeriesTrucoContext); */

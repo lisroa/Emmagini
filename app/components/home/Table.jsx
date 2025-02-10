@@ -5,13 +5,13 @@ import { useDataContext } from "../../context/GameDataProvider";
 import { useRouter } from "next/navigation";
 import CardHome from "../cards/CardHome";
 import CardTruco from "@/app/components/cards/CardTruco";
-import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
+//import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
 import { useDataAlbumContext } from "@/app/context/trivia/AlbumProvider";
 import WhileTap from "@/app/components/animations/WhileTap";
 
 function Table() {
 	const { infoGames, infoTruco, empresa, textos, data } = useDataContext();
-	const { setIdTorneo } = useSeriesTrucoDataContext();
+	//const { setIdTorneo } = useSeriesTrucoDataContext();
 	const { idAlbum, setIdAlbum } = useDataAlbumContext();
 	const router = useRouter();
 	const [showModal, setShowModal] = useState(false);
@@ -27,18 +27,14 @@ function Table() {
 		setShowModal(true);
 	};
 
-	const closeModal = () => {
-		setShowModal(false);
-	};
-
 	const saveTournamentIdToCache = (tournamentId) => {
 		localStorage.setItem("tournamentId", tournamentId);
 	};
 
-	const handleTournamentCardClick = (tournamentId) => {
+	/*const handleTournamentCardClick = (tournamentId) => {
 		setIdTorneo(tournamentId);
 		saveTournamentIdToCache(tournamentId);
-	};
+	};*/
 
 	const handleSorteoCardClick = () => {
 		router.push(`/app/sorteos`);
@@ -61,6 +57,8 @@ function Table() {
 			router.push(`/app/lineatiempo/${id}`);
 		} else if (tipo === "torneotruco") {
 			router.push(`/app/truco`);
+		} else if (tipo === "mom") {
+			router.push(`/app/mayor-menor/${id}`);
 		} else {
 			("");
 		}
@@ -91,7 +89,7 @@ function Table() {
 	};
 
 	return (
-		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[110px]">
+		<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 p-10 mb-32 pb-[150px]">
 			{showModal && (
 				<ModalMensaje
 					message={modalMessage}
@@ -133,7 +131,7 @@ function Table() {
 							</WhileTap>
 						))}
 
-				{infoTruco &&
+				{/*infoTruco &&
 					Object.values(infoTruco)
 						.sort((a, b) => a.orden - b.orden)
 						.map((torneo) => (
@@ -158,7 +156,7 @@ function Table() {
 									/>
 								</div>
 							</WhileTap>
-						))}
+						))*/}
 			</div>
 		</div>
 	);
