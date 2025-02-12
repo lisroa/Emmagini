@@ -1,5 +1,5 @@
 "use client";
-/*import React from "react";
+import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { GameDataProvider } from "../context/GameDataProvider";
@@ -8,10 +8,10 @@ import { FrontDataProvider } from "../context/FrontProvider";
 import { AlbumDataProvider } from "../context/trivia/AlbumProvider";
 import NavBar from "../components/home/NavBar";
 import SideMenu from "../components/SideMenu/SideMenu";
-import ButtonNav from "../components/home/ButtonNav";*/
+import ButtonNav from "../components/home/ButtonNav";
 
 // Crear una instancia de QueryClient
-//const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 export default function Layout({
 	children,
@@ -21,7 +21,7 @@ export default function Layout({
 	// TODO: Agregar código que verifique si estás logeado (tienes token y userId, puedes hacer una solicitud también). Si no estás logeado, te redirecciona al login, si estás logeado no hace nada.
 	// TODO: Agregar SeriesTrucoProvider para que el truco funcione.
 	return (
-		/*<QueryClientProvider client={queryClient}>
+		<QueryClientProvider client={queryClient}>
 			<FrontDataProvider>
 				<GameDataProvider>
 					<AlbumDataProvider>
@@ -34,9 +34,6 @@ export default function Layout({
 				</GameDataProvider>
 			</FrontDataProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
-		</QueryClientProvider>*/
-		<p className="mt-20 text-black">
-			Web en construccion. Disculpe las molestias
-		</p>
+		</QueryClientProvider>
 	);
 }
