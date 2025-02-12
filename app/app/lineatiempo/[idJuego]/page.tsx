@@ -27,7 +27,6 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const router = useRouter();
 	const { refetchAppData, infoGames } = useDataContext();
 	const { userId, token } = useAuthContext();
-
 	const [responseApi, setResponseApi] = useState<any>(null);
 	const [images, setImages] = useState<any[]>([]);
 	const [loading, setLoading] = useState(true);

@@ -15,7 +15,6 @@ interface ComponentProps {
 }
 
 const fetchGetGame = async (token: string, userId: string, idJuego: string) => {
-	console.log("Ejecutando fetchGetGame con action: get");
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/mom_jugar",
 		{
@@ -41,7 +40,6 @@ const fetchStartGame = async (
 	userId: string,
 	idJuego: string
 ) => {
-	console.log("Ejecutando fetchStartGame con action: start");
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/mom_jugar",
 		{
@@ -68,7 +66,6 @@ const fetchActionGame = async (
 	idJuego: string,
 	action: string
 ) => {
-	console.log(`Ejecutando fetchActionGame con action: ${action}`);
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/mom_jugar",
 		{
@@ -90,55 +87,54 @@ const fetchActionGame = async (
 };
 
 function Page({ params: { idJuego } }: ComponentProps) {
-	const { infoGames, empresa } = useDataContext();
+	const { infoGames, empresa, refetchAppData } = useDataContext();
 	const { token, userId } = useAuthContext();
 	const router = useRouter();
-	const [startGameData, setStartGameData] = useState<any>(null);
-	const [actionGameData, setActionGameData] = useState<any>(null);
-	const [shouldFlip, setShouldFlip] = useState(false);
-	const [resultImage, setResultImage] = useState<string | null>(null);
-	const [mayorText, setMayorText] = useState("Mayor");
-	const [menorText, setMenorText] = useState("Menor");
-	const [mayorBgColor, setMayorBgColor] = useState("bg-blueEmmagini");
 
-	const [onClickMayor, setOnClickMayor] = useState<() => void>(
-		() => () => handleActionClick("mayor")
-	);
-	const [onClickMenor, setOnClickMenor] = useState<() => void>(
-		() => () => handleActionClick("menor")
-	);
-
-	const [gameKey, setGameKey] = useState(0);
-
-	const [firstMemoFlipped, setFirstMemoFlipped] = useState(false);
-
-	useQuery(
+	const {
+		data: startGameData,
+		isLoading,
+		refetch,
+	} = useQuery(
 		["startGameData", token, userId, idJuego],
 		async () => {
 			const getData = await fetchGetGame(token, userId, idJuego);
 			if (getData?.id === null && getData?.error === 0) {
-				console.log("Respuesta de get:", getData, "-> se ejecuta start");
 				return await fetchStartGame(token, userId, idJuego);
 			}
 			return getData;
 		},
 		{
-			onSuccess: (data) => {
-				console.log("Datos iniciales del juego cargados:", data);
-				setStartGameData(data);
-			},
-
 			refetchOnWindowFocus: false,
-			refetchOnMount: false,
 			refetchOnReconnect: false,
 		}
 	);
 
+	const [cardFlip, setCardFlip] = useState(false);
+	const [cardDirection, setCardDirection] = useState(1);
+	const [actionFlip, setActionFlip] = useState(false);
+	const [actionDirection, setActionDirection] = useState(1);
+	const [bannerFlip, setBannerFlip] = useState(false);
+	const [bannerDirection, setBannerDirection] = useState(-1);
+	const [actionGameData, setActionGameData] = useState<any>(null);
+	const [resultImage, setResultImage] = useState<string | null>(null);
+	const [mayorText, setMayorText] = useState("Mayor");
+	const [menorText, setMenorText] = useState("Menor");
+	const [mayorBgColor, setMayorBgColor] = useState("bg-blueEmmagini");
+	const [gameKey, setGameKey] = useState(0);
+
 	useEffect(() => {
 		if (startGameData) {
-			setFirstMemoFlipped(false);
+			setCardDirection(-1);
+			setActionDirection(-1);
+			setBannerDirection(-1);
+			setCardFlip(false);
+			setActionFlip(false);
+			setBannerFlip(false);
+
 			const timer = setTimeout(() => {
-				setFirstMemoFlipped(true);
+				setCardDirection(1);
+				setCardFlip(true);
 			}, 500);
 			return () => clearTimeout(timer);
 		}
@@ -148,7 +144,6 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		const backgroundImage = empresa?.fondo
 			? `https://backend.emmagini.com/uploads/${empresa.fondo}`
 			: null;
-
 		if (backgroundImage) {
 			document.body.style.backgroundImage = `url(${backgroundImage})`;
 			document.body.style.backgroundSize = "cover";
@@ -158,22 +153,23 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			document.body.style.backgroundImage = "";
 			document.body.style.backgroundColor = "white";
 		}
-
 		return () => {
 			document.body.style.backgroundImage = "";
 			document.body.style.backgroundColor = "white";
 		};
 	}, [empresa]);
 
-	const handleActionClick = async (newAction: string) => {
-		console.log("Botón clickeado con acción:", newAction);
+	async function handleActionClick(newAction: string) {
 		try {
-			setShouldFlip(false);
 			const data = await fetchActionGame(token, userId, idJuego, newAction);
+
 			setTimeout(() => {
 				setActionGameData(data);
-				setShouldFlip(true);
-				setMayorBgColor("bg-[#ea9a45]");
+
+				setActionDirection(1);
+				setActionFlip(true);
+				setBannerDirection(1);
+				setBannerFlip(true);
 
 				if (data?.win !== undefined) {
 					const currentJuego = infoGames.find(
@@ -182,29 +178,27 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					setResultImage(
 						data.win ? currentJuego.imagen_ok : currentJuego.imagen_fail
 					);
-
 					if (data.win) {
-						console.log("Resultado de la acción: ¡Ganaste!");
 						setMayorText("Cobrar y salir");
 						setMenorText("Continuar");
+						setMayorBgColor("bg-[#ea9a45]");
 						setOnClickMayor(() => () => handleCobrar());
 						setOnClickMenor(() => () => resetGame());
 					} else {
-						console.log("Resultado de la acción: Fallaste");
 						setMayorText("Salir");
 						setMenorText("Volver a jugar");
+						setMayorBgColor("bg-[#ea9a45]");
 						setOnClickMayor(() => () => router.push("/app"));
 						setOnClickMenor(() => () => resetGame());
 					}
 				}
-			}, 300);
+			}, 1000);
 		} catch (error) {
 			console.error("Error en handleActionClick:", error);
 		}
-	};
+	}
 
-	const handleCobrar = async () => {
-		console.log("Acción Cobrar iniciada");
+	async function handleCobrar() {
 		try {
 			await fetchActionGame(token, userId, idJuego, "cobrar");
 		} catch (error) {
@@ -212,47 +206,51 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		}
 		setTimeout(() => {
 			router.push("/app");
+			refetchAppData();
 		}, 300);
-	};
+	}
 
-	const resetGame = async () => {
-		console.log("Reiniciando el juego...");
+	async function resetGame() {
 		try {
-			setFirstMemoFlipped(false);
-			setShouldFlip(false);
+			setCardDirection(-1);
+			setActionDirection(-1);
+			setBannerDirection(-1);
+			setCardFlip(false);
+			setActionFlip(false);
+			setBannerFlip(false);
 			setActionGameData(null);
 			setResultImage(null);
 			setMayorText("Mayor");
 			setMenorText("Menor");
 			setMayorBgColor("bg-blueEmmagini");
+			refetchAppData();
 
-			const data = await fetchGetGame(token, userId, idJuego);
-			if (data?.id === null && data?.error === 0) {
-				console.log("Reset: respuesta de get:", data, "-> se ejecuta start");
-				const startData = await fetchStartGame(token, userId, idJuego);
-				setStartGameData(startData);
-			} else {
-				setStartGameData(data);
-			}
+			await refetch();
 			setOnClickMayor(() => () => handleActionClick("mayor"));
 			setOnClickMenor(() => () => handleActionClick("menor"));
 			setGameKey((prev) => prev + 1);
+
+			const timer = setTimeout(() => {
+				setCardDirection(1);
+				setCardFlip(true);
+			}, 500);
+			return () => clearTimeout(timer);
 		} catch (error) {
 			console.error("Error en resetGame:", error);
 		}
-	};
+	}
 
-	if (!infoGames || !startGameData) {
+	const [onClickMayor, setOnClickMayor] = useState<() => void>(
+		() => () => handleActionClick("mayor")
+	);
+	const [onClickMenor, setOnClickMenor] = useState<() => void>(
+		() => () => handleActionClick("menor")
+	);
+
+	if (!infoGames || isLoading || !startGameData) {
 		return (
 			<div className="mt-20 text-black">
 				<div className="mt-96">
-					<section className="dots-container">
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-						<div className="dot"></div>
-					</section>
 					<h1 className="text-white text-center mt-4 font-bold text-xl">
 						CARGANDO
 					</h1>
@@ -282,7 +280,8 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						key={`card-${gameKey}`}
 						memoBlock={{ img: startGameData?.img_carta }}
 						cover={juego.reverso}
-						autoFlip={firstMemoFlipped}
+						controlledFlip={cardFlip}
+						flipDirection={cardDirection}
 						width={220}
 						height={165}
 					/>
@@ -293,7 +292,8 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						key={`action-${gameKey}`}
 						memoBlock={{ img: actionGameData?.img_carta }}
 						cover={juego.reverso}
-						autoFlip={shouldFlip}
+						controlledFlip={actionFlip}
+						flipDirection={actionDirection}
 						width={220}
 						height={165}
 					/>
@@ -311,12 +311,14 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					onClick={onClickMenor}
 				/>
 			</div>
+
 			<div className="rounded-lg w-[480px] h-[360px]">
 				<MemoBlock
 					key={`banner-${gameKey}`}
-					memoBlock={{ img: resultImage }}
+					memoBlock={{ img: resultImage || undefined }}
 					cover={juego.banner}
-					autoFlip={shouldFlip}
+					controlledFlip={bannerFlip}
+					flipDirection={bannerDirection}
 					width={480}
 					height={360}
 				/>
