@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-/*import React from "react";
+import React from "react";
+import { useDataContext } from "@/app/context/GameDataProvider";
 import ImageBanner from "../components/home/ImageBanner";
 import Table from "../components/home/Table";
 import banner from "../../public/assets/bg/background.png";
@@ -9,10 +10,14 @@ import "@/app/components/styles/loader.css";
 import ButtonNav from "../components/home/ButtonNav";
 import { BsGift } from "react-icons/bs";
 import { BsCartCheck } from "react-icons/bs";
-import { AiOutlineTrophy } from "react-icons/ai";*/
-import { useDataContext } from "@/app/context/GameDataProvider";
+import { AiOutlineTrophy } from "react-icons/ai";
+
 const Home = () => {
 	const { error, empresa, textos } = useDataContext();
+
+	/*useEffect(() => {
+		console.log("textos", textos);
+	}, [textos]);*/
 
 	useEffect(() => {
 		if (empresa) {
@@ -54,7 +59,7 @@ const Home = () => {
 	}
 
 	return (
-		/*<main>
+		<main>
 			<ImageBanner
 				image={empresa.header_imagen}
 				welcomText={empresa.header_1}
@@ -74,10 +79,7 @@ const Home = () => {
 				texto2={"Productos"}
 				texto3={"Premium"}
 			/>
-		</main> */
-		<p className="mt-20 text-white">
-			Web en construccion. Disculpe las molestias
-		</p>
+		</main>
 	);
 };
 
