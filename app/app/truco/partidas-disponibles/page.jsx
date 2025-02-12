@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useCallback } from "react";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import DivRounded from "@/app/components/extras/DivRounded";
 import GamesCounter from "@/app/components/extras/GamesCounter";
 import PrizesCard from "@/app/components/cards/PrizesCard";

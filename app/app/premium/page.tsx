@@ -5,7 +5,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import Modal from "@/app/components/extras/ModalMensajes";
 import imageTester from "../../../public/assets/premium-tester.png";
 

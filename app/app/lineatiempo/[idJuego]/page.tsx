@@ -392,7 +392,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton  from "@/app/components/buttons/RoundButton";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import "@/app/components/styles/loader.css";
 

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useSeriesTrucoDataContext } from "@/app/context/truco/SeriesTrucoProvider";
 import { usePartidasTrucoDataContext } from "@/app/context/truco/PartidasTrucoProvider";
 import { useJuegoTrucoDataContext } from "@/app/context/truco/JuegoTrucoProvider";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import CardGames from "@/app/components/cards/CardGames";
 import CardNewGame from "@/app/components/cards/CardNewGame";
 import tester from "@/public/assets/cards/imageCard.png";

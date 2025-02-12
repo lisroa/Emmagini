@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ReactNode } from "react";
-import { RoundButton } from "../buttons/RoundButton";
+import RoundButton from "../buttons/RoundButton";
 
 // En el orden por el que se utilizan
 

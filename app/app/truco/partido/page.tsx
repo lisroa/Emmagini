@@ -4,7 +4,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { RoundButton } from "../../../components/buttons/RoundButton";
+import RoundButton from "../../../components/buttons/RoundButton";
 import { useJuegoTrucoDataContext } from "@/app/context/truco/JuegoTrucoProvider";
 import { BsCaretLeftFill } from "react-icons/bs";
 import { BsFillCaretRightFill } from "react-icons/bs";

@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import ButtonNav from "@/app/components/home/ButtonNav";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import Modal from "@/app/components/extras/Modal";
 import { BsGift } from "react-icons/bs";
 import { BsCartCheck } from "react-icons/bs";

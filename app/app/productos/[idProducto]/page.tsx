@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import { BsCashCoin, BsCoin } from "react-icons/bs";
 import "@/app/components/styles/loader.css";
 import Modal from "@/app/components/extras/ModalMensajes";

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import Modal from "@/app/components/extras/ModalMensajes";
 import ButtonNav from "@/app/components/home/ButtonNav";
 import { IoMdArrowRoundBack } from "react-icons/io";

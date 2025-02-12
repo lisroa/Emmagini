@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { RoundButton } from "@/app/components/buttons/RoundButton";
+import RoundButton from "@/app/components/buttons/RoundButton";
 import DivRounded from "@/app/components/extras/DivRounded";
 import PrizesCard from "@/app/components/cards/PrizesCard";
 
