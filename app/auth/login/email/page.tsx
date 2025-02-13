@@ -1,16 +1,18 @@
 "use client";
 
+import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
+import axios from "axios";
 import { LockKeyhole, User } from "lucide-react";
-import RoundButton from "@/app/components/buttons/RoundButton";
-import { useCallback, useState } from "react";
-import { ToggleInputVisionButton } from "@/app/components/buttons/ToggleInputVisionButton";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "@/app/context/AuthProvider";
+import RoundButton from "@/app/components/buttons/RoundButton";
+import { ToggleInputVisionButton } from "@/app/components/buttons/ToggleInputVisionButton";
+import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useAuthContext } from "@/app/context/AuthProvider";
+import "@/app/components/styles/loader.css";
 
 const formSchema = z.object({
 	email: z.string().email().min(1),
@@ -21,10 +23,9 @@ type FormSchema = z.infer<typeof formSchema>;
 
 export default function Page() {
 	const router = useRouter();
-
 	const { signInWithEmailAndPassword } = useAuthContext();
-
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
 
 	const { register, handleSubmit, formState } = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
@@ -41,6 +42,44 @@ export default function Page() {
 	const handleTogglePasswordVisibility = useCallback(() => {
 		setIsPasswordVisible(!isPasswordVisible);
 	}, [isPasswordVisible]);
+
+	const fetchLoginText = useCallback(async () => {
+		try {
+			const data = new URLSearchParams();
+			data.append("host", "demo14.emmagini.com");
+			data.append("fcm_token", "");
+			data.append("id_plataforma", "3");
+			data.append("lang", "es");
+
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/login_text",
+				data,
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			console.error("Error en login_text:", error);
+			throw error;
+		}
+	}, []);
+
+	useEffect(() => {
+		const loadData = async () => {
+			try {
+				const [loginTextData] = await Promise.all([fetchLoginText()]);
+				setLoginTextResponse(loginTextData);
+			} catch (error) {
+				console.error("Error al cargar los datos:", error);
+			}
+		};
+
+		loadData();
+	}, [fetchLoginText]);
+
 	return (
 		<div className="w-full flex flex-col gap-5 justify-center items-center">
 			<div className="flex flex-col items-center justify-center shadow-lg rounded-full p-3 w-14 h-14 bg-white">
@@ -55,10 +94,10 @@ export default function Page() {
 
 			<div className="w-full flex flex-col items-center justify-center">
 				<h1 className="text-black font-bold text-center md:text-2xl text-xl">
-					Login
+					{loginTextResponse?.keytext.registro_expo_titulo}
 				</h1>
 				<h6 className="text-gray-400 font-regular text-center md:text-sm">
-					Login your account
+					{loginTextResponse?.keytext.inicio_titulo}
 				</h6>
 			</div>
 
@@ -76,7 +115,7 @@ export default function Page() {
 					<input
 						{...register("email")}
 						className="flex-1 bg-transparent text-black text-lg outline-0 h-full"
-						placeholder="Email"
+						placeholder={loginTextResponse?.keytext.login_email}
 					/>
 				</div>
 
@@ -92,7 +131,7 @@ export default function Page() {
 					<input
 						{...register("password")}
 						className="flex-1 bg-transparent text-black text-lg outline-0 h-full border-none focus:outline-none focus:ring-0"
-						placeholder="Password"
+						placeholder={loginTextResponse?.keytext.login_clave}
 						type={isPasswordVisible ? "text" : "password"}
 					/>
 					<ToggleInputVisionButton
@@ -103,7 +142,7 @@ export default function Page() {
 				</div>
 
 				<RoundButton
-					text={"Submit"}
+					text={loginTextResponse?.keytext.registro_expo}
 					type="submit"
 					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 h-14 py-3 px-3 w-full"
 					textClassName="text-white"
@@ -112,9 +151,9 @@ export default function Page() {
 
 			<div className="w-full flex flex-row items-center justify-center">
 				<p className="text-gray-400 font-regular text-center text-md">
-					Don’t have an account? Sign Up{" "}
+					Todavia no tienes una cuenta?{" "}
 					<span className="text-blue-400 hover:text-blue-500">
-						<Link href="../login">here</Link>
+						<Link href="../login">Registrate aqui</Link>
 					</span>
 				</p>
 			</div>

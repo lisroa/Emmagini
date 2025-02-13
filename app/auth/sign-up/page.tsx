@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useAuthContext } from "@/app/context/AuthProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useAuthContext } from "@/app/context/AuthProvider";
+
 import { LockKeyhole, User } from "lucide-react";
 import RoundButton from "@/app/components/buttons/RoundButton";
 import { ToggleInputVisionButton } from "@/app/components/buttons/ToggleInputVisionButton";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
 	username: z.string().min(1),
@@ -30,6 +32,45 @@ export default function Page() {
 	const { register, handleSubmit, formState } = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
 	});
+
+	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
+
+	const fetchLoginText = useCallback(async () => {
+		try {
+			const data = new URLSearchParams();
+			data.append("host", "demo14.emmagini.com");
+			data.append("fcm_token", "");
+			data.append("id_plataforma", "3");
+			data.append("lang", "es");
+
+			const response = await axios.post(
+				"https://backend.emmagini.com/api2/login_text",
+				data,
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+					},
+				}
+			);
+			return response.data;
+		} catch (error) {
+			console.error("Error en login_text:", error);
+			throw error;
+		}
+	}, []);
+
+	useEffect(() => {
+		const loadData = async () => {
+			try {
+				const [loginTextData] = await Promise.all([fetchLoginText()]);
+				setLoginTextResponse(loginTextData);
+			} catch (error) {
+				console.error("Error al cargar los datos:", error);
+			}
+		};
+
+		loadData();
+	}, [fetchLoginText]);
 
 	const onSubmit = useCallback(
 		async (data: FormSchema) => {
@@ -57,7 +98,7 @@ export default function Page() {
 		<div className="w-full flex flex-col gap-5 justify-center items-center">
 			<div className="w-full flex flex-col items-center justify-center">
 				<h1 className="text-black font-bold text-center md:text-2xl text-xl">
-					Register
+					{loginTextResponse?.keytext.registro_titulo}
 				</h1>
 			</div>
 
@@ -75,7 +116,7 @@ export default function Page() {
 					<input
 						{...register("username")}
 						className="flex-1 bg-transparent text-black text-lg outline-0 h-full"
-						placeholder="Username"
+						placeholder={loginTextResponse?.keytext.registro_nombre}
 					/>
 				</div>
 
@@ -89,7 +130,7 @@ export default function Page() {
 					<input
 						{...register("email")}
 						className="flex-1 bg-transparent text-black text-lg outline-0 h-full"
-						placeholder="Email Address"
+						placeholder={loginTextResponse?.keytext.registro_email}
 					/>
 				</div>
 
@@ -103,7 +144,7 @@ export default function Page() {
 					<input
 						{...register("password")}
 						className="flex-1 bg-transparent text-black text-lg outline-0 h-[49px] border-0 focus:outline-none focus:ring-0"
-						placeholder="Password"
+						placeholder={loginTextResponse?.keytext.registro_clave_1}
 						type={isPasswordVisible ? "text" : "password"}
 					/>
 					<ToggleInputVisionButton
@@ -123,7 +164,7 @@ export default function Page() {
 					<input
 						{...register("confirmPassword")}
 						className="flex-1 bg-transparent text-black text-lg outline-0 h-[49px] border-0  focus:outline-none focus:ring-0"
-						placeholder="Confirm Password"
+						placeholder={loginTextResponse?.keytext.registro_clave_2}
 						type={isPasswordVisible ? "text" : "password"}
 					/>
 					<ToggleInputVisionButton
@@ -135,7 +176,7 @@ export default function Page() {
 
 				<RoundButton
 					type="submit"
-					text={"Submit"}
+					text={loginTextResponse?.keytext.registro_ingresar}
 					buttonClassName="border border-sky-700 hover:bg-sky-800 bg-sky-700 py-3 px-3 w-full"
 					textClassName="text-white"
 				/>
@@ -143,9 +184,9 @@ export default function Page() {
 
 			<div className="w-full flex flex-row items-center justify-center">
 				<p className="text-gray-400 font-regular text-center text-md">
-					Already have an account? Login{" "}
+					Ya tienes una cuenta?{" "}
 					<span className="text-blue-400 hover:text-blue-500">
-						<Link href="./login">here</Link>
+						<Link href="./login">Ingresa aqui</Link>
 					</span>
 				</p>
 			</div>

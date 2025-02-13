@@ -22,15 +22,18 @@ const MemoBlock: React.FC<MemoBlockProps> = ({
 	height,
 }) => {
 	const [internalFlip, setInternalFlip] = useState(false);
+	const [coverLoaded, setCoverLoaded] = useState(false);
+	const [backLoaded, setBackLoaded] = useState(false);
+	const isReady = coverLoaded && (memoBlock.img ? backLoaded : true);
 
 	useEffect(() => {
-		if (autoFlip && controlledFlip === undefined) {
+		if (autoFlip && controlledFlip === undefined && isReady) {
 			const timer = setTimeout(() => {
 				setInternalFlip(true);
 			}, 1000);
 			return () => clearTimeout(timer);
 		}
-	}, [autoFlip, controlledFlip]);
+	}, [autoFlip, controlledFlip, isReady]);
 
 	const flipState =
 		controlledFlip !== undefined ? controlledFlip : internalFlip;
@@ -41,7 +44,7 @@ const MemoBlock: React.FC<MemoBlockProps> = ({
 			style={{ perspective: 1000, width: `${width}px`, height: `${height}px` }}
 		>
 			<motion.div
-				animate={{ rotateY: targetRotation }}
+				animate={{ rotateY: isReady ? targetRotation : 0 }}
 				transition={{ duration: 0.7 }}
 				style={{
 					width: "100%",
@@ -65,6 +68,7 @@ const MemoBlock: React.FC<MemoBlockProps> = ({
 						width={width}
 						height={height}
 						style={{ borderRadius: "8px", objectFit: "cover" }}
+						onLoadingComplete={() => setCoverLoaded(true)}
 					/>
 				</motion.div>
 
@@ -85,6 +89,7 @@ const MemoBlock: React.FC<MemoBlockProps> = ({
 							width={width}
 							height={height}
 							style={{ borderRadius: "8px", objectFit: "cover" }}
+							onLoadingComplete={() => setBackLoaded(true)}
 						/>
 					)}
 				</motion.div>

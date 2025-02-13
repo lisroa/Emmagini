@@ -503,7 +503,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 				onClick={handleStartGame}
 				idJuego={idJuego}
 			/>
-			<div className="mt-24">
+			<div className="mt-24 pb-32">
 				<h1 className="text-white text-center text-2xl font-bold">
 					{/*// @ts-ignore */}
 					{contenidoEncontrado?.titulo || ""}

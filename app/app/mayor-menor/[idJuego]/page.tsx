@@ -86,6 +86,30 @@ const fetchActionGame = async (
 	return response.data;
 };
 
+function useBannerDimensions() {
+	const [dimensions, setDimensions] = useState({ width: 480, height: 360 });
+
+	useEffect(() => {
+		function handleResize() {
+			const windowWidth = window.innerWidth;
+			if (windowWidth >= 1280) {
+				setDimensions({ width: 480, height: 360 });
+			} else if (windowWidth >= 1024) {
+				setDimensions({ width: 400, height: 300 });
+			} else if (windowWidth >= 768) {
+				setDimensions({ width: 360, height: 270 });
+			} else {
+				setDimensions({ width: 320, height: 240 });
+			}
+		}
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
+	return dimensions;
+}
+
 function Page({ params: { idJuego } }: ComponentProps) {
 	const { infoGames, empresa, refetchAppData } = useDataContext();
 	const { token, userId } = useAuthContext();
@@ -122,6 +146,8 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const [menorText, setMenorText] = useState("Menor");
 	const [mayorBgColor, setMayorBgColor] = useState("bg-blueEmmagini");
 	const [gameKey, setGameKey] = useState(0);
+
+	const bannerDimensions = useBannerDimensions();
 
 	useEffect(() => {
 		if (startGameData) {
@@ -162,15 +188,12 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	async function handleActionClick(newAction: string) {
 		try {
 			const data = await fetchActionGame(token, userId, idJuego, newAction);
-
 			setTimeout(() => {
 				setActionGameData(data);
-
 				setActionDirection(1);
 				setActionFlip(true);
 				setBannerDirection(1);
 				setBannerFlip(true);
-
 				if (data?.win !== undefined) {
 					const currentJuego = infoGames.find(
 						(juegoItem: any) => juegoItem.id === idJuego
@@ -262,7 +285,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const juego = infoGames.find((juegoItem: any) => juegoItem.id === idJuego);
 
 	return (
-		<div className="mt-20 flex flex-col items-center gap-8">
+		<div className="mt-20 flex flex-col items-center gap-8 px-4">
 			<h1 className="text-white text-center text-xl font-medium">
 				{juego.nombre}
 			</h1>
@@ -274,8 +297,8 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					Ronda: {startGameData?.ronda || 0} / {juego.rondas}
 				</p>
 			</div>
-			<div className="flex justify-center gap-6">
-				<div className="w-[220px] h-[165px]">
+			<div className="flex flex-wrap justify-center gap-6">
+				<div className="w-[220px] h-[165px] sm:w-[180px] sm:h-[135px] md:w-[220px] md:h-[165px]">
 					<MemoBlock
 						key={`card-${gameKey}`}
 						memoBlock={{ img: startGameData?.img_carta }}
@@ -286,8 +309,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						height={165}
 					/>
 				</div>
-
-				<div className="w-[220px] h-[165px]">
+				<div className="w-[220px] h-[165px] sm:w-[180px] sm:h-[135px] md:w-[220px] md:h-[165px]">
 					<MemoBlock
 						key={`action-${gameKey}`}
 						memoBlock={{ img: actionGameData?.img_carta }}
@@ -299,7 +321,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					/>
 				</div>
 			</div>
-			<div className="w-[200px] flex flex-col gap-2">
+			<div className="w-full max-w-[200px] flex flex-col gap-2">
 				<RoundButton
 					text={mayorText}
 					buttonClassName={`w-full h-full ${mayorBgColor} text-white`}
@@ -312,15 +334,21 @@ function Page({ params: { idJuego } }: ComponentProps) {
 				/>
 			</div>
 
-			<div className="rounded-lg w-[480px] h-[360px]">
+			<div
+				className="rounded-lg"
+				style={{
+					width: bannerDimensions.width,
+					height: bannerDimensions.height,
+				}}
+			>
 				<MemoBlock
 					key={`banner-${gameKey}`}
 					memoBlock={{ img: resultImage || undefined }}
 					cover={juego.banner}
 					controlledFlip={bannerFlip}
 					flipDirection={bannerDirection}
-					width={480}
-					height={360}
+					width={bannerDimensions.width}
+					height={bannerDimensions.height}
 				/>
 			</div>
 		</div>
