@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
-import Board from "../ruleta/board/board";
+import Board from "./Boooard/Board";
 import Modal from "../extras/ModalMensajes";
 import "@/app/components/ruleta/styles.css";
 
