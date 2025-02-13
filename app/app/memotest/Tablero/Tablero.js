@@ -1,6 +1,6 @@
 import { useDataContext } from "@/app/context/GameDataProvider";
 import MemoBlock from "../MemoBlock/MemoBlock";
-import "./Board.css";
+import "./Tablero.css";
 
 const Board = ({ animating, handleMemoClick, memoBlocks, cover }) => {
 	const { data } = useDataContext();
