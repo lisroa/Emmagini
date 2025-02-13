@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { useAuthContext } from "@/app/context/AuthProvider";
-import Board from "@/app/app/memotest/Tablero/Tablero";
+import Board from "./Tablero/Tablero";
 import CountdownTimer from "@/app/components/extras/CountdownTimer";
 import ModalMensajes from "@/app/components/extras/ModalMensajes";
 import DinamicButtonNav from "@/app/components/home/DinamicButtonNav";
