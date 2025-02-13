@@ -82,7 +82,7 @@ const App = ({ idPartida }) => {
 				setAnimating(false);
 			}
 		},
-		[token, userId, idPartida, shuffledBlocks]
+		[token, userId, idPartida, shuffledBlocks, refetchAppData]
 	);
 
 	const handleMemoClick = (clickedBlock) => {
