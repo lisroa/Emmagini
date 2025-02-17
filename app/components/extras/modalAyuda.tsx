@@ -22,7 +22,6 @@ const ModalAyuda = ({
 	const [showModal, setShowModal] = useState(isOpen);
 
 	useEffect(() => {
-		// Verificar si el modal debe estar oculto para este juego
 		const hideModalForGame = localStorage.getItem(`hideModal_${idJuego}`);
 		if (hideModalForGame === "true") {
 			setShowModal(false);
@@ -30,21 +29,20 @@ const ModalAyuda = ({
 	}, [idJuego]);
 
 	const handlePlayClick = () => {
-		setShowModal(false); // Cierra el modal
+		setShowModal(false);
 		if (onClick) {
-			onClick(); // Llama a la función de callback si existe
+			onClick();
 		}
 	};
 
 	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const isChecked = event.target.checked;
 
-		// Guardar en localStorage si el modal no debe mostrarse más para este juego
 		localStorage.setItem(`hideModal_${idJuego}`, isChecked.toString());
 	};
 
 	if (!showModal) {
-		return null; // No renderiza el modal si está oculto
+		return null;
 	}
 
 	return (
@@ -79,7 +77,7 @@ const ModalAyuda = ({
 				</div>
 				<button
 					className="bg-[#430df5] w-full h-[44px] text-white text-center rounded-[32px]"
-					onClick={handlePlayClick} // Llama al manejador para cerrar el modal
+					onClick={handlePlayClick}
 				>
 					{textButton}
 				</button>

@@ -40,6 +40,15 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const [buttonText, setButtonText] = useState<string>("Volver");
 	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
 	const [cover, setCover] = useState<string>("");
+	const [gameStarted, setGameStarted] = useState(false);
+
+	useEffect(() => {
+		const hideModal = localStorage.getItem(`hideModal_${idDelJuego}`);
+		if (hideModal === "true") {
+			setIsHelpModalOpen(false);
+			setGameStarted(true);
+		}
+	}, [idDelJuego]);
 
 	useEffect(() => {
 		if (data && data.contenidos) {
@@ -312,7 +321,9 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 						?.extra
 				}
 			</h2>
+
 			<CountdownTimer
+				start={gameStarted}
 				duration={300}
 				onTimeOut={finalizarPartidaConTimeout}
 				resetTimer={resetTimer}
