@@ -48,18 +48,6 @@ interface ComponentProps {
 const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const { userId, token } = useAuthContext();
 	const { refetchAppData } = useDataContext();
-
-	const { data, error, isLoading } = useQuery(
-		["validateData", token, userId],
-		() => validateData({ token, userId }),
-		{
-			enabled: !!token && !!userId,
-			refetchOnWindowFocus: false,
-		}
-	);
-
-	const router = useRouter();
-
 	const [responseApi, setResponseApi] = useState<any>(null);
 	const [contenidoEncontrado, setContenidoEncontrado] = useState(null);
 	const [column1, setColumn1] = useState([]);
@@ -76,9 +64,29 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const [timeoutCalled, setTimeoutCalled] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
+	const [gameStarted, setGameStarted] = useState(false);
 	const [buttonText, setButtonText] = useState<string>("Volver");
 	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
 	const [showRuleta, setShowRuleta] = useState(false);
+
+	const { data, error, isLoading } = useQuery(
+		["validateData", token, userId],
+		() => validateData({ token, userId }),
+		{
+			enabled: !!token && !!userId,
+			refetchOnWindowFocus: false,
+		}
+	);
+
+	const router = useRouter();
+
+	useEffect(() => {
+		const hideModal = localStorage.getItem(`hideModal_${idJuego}`);
+		if (hideModal === "true") {
+			setIsHelpModalOpen(false);
+			setGameStarted(true);
+		}
+	}, [idJuego]);
 
 	//Iniciar la partida y obtener el id_partida
 	const iniciarPartida = useCallback(async () => {
@@ -513,6 +521,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					{contenidoEncontrado?.extra || ""}
 				</h1>
 				<CountdownTimer
+					start={gameStarted}
 					duration={300}
 					onTimeOut={finalizarPartidaConTimeout}
 					resetTimer={resetTimer}
