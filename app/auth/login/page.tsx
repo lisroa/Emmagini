@@ -14,6 +14,7 @@ import "@/app/components/styles/loader.css";
 
 export default function Page() {
 	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
+	const { lang } = useAuthContext();
 
 	const fetchLoginText = useCallback(async () => {
 		try {
@@ -21,7 +22,7 @@ export default function Page() {
 			data.append("host", "demo14.emmagini.com");
 			data.append("fcm_token", "");
 			data.append("id_plataforma", "3");
-			data.append("lang", "es");
+			data.append("lang", lang);
 
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/login_text",

@@ -11,11 +11,13 @@ import { AiOutlineTrophy } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDataFrontContext } from "@/app/context/FrontProvider";
+import { useAuthContext } from "@/app/context/AuthProvider";
 import ConfirmModal from "@/app/components/extras/ConfirmModal";
 
 const SideMenu = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { sideMenuOpen, setSideMenuOpen, setModalOpen } = useDataFrontContext();
+	const { lang } = useAuthContext();
 	//const { logOut } = useDataFrontContext();
 
 	const router = useRouter();
@@ -66,7 +68,7 @@ const SideMenu = () => {
 					token: token,
 					userid: userId,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {

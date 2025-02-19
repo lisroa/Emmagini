@@ -13,6 +13,8 @@ const USER_ID_KEY = "user_id";
 interface AuthContextValues {
 	userId: string;
 	token: string;
+	lang: string;
+	setLang: (lang: string) => void;
 	signInWithEmailAndPassword: (
 		email: string,
 		password: string
@@ -33,6 +35,7 @@ export const AuthContext = createContext<AuthContextValues>({} as any);
 export const AuthProvider = ({ children }) => {
 	const [userId, setUserId] = useState("");
 	const [token, setToken] = useState("");
+	const [lang, setLang] = useState("es");
 
 	const singUpNewUser = useCallback(
 		async (
@@ -49,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 						fullname: username,
 						password: password,
 						repassword: confirmPassword,
-						lang: "es",
+						lang: lang,
 						host: "demo14.emmagini.com",
 						timezone: -3,
 						fcm_token: "",
@@ -82,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 						timezone: -3,
 						fcm_token: "",
 						id_plataforma: 3,
-						lang: "es",
+						lang: lang,
 						host: "demo14.emmagini.com",
 					},
 					{
@@ -135,7 +138,7 @@ export const AuthProvider = ({ children }) => {
 					fcm_token: "",
 					es_app: 0,
 					id_plataforma: 3,
-					lang: "es",
+					lang: lang,
 					timezone: -3,
 				},
 				{
@@ -162,6 +165,8 @@ export const AuthProvider = ({ children }) => {
 				signInWithEmailAndPassword,
 				singUpNewUser,
 				signInWithGoogle,
+				lang,
+				setLang,
 			}}
 		>
 			{children}

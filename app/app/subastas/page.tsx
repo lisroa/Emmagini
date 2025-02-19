@@ -12,7 +12,7 @@ import { BsCartCheck } from "react-icons/bs";
 import { AiOutlineTrophy } from "react-icons/ai";
 import "../../components/styles/loader.css";
 
-const fetchAuctions = async (token: any, userId: any) => {
+const fetchAuctions = async (token: any, userId: any, lang: string) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_auctions",
 		{
@@ -20,7 +20,7 @@ const fetchAuctions = async (token: any, userId: any) => {
 			userid: userId,
 			host: "demo14.emmagini.com",
 			id_club: null,
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -33,7 +33,7 @@ const fetchAuctions = async (token: any, userId: any) => {
 
 function Page() {
 	const { data, textos, empresa } = useDataContext();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const router = useRouter();
 
 	const {
@@ -41,7 +41,7 @@ function Page() {
 		error,
 		isLoading,
 	} = useQuery(["auctionsData", token, userId], () =>
-		fetchAuctions(token, userId)
+		fetchAuctions(token, userId, lang)
 	);
 
 	function fixImageUrl(url: any) {

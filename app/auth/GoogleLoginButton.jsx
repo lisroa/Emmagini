@@ -9,7 +9,7 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 const GoogleLoginButton = () => {
 	const router = useRouter();
 
-	const { token, userId, setToken, setUserId } = useAuthContext();
+	const { token, userId, setToken, setUserId, lang } = useAuthContext();
 
 	const TOKEN_KEY = "token";
 	const USER_ID_KEY = "user_id";
@@ -26,7 +26,7 @@ const GoogleLoginButton = () => {
 						fcm_token: "",
 						es_app: "0",
 						id_plataforma: "3",
-						lang: "es",
+						lang: lang,
 						timezone: "-3",
 					},
 					{

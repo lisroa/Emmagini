@@ -31,7 +31,7 @@ const ModalStickers = ({
 						plan: idSobre,
 						es_monedas: 0,
 						host: "demo25.emmagini.com",
-						lang: "es",
+						lang: lang,
 						callback: `https://demo25.emmagini.com/home.php#v=album&id=${idAlbum}`,
 						token: token,
 						userid: userId,
@@ -108,7 +108,7 @@ const ModalStickers = ({
 	stickersPrices,
 	idAlbum,
 }: ModalStickersProps) => {
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { refetchAppData } = useDataContext();
 	const [isAnimationVisible, setIsAnimationVisible] = useState(false);
 	const [stickers, setStickers] = useState([]);
@@ -123,7 +123,7 @@ const ModalStickers = ({
 						plan: idSobre,
 						es_monedas: 0,
 						host: "demo14.emmagini.com",
-						lang: "es",
+						lang: lang,
 						callback: `https://demo14.emmagini.com/home.php#v=album&id=${idAlbum}`,
 						token: token,
 						userid: userId,
@@ -143,7 +143,7 @@ const ModalStickers = ({
 				console.error("Error al realizar la compra:", error);
 			}
 		},
-		[idAlbum, token, userId]
+		[idAlbum, token, userId, lang]
 	);
 
 	const handleCardClick = (idSobre: any) => {

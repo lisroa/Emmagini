@@ -13,7 +13,7 @@ import { BsCartCheck } from "react-icons/bs";
 import { AiOutlineTrophy } from "react-icons/ai";
 import "@/app/components/styles/loader.css";
 
-const fetchSorteos = async (token: any, userId: any) => {
+const fetchSorteos = async (token: any, userId: any, lang: string) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_sorteos",
 		{
@@ -21,7 +21,7 @@ const fetchSorteos = async (token: any, userId: any) => {
 			userid: userId,
 			host: "demo14.emmagini.com",
 			id_club: null,
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -34,7 +34,7 @@ const fetchSorteos = async (token: any, userId: any) => {
 
 function Page() {
 	const { empresa, textos } = useDataContext();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -63,7 +63,7 @@ function Page() {
 		error,
 		isLoading,
 	} = useQuery(["rafflesData", token, userId], () =>
-		fetchSorteos(token, userId)
+		fetchSorteos(token, userId, lang)
 	);
 
 	function fixImageUrl(url: string) {

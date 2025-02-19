@@ -40,7 +40,7 @@ interface ComponentProps {
 function Page({ params: { idJuego } }: ComponentProps) {
 	const router = useRouter();
 	const { refetchAppData, infoGames } = useDataContext();
-	const { userId, token } = useAuthContext();
+	const { userId, token, lang } = useAuthContext();
 	const [responseApi, setResponseApi] = useState<any>(null);
 	const [idPartida, setIdPartida] = useState<any>(null);
 	const [images, setImages] = useState<any[]>([]);
@@ -92,7 +92,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					id_juego: idJuego,
 					id_partida: "",
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -106,7 +106,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			console.error("Error al iniciar partida", error);
 			throw error;
 		}
-	}, [token, userId, idJuego]);
+	}, [token, userId, idJuego, lang]);
 
 	const fetchData = useCallback(async () => {
 		try {
@@ -171,7 +171,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						incorrectas: incorrectCount,
 						timeout: isTimeout ? 1 : 0,
 						host: "demo14.emmagini.com",
-						lang: "es",
+						lang: lang,
 					},
 					{
 						headers: {
@@ -206,6 +206,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		[
 			token,
 			userId,
+			lang,
 			idJuego,
 			correctCount,
 			incorrectCount,
@@ -235,7 +236,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					id_juego: idJuego,
 					data: JSON.stringify(formattedData),
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -262,7 +263,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 		} catch (error) {
 			console.error("Error al verificar el orden:", error);
 		}
-	}, [token, userId, idJuego, orden, images, finalizarPartida]);
+	}, [token, userId, idJuego, lang, orden, images, finalizarPartida]);
 
 	const resetGameState = () => {
 		setImages([]);

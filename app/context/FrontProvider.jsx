@@ -13,11 +13,10 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export const FrontDataContext = createContext();
 
 export const FrontDataProvider = ({ children }) => {
-	//Side Menu
+	const { lang } = useAuthContext();
 	const [sideMenuOpen, setSideMenuOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 
-	//PRODUCTOS
 	const [productos, setProductos] = useState();
 
 	const logOut = useCallback(async () => {
@@ -30,8 +29,8 @@ export const FrontDataProvider = ({ children }) => {
 				{
 					token: token,
 					userid: userId,
-					host: "demo23.emmagini.com",
-					lang: "es",
+					host: "demo14.emmagini.com",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -62,7 +61,7 @@ export const FrontDataProvider = ({ children }) => {
 					userid: userId,
 					host: "demo14.emmagini.com",
 					id_club: "e6b564b3-c526-11ee-bc84-ec15a2edbff6",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {

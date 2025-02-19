@@ -4,12 +4,14 @@ import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useAuthContext } from "../context/AuthProvider";
 import "@/app/components/styles/loader.css";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const clientId =
 		"861018734768-mm2f76o6bidnoplpck3i87vdm91vrbut.apps.googleusercontent.com";
 
+	const { lang, setLang } = useAuthContext();
 	const [themeResponse, setThemeResponse] = useState<any>(null);
 	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
@@ -18,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		try {
 			const data = new URLSearchParams();
 			data.append("host", "demo14.emmagini.com");
-			data.append("lang", "es");
+			data.append("lang", lang);
 
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/gettheme",
@@ -42,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			data.append("host", "demo14.emmagini.com");
 			data.append("fcm_token", "");
 			data.append("id_plataforma", "3");
-			data.append("lang", "es");
+			data.append("lang", lang);
 
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/login_text",
@@ -79,6 +81,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		loadData();
 	}, [fetchTheme, fetchLoginText]);
 
+	/*useEffect(() => {
+		console.log("Idioma actual:", lang);
+	}, [lang]); */
+
 	if (loading) {
 		return (
 			<div className="mt-20 text-black">
@@ -101,12 +107,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<GoogleOAuthProvider clientId={clientId}>
 			<main className="relative min-h-screen max-h-screen w-screen h-screen overscroll-none overflow-hidden bg-black">
-				<div className="absolute inset-0 z-0 w-[850px]">
+				<div className="absolute top-0 left-0 z-0 w-full max-w-[850px] h-full">
 					<Image
 						className="object-center w-full h-full"
 						src={themeResponse?.fondo_login}
-						alt={"Homepage background"}
+						alt="Homepage background"
 						layout="fill"
+						objectFit="cover"
+						objectPosition="center"
 					/>
 				</div>
 
@@ -123,6 +131,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 					<div className="flex flex-col items-center justify-center md:p-10 p-7 md:w-5/12 md:h-[80%] md:max-h-[68%] w-[80%] max-h-[68%] bg-white rounded-4xl shadow-lg overflow-auto max-w-[540px]">
 						{children}
+						<div className="mt-4 flex flex-row items-center">
+							{loginTextResponse?.lang?.map((l: any) => (
+								<button
+									key={l.id}
+									onClick={() => {
+										setLang(l.id);
+										console.log("Idioma seleccionado:", l.id);
+									}}
+									className={`w-32 h-32 transition-opacity ${
+										lang === l.id ? "opacity-75" : "opacity-100"
+									}`}
+								>
+									<Image
+										src={l.icon}
+										alt={l.text}
+										width={48}
+										height={48}
+										className="mx-auto"
+									/>
+								</button>
+							))}
+						</div>
 					</div>
 				</div>
 			</main>

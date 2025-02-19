@@ -20,7 +20,6 @@ export default function Page({
 	const { infoGames, empresa } = useDataContext();
 	const router = useRouter();
 
-	// Limpieza del fondo al desmontar
 	useEffect(() => {
 		return () => {
 			document.body.style.backgroundImage = "";
@@ -28,7 +27,6 @@ export default function Page({
 		};
 	}, []);
 
-	// Configurar fondo dinámico
 	useEffect(() => {
 		if (infoGames) {
 			const museo = infoGames.find(
@@ -38,8 +36,8 @@ export default function Page({
 				(categoria: any) => categoria.id === idCategoria
 			);
 
-			if (categoria?.imagen_0 && categoria.imagen_0 !== "") {
-				document.body.style.backgroundImage = `url(${categoria.imagen_0})`;
+			if (categoria?.imagen_1 && categoria.imagen_1 !== "") {
+				document.body.style.backgroundImage = `url(${categoria.imagen_1})`;
 			} else if (empresa?.fondo) {
 				document.body.style.backgroundImage = `url(https://backend.emmagini.com/uploads/${empresa.fondo})`;
 			} else {

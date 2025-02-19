@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -15,7 +14,14 @@ import { BsCartCheck } from "react-icons/bs";
 import { AiOutlineTrophy } from "react-icons/ai";
 import "@/app/components/styles/loader.css";
 
-const fetchSorteo = async (token: any, userId: any, idSorteo: any) => {
+// TODO: AGREGAR TEXTOS
+
+const fetchSorteo = async (
+	token: any,
+	userId: any,
+	idSorteo: any,
+	lang: string
+) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_sorteo",
 		{
@@ -23,7 +29,7 @@ const fetchSorteo = async (token: any, userId: any, idSorteo: any) => {
 			userid: userId,
 			id: idSorteo,
 			host: "demo14.emmagini.com",
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -42,7 +48,7 @@ interface ComponentProps {
 
 function Page({ params: { idSorteo } }: ComponentProps) {
 	const { empresa, textos } = useDataContext();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -71,7 +77,7 @@ function Page({ params: { idSorteo } }: ComponentProps) {
 		error,
 		isLoading,
 	} = useQuery(["raffleData", token, userId], () =>
-		fetchSorteo(token, userId, idSorteo)
+		fetchSorteo(token, userId, idSorteo, lang)
 	);
 
 	console.log(raffleData);

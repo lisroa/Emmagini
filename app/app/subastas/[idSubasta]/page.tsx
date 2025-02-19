@@ -22,7 +22,8 @@ interface ComponentProps {
 const fetchAuctionDetails = async (
 	token: string,
 	userId: string,
-	idSubasta: string
+	idSubasta: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_auction",
@@ -31,7 +32,7 @@ const fetchAuctionDetails = async (
 			userid: userId,
 			id: idSubasta,
 			host: "demo14.emmagini.com",
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -46,7 +47,8 @@ const placeBid = async (
 	token: string,
 	userId: string,
 	idSubasta: string,
-	oferta: string
+	oferta: string,
+	lang: string
 ) => {
 	try {
 		const response = await axios.post(
@@ -59,7 +61,7 @@ const placeBid = async (
 					"https://demo14.emmagini.com/home.php#v=detalle-subastas&id=a0f94f4a-c050-11ee-bc84-ec15a2edbff6",
 				token,
 				userid: userId,
-				lang: "es",
+				lang: lang,
 			}),
 			{
 				headers: {
@@ -76,7 +78,7 @@ const placeBid = async (
 
 function Page({ params: { idSubasta } }: ComponentProps) {
 	const router = useRouter();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { data, textos, empresa } = useDataContext();
 	const [oferta, setOferta] = useState("");
 	const [auctionDetails, setAuctionDetails] = useState<any>(null);
@@ -106,7 +108,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 	}, [empresa]);
 	const fetchData = async () => {
 		try {
-			const data = await fetchAuctionDetails(token, userId, idSubasta);
+			const data = await fetchAuctionDetails(token, userId, idSubasta, lang);
 			setAuctionDetails(data);
 			setIsLoading(false);
 		} catch (error) {
@@ -123,7 +125,7 @@ function Page({ params: { idSubasta } }: ComponentProps) {
 	const handleBid = async () => {
 		if (oferta.trim()) {
 			try {
-				const response = await placeBid(token, userId, idSubasta, oferta);
+				const response = await placeBid(token, userId, idSubasta, oferta, lang);
 				if (response.error === 0 && response.mensaje === "OK") {
 					setModalMessage("Oferta realizada con éxito");
 					setOferta("");

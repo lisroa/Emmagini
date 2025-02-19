@@ -9,7 +9,7 @@ export const AlbumDataContext = createContext();
 
 export const AlbumDataProvider = ({ children }) => {
 	const [idAlbum, setIdAlbum] = useState(null);
-	const { userId, token } = useAuthContext();
+	const { userId, token, lang } = useAuthContext();
 
 	const fetchAlbumData = async () => {
 		if (!idAlbum || !token || !userId) {
@@ -25,7 +25,7 @@ export const AlbumDataProvider = ({ children }) => {
 				userid: userId,
 				host: "demo14.emmagini.com",
 				callback: "https://demo14.emmagini.com/home.php#v=inicio",
-				lang: "es",
+				lang: lang,
 			},
 			{
 				headers: {

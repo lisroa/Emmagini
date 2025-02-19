@@ -25,7 +25,8 @@ interface ComponentProps {
 const fetchValidateData = async (
 	idTrivia: string,
 	token: string,
-	userId: string
+	userId: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/validate",
@@ -34,7 +35,7 @@ const fetchValidateData = async (
 			token,
 			userid: userId,
 			host: "demo5.emmagini.com",
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -48,7 +49,8 @@ const fetchValidateData = async (
 const fetchAlbumData = async (
 	idTrivia: string,
 	token: string,
-	userId: string
+	userId: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_album",
@@ -58,7 +60,7 @@ const fetchAlbumData = async (
 			id: idTrivia,
 			host: "demo5.emmagini.com",
 			callback: "https://demo5.emmagini.com/home.php#v=inicio",
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -72,7 +74,8 @@ const fetchAlbumData = async (
 const fetchVideoData = async (
 	idTrivia: string,
 	token: string,
-	userId: string
+	userId: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_video",
@@ -82,7 +85,7 @@ const fetchVideoData = async (
 			id: idTrivia,
 			host: "demo5.emmagini.com",
 			callback: "https://demo5.emmagini.com/home.php#v=inicio",
-			lang: "es",
+			lang: lang,
 			trivia: "1",
 		},
 		{
@@ -100,14 +103,15 @@ const postAnswerData = async (
 	idTrivia: string,
 	videoId: string,
 	token: string,
-	userId: string
+	userId: string,
+	lang: string
 ) => {
 	const requestBody: { [key: string]: any } = {
 		id_album: idTrivia,
 		id_video: videoId,
 		sequencia: "0",
 		host: "demo5.emmagini.com",
-		lang: "es",
+		lang: lang,
 		trivia: "true",
 		callback: `https://demo5.emmagini.com/home.php#v=album&id=${idTrivia}`,
 		token,
@@ -130,7 +134,7 @@ const postAnswerData = async (
 export default function Page({ params: { idTrivia } }: ComponentProps) {
 	const { dataAlbum } = useDataAlbumContext();
 
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { empresa } = useDataContext();
 	const queryClient = useQueryClient();
 
@@ -146,7 +150,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 
 	const { data: validateData } = useQuery(
 		["validateData", idTrivia, token, userId],
-		() => fetchValidateData(idTrivia, token, userId),
+		() => fetchValidateData(idTrivia, token, userId, lang),
 		{
 			enabled: !!token && !!userId,
 		}
@@ -154,7 +158,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 
 	const { data: albumData, isLoading: isAlbumLoading } = useQuery(
 		["albumData", idTrivia, token, userId],
-		() => fetchAlbumData(idTrivia, token, userId),
+		() => fetchAlbumData(idTrivia, token, userId, lang),
 		{
 			enabled: !!token && !!userId,
 		}
@@ -162,7 +166,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 
 	const { data: videoData, isLoading: isVideoLoading } = useQuery(
 		["videoData", idTrivia, token, userId],
-		() => fetchVideoData(idTrivia, token, userId),
+		() => fetchVideoData(idTrivia, token, userId, lang),
 		{
 			enabled: !!token && !!userId,
 		}
@@ -182,7 +186,8 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 				idTrivia,
 				videoData?.id || "",
 				token,
-				userId
+				userId,
+				lang
 			),
 		{
 			onSuccess: (data) => {

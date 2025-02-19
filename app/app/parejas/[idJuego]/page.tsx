@@ -19,7 +19,7 @@ import { GrPowerReset } from "react-icons/gr";
 import "@/app/components/styles/loader.css";
 
 // @ts-ignore
-const validateData = async ({ token, userId }) => {
+const validateData = async ({ token, userId, lang }) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/validate",
 		{
@@ -27,7 +27,7 @@ const validateData = async ({ token, userId }) => {
 			token,
 			userid: userId,
 			host: "demo14.emmagini.com",
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -46,7 +46,7 @@ interface ComponentProps {
 }
 
 const Page = ({ params: { idJuego } }: ComponentProps) => {
-	const { userId, token } = useAuthContext();
+	const { userId, token, lang } = useAuthContext();
 	const { refetchAppData } = useDataContext();
 	const [responseApi, setResponseApi] = useState<any>(null);
 	const [contenidoEncontrado, setContenidoEncontrado] = useState(null);
@@ -71,7 +71,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 
 	const { data, error, isLoading } = useQuery(
 		["validateData", token, userId],
-		() => validateData({ token, userId }),
+		() => validateData({ token, userId, lang }),
 		{
 			enabled: !!token && !!userId,
 			refetchOnWindowFocus: false,
@@ -99,7 +99,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					id_juego: idJuego,
 					id_partida: "",
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -113,7 +113,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			console.error("Error al hacer la solicitud", error);
 			throw error;
 		}
-	}, [token, userId, idJuego]);
+	}, [token, userId, idJuego, lang]);
 
 	const fetchData = useCallback(async () => {
 		try {
@@ -194,7 +194,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					incorrectas: incorrectAttempts,
 					timeout: 0,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -228,6 +228,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		token,
 		userId,
 		idJuego,
+		lang,
 		correctAttempts,
 		incorrectAttempts,
 		responseApi,
@@ -252,7 +253,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					incorrectas: incorrectAttempts,
 					timeout: 0,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -278,6 +279,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		token,
 		userId,
 		idJuego,
+		lang,
 		responseApi,
 		correctAttempts,
 		incorrectAttempts,
@@ -374,7 +376,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					incorrectas: incorrectAttempts,
 					timeout: 0,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -404,6 +406,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		token,
 		userId,
 		idJuego,
+		lang,
 		responseApi,
 		correctAttempts,
 		incorrectAttempts,

@@ -13,7 +13,7 @@ interface ComponentProps {
 }
 
 function Page({ params: { idJuego } }: ComponentProps) {
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const [loading, setLoading] = useState(false);
 	const [response, setResponse] = useState<any>(null);
 
@@ -27,7 +27,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					id_juego: idJuego,
 					id_partida: "",
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -41,7 +41,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 			console.error("Error al hacer la solicitud", error);
 			throw error;
 		}
-	}, [token, userId, idJuego]);
+	}, [token, userId, idJuego, lang]);
 
 	const fetchData = useCallback(async () => {
 		try {

@@ -66,6 +66,7 @@ const Home = () => {
 				title={empresa.header_2}
 				subtitle={empresa.header_contenido}
 				buttonText={textos.btn_header_mas}
+				link={empresa.header_destino}
 			/>
 			<Table />
 			<ButtonNav

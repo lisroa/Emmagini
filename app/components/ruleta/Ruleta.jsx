@@ -12,7 +12,7 @@ import "@/app/components/ruleta/styles.css";
 const multiplierList = ["x1", "x2", "x3", "x1", "x1", "x1", "x2", "x3", "x10"];
 
 const App = ({ idPartida }) => {
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { refetchAppData } = useDataContext();
 	const router = useRouter();
 	const [shuffledBlocks, setShuffledBlocks] = useState([]);
@@ -47,7 +47,7 @@ const App = ({ idPartida }) => {
 						token: token,
 						userid: userId,
 						host: "demo14.emmagini.com",
-						lang: "es",
+						lang: lang,
 						id: idPartida,
 					},
 					{
@@ -82,7 +82,7 @@ const App = ({ idPartida }) => {
 				setAnimating(false);
 			}
 		},
-		[token, userId, idPartida, shuffledBlocks, refetchAppData]
+		[token, userId, lang, idPartida, shuffledBlocks, refetchAppData]
 	);
 
 	const handleMemoClick = (clickedBlock) => {
@@ -158,7 +158,7 @@ function Ruleta({ idPartida }) {
 					token: token,
 					userid: userId,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 					id: idPartida,
 				},
 				{

@@ -14,7 +14,12 @@ interface ComponentProps {
 	};
 }
 
-const fetchGetGame = async (token: string, userId: string, idJuego: string) => {
+const fetchGetGame = async (
+	token: string,
+	userId: string,
+	idJuego: string,
+	lang: string
+) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/mom_jugar",
 		{
@@ -24,7 +29,7 @@ const fetchGetGame = async (token: string, userId: string, idJuego: string) => {
 			callback: `https://demo14.emmagini.com/home.php#v=mom&id=${idJuego}`,
 			token,
 			userid: userId,
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -38,7 +43,8 @@ const fetchGetGame = async (token: string, userId: string, idJuego: string) => {
 const fetchStartGame = async (
 	token: string,
 	userId: string,
-	idJuego: string
+	idJuego: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/mom_jugar",
@@ -49,7 +55,7 @@ const fetchStartGame = async (
 			callback: `https://demo14.emmagini.com/home.php#v=mom&id=${idJuego}`,
 			token,
 			userid: userId,
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -64,7 +70,8 @@ const fetchActionGame = async (
 	token: string,
 	userId: string,
 	idJuego: string,
-	action: string
+	action: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/mom_jugar",
@@ -75,7 +82,7 @@ const fetchActionGame = async (
 			callback: `https://demo14.emmagini.com/home.php#v=mom&id=${idJuego}`,
 			token,
 			userid: userId,
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -112,7 +119,7 @@ function useBannerDimensions() {
 
 function Page({ params: { idJuego } }: ComponentProps) {
 	const { infoGames, empresa, refetchAppData } = useDataContext();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const router = useRouter();
 
 	const {
@@ -122,9 +129,9 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	} = useQuery(
 		["startGameData", token, userId, idJuego],
 		async () => {
-			const getData = await fetchGetGame(token, userId, idJuego);
+			const getData = await fetchGetGame(token, userId, idJuego, lang);
 			if (getData?.id === null && getData?.error === 0) {
-				return await fetchStartGame(token, userId, idJuego);
+				return await fetchStartGame(token, userId, idJuego, lang);
 			}
 			return getData;
 		},
@@ -187,7 +194,13 @@ function Page({ params: { idJuego } }: ComponentProps) {
 
 	async function handleActionClick(newAction: string) {
 		try {
-			const data = await fetchActionGame(token, userId, idJuego, newAction);
+			const data = await fetchActionGame(
+				token,
+				userId,
+				idJuego,
+				newAction,
+				lang
+			);
 			setTimeout(() => {
 				setActionGameData(data);
 				setActionDirection(1);
@@ -223,7 +236,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 
 	async function handleCobrar() {
 		try {
-			await fetchActionGame(token, userId, idJuego, "cobrar");
+			await fetchActionGame(token, userId, idJuego, "cobrar", lang);
 		} catch (error) {
 			console.error("Error en handleCobrar:", error);
 		}

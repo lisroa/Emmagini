@@ -11,7 +11,7 @@ import imageTester from "../../../public/assets/premium-tester.png";
 
 function Page() {
 	const router = useRouter();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { data } = useDataContext();
 	const [inputValue, setInputValue] = useState("");
 	const [showModal, setShowModal] = useState(false);
@@ -50,7 +50,7 @@ function Page() {
 					host: "demo14.emmagini.com/home.php#v=inicio",
 					token: token,
 					userid: userId,
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -76,7 +76,7 @@ function Page() {
 			setShowModal(true);
 			setInputValue("");
 		}
-	}, [token, userId, inputValue]);
+	}, [token, userId, inputValue, lang]);
 
 	return (
 		<div className="flex items-center justify-center min-h-screen">

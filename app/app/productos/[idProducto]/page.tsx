@@ -24,7 +24,8 @@ interface ComponentProps {
 const fetchProduct = async (
 	token: string,
 	userId: string,
-	idProducto: string
+	idProducto: string,
+	lang: string
 ) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_producto",
@@ -34,7 +35,7 @@ const fetchProduct = async (
 			id: idProducto,
 			host: "demo14.emmagini.com",
 			callback: `https://demo14.emmagini.com/home.php#v=detalle-productos&id=${idProducto}`,
-			lang: "es",
+			lang: lang,
 		},
 		{
 			headers: {
@@ -50,7 +51,8 @@ const purchaseProduct = async (
 	token: string,
 	userId: string,
 	productId: string,
-	price: number
+	price: number,
+	lang: string
 ) => {
 	try {
 		const response = await axios.post(
@@ -62,7 +64,7 @@ const purchaseProduct = async (
 				callback: `https://demo14.emmagini.com/home.php#v=detalle-productos&id=${productId}`,
 				token,
 				userid: userId,
-				lang: "es",
+				lang: lang,
 			},
 			{
 				headers: {
@@ -80,13 +82,13 @@ const purchaseProduct = async (
 };
 
 function Page({ params: { idProducto } }: ComponentProps) {
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { getAppData, empresa } = useDataContext();
 	const router = useRouter();
 
 	const { data, error, isLoading } = useQuery(
 		["productData", token, userId, idProducto],
-		() => fetchProduct(token, userId, idProducto)
+		() => fetchProduct(token, userId, idProducto, lang)
 	);
 	useEffect(() => {
 		const backgroundImage = empresa?.fondo
@@ -124,7 +126,8 @@ function Page({ params: { idProducto } }: ComponentProps) {
 					token,
 					userId,
 					idProducto,
-					data.content.precio
+					data.content.precio,
+					lang
 				);
 				if (result.error === "0") {
 					setModalMessage("Muchas gracias por su compra");

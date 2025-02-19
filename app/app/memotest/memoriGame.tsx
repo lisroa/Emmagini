@@ -23,7 +23,7 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 	const router = useRouter();
 	const { data, refetchAppData } = useDataContext();
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(true);
 	const [shuffledMemoBlocks, setShuffledMemoBlocks] = useState<any[]>([]);
 	const [selectedMemoBlock, setSelectedMemoBlock] = useState<any | null>(null);
@@ -147,7 +147,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 					incorrectas: failedAttempts,
 					timeout: 0,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -183,6 +183,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 		userId,
 		idDelJuego,
 		idPartida,
+		lang,
 		successfulAttempts,
 		failedAttempts,
 		refetchAppData,
@@ -204,7 +205,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 					incorrectas: failedAttempts,
 					timeout: 1,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -230,6 +231,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 		userId,
 		idDelJuego,
 		idPartida,
+		lang,
 		successfulAttempts,
 		failedAttempts,
 		timeoutCalled,

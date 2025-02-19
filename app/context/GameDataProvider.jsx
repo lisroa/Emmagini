@@ -8,7 +8,7 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 export const GameDataContext = createContext();
 
 export const GameDataProvider = ({ children }) => {
-	const { userId, token } = useAuthContext();
+	const { userId, token, lang } = useAuthContext();
 
 	const fetchAppData = async () => {
 		const response = await axios.post(
@@ -18,7 +18,7 @@ export const GameDataProvider = ({ children }) => {
 				token,
 				userid: userId,
 				host: "demo14.emmagini.com",
-				lang: "es",
+				lang: lang,
 			},
 			{
 				headers: {
@@ -35,7 +35,7 @@ export const GameDataProvider = ({ children }) => {
 		{
 			enabled: !!token && !!userId,
 			staleTime: 60000,
-			refetchOnWindowFocus: false, // No refetchear al cambiar de ventana
+			refetchOnWindowFocus: false,
 		}
 	);
 
@@ -48,7 +48,7 @@ export const GameDataProvider = ({ children }) => {
 				token,
 				userid: userId,
 				host: "demo4.emmagini.com",
-				lang: "es",
+				lang: lang,
 			},
 			{
 				headers: {

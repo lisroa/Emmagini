@@ -23,7 +23,7 @@ type FormSchema = z.infer<typeof formSchema>;
 
 export default function Page() {
 	const router = useRouter();
-	const { signInWithEmailAndPassword } = useAuthContext();
+	const { signInWithEmailAndPassword, lang } = useAuthContext();
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
 
@@ -49,7 +49,7 @@ export default function Page() {
 			data.append("host", "demo14.emmagini.com");
 			data.append("fcm_token", "");
 			data.append("id_plataforma", "3");
-			data.append("lang", "es");
+			data.append("lang", lang);
 
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/login_text",

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 
 //Agregar el link del boton si lo tiene o que vaya a subastas.
@@ -25,9 +26,11 @@ function ImageBanner(props) {
 					<h3 className="font-normal text-lg sm:text-xl md:text-2xl lg:text-3xl leading-8 mt-2 md:mt-4 mb-4">
 						{props.subtitle}
 					</h3>
-					<button className="w-full sm:w-[323px] h-12 bg-blueEmmagini mt-4 rounded-[50px] border-4 border-gray-500 hover:bg-sky-700">
-						{props.buttonText}
-					</button>
+					<Link href={props.link} target="_blank" rel="noopener noreferrer">
+						<button className="w-full sm:w-[323px] h-12 bg-blueEmmagini mt-4 rounded-[50px] border-4 border-gray-500 hover:bg-sky-700">
+							{props.buttonText}
+						</button>
+					</Link>
 				</div>
 			</div>
 		</div>

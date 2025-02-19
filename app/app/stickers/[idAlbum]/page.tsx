@@ -22,7 +22,7 @@ interface ComponentProps {
 }
 
 function Page({ params: { idAlbum } }: ComponentProps) {
-	const { token, userId } = useAuthContext();
+	const { token, userId, lang } = useAuthContext();
 	const { empresaModoPremium, userModoPremium, empresa } = useDataContext();
 	const [loading, setLoading] = useState(true);
 	const [modalImage, setModalImage] = useState(null);
@@ -42,7 +42,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					id: idAlbum,
 					host: "demo14.emmagini.com",
 					callback: "https://demo14.emmagini.com/home.php#v=inicio",
-					lang: "es",
+					lang: lang,
 				},
 				{
 					headers: {
@@ -56,7 +56,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 			console.error("Error al hacer la solicitud del álbum:", error);
 			throw error;
 		}
-	}, [token, userId, idAlbum]);
+	}, [token, userId, idAlbum, lang]);
 
 	const fetchData = useCallback(async () => {
 		try {
@@ -118,7 +118,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					userid: userId,
 					id: idAlbum,
 					host: "demo14.emmagini.com",
-					lang: "es",
+					lang: lang,
 					callback:
 						"https://demo14.emmagini.com/home.php#v=album&id=" + idAlbum,
 				},
@@ -134,7 +134,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 			console.error("Error al hacer la solicitud de precios:", error);
 			throw error;
 		}
-	}, [token, userId, idAlbum]);
+	}, [token, userId, idAlbum, lang]);
 
 	const handleButtonStickersClick = useCallback(async () => {
 		try {
