@@ -83,6 +83,8 @@ export const GameDataProvider = ({ children }) => {
 				infoGames: data?.contenidos,
 				textos: data?.keytext,
 				empresa: data?.empresa,
+				availableLanguages: data?.lang,
+				userData: data?.userdata,
 				isLoading,
 				error,
 				//dataTruco,

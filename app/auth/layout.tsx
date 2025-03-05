@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import axios from "axios";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useAuthContext } from "../context/AuthProvider";
@@ -131,16 +132,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 					<div className="flex flex-col items-center justify-center md:p-10 p-7 md:w-5/12 md:h-[80%] md:max-h-[68%] w-[80%] max-h-[68%] bg-white rounded-4xl shadow-lg overflow-auto max-w-[540px]">
 						{children}
-						<div className="mt-4 flex flex-row items-center">
+						<div className="mt-4 flex flex-row items-center justify-center w-full gap-x-2">
 							{loginTextResponse?.lang?.map((l: any) => (
 								<button
 									key={l.id}
 									onClick={() => {
 										setLang(l.id);
-										console.log("Idioma seleccionado:", l.id);
 									}}
-									className={`w-32 h-32 transition-opacity ${
-										lang === l.id ? "opacity-75" : "opacity-100"
+									className={`mb-6 transition-opacity rounded-lg ${
+										lang === l.id
+											? "opacity-75 border-2 border-gray-500"
+											: "opacity-100"
 									}`}
 								>
 									<Image
@@ -153,6 +155,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 								</button>
 							))}
 						</div>
+						<Link href="https://copado.club/tyc.php">
+							<p className="text-blueEmmagini underline text-center">
+								Terminos y condiciones
+							</p>
+						</Link>
 					</div>
 				</div>
 			</main>

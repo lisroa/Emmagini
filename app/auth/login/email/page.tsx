@@ -151,9 +151,11 @@ export default function Page() {
 
 			<div className="w-full flex flex-row items-center justify-center">
 				<p className="text-gray-400 font-regular text-center text-md">
-					Todavia no tienes una cuenta?{" "}
+					No tienes una cuenta?{" "}
 					<span className="text-blue-400 hover:text-blue-500">
-						<Link href="../login">Registrate aqui</Link>
+						<Link href="../login" className="text-blueEmmagini">
+							Registrate aqui
+						</Link>
 					</span>
 				</p>
 			</div>
