@@ -155,7 +155,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 								</button>
 							))}
 						</div>
-						<Link href="https://copado.club/tyc.php">
+						<Link href="https://copado.club/tyc.php" target="_blank">
 							<p className="text-blueEmmagini underline text-center">
 								Terminos y condiciones
 							</p>
