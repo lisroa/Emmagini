@@ -41,6 +41,7 @@ const SideMenu = () => {
 	const { lang } = useAuthContext();
 	const router = useRouter();
 	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	useEffect(() => {
 		if (!router.events) return;
 		const handleRouteChange = () => {
@@ -107,6 +108,11 @@ const SideMenu = () => {
 		await logOut();
 	};
 
+	// Función para cerrar el menú cuando se hace click en algún Link
+	const handleLinkClick = () => {
+		setSideMenuOpen(false);
+	};
+
 	return (
 		<>
 			<AnimatePresence>
@@ -122,16 +128,14 @@ const SideMenu = () => {
 						<div className="absolute top-4 right-4">
 							<button
 								className="rounded-full bg-red-500 mr-4"
-								onClick={() => {
-									setSideMenuOpen(false);
-								}}
+								onClick={() => setSideMenuOpen(false)}
 							>
 								<SlClose className="text-white" size={35} />
 							</button>
 						</div>
 
 						<div className="mt-20">
-							<Link href="/app/premium">
+							<Link href="/app/premium" onClick={handleLinkClick}>
 								<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
 									<div className="flex items-center">
 										<AiOutlineTrophy className="mr-2" />
@@ -142,7 +146,7 @@ const SideMenu = () => {
 									<AiOutlineArrowRight />
 								</button>
 							</Link>
-							<Link href="/app/subastas">
+							<Link href="/app/subastas" onClick={handleLinkClick}>
 								<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
 									<div className="flex items-center">
 										<BsGift className="mr-2" />
@@ -153,7 +157,7 @@ const SideMenu = () => {
 									<AiOutlineArrowRight />
 								</button>
 							</Link>
-							<Link href="/app/productos">
+							<Link href="/app/productos" onClick={handleLinkClick}>
 								<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
 									<div className="flex items-center">
 										<BsCartCheck className="mr-2" />
@@ -164,7 +168,7 @@ const SideMenu = () => {
 									<AiOutlineArrowRight />
 								</button>
 							</Link>
-							<Link href="/app">
+							<Link href="/app/perfil" onClick={handleLinkClick}>
 								<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
 									<div className="flex items-center">
 										<FaRegUserCircle className="mr-2" />
@@ -175,7 +179,11 @@ const SideMenu = () => {
 									<AiOutlineArrowRight />
 								</button>
 							</Link>
-							<Link href="https://copado.club/tyc.php" target="_blank">
+							<Link
+								href="https://copado.club/tyc.php"
+								target="_blank"
+								onClick={handleLinkClick}
+							>
 								<button className="flex items-center justify-between w-[323px] h-12 bg-white text-blueEmmagini mt-4 rounded-[50px] px-4">
 									<div className="flex items-center">
 										<BadgeInfo className="mr-2" />
