@@ -108,7 +108,6 @@ const SideMenu = () => {
 		await logOut();
 	};
 
-	// Función para cerrar el menú cuando se hace click en algún Link
 	const handleLinkClick = () => {
 		setSideMenuOpen(false);
 	};

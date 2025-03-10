@@ -88,7 +88,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 	if (loading) {
 		return (
-			<div className="mt-20 text-black">
+			<div className="mt-20 text-blueEmmagini">
 				<div className="mt-96">
 					<section className="dots-container">
 						<div className="dot"></div>

@@ -481,7 +481,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	};
 	if (isLoading) {
 		return (
-			<div className="mt-20 text-black">
+			<div className="mt-20 text-blueEmmagini">
 				<div className="mt-96">
 					<section className="dots-container">
 						<div className="dot"></div>

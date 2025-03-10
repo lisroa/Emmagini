@@ -306,7 +306,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						<div className="dot"></div>
 						<div className="dot"></div>
 					</section>
-					<h1 className="text-white text-center mt-4 font-bold text-xl">
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold text-xl">
 						CARGANDO
 					</h1>
 				</div>

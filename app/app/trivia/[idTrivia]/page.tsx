@@ -236,7 +236,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 
 	if (isAlbumLoading || isVideoLoading) {
 		return (
-			<div className="mt-20 text-black">
+			<div className="mt-20 text-blueEmmagini">
 				<div className="mt-96">
 					<section className="dots-container">
 						<div className="dot"></div>
@@ -245,7 +245,7 @@ export default function Page({ params: { idTrivia } }: ComponentProps) {
 						<div className="dot"></div>
 						<div className="dot"></div>
 					</section>
-					<h1 className="text-white text-center mt-4 font-bold text-xl">
+					<h1 className="text-blueEmmagini text-center mt-4 font-bold text-xl">
 						CARGANDO
 					</h1>
 				</div>

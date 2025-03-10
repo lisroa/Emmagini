@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState, useId, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import { useAuthContext } from "@/app/context/AuthProvider";
@@ -15,7 +17,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
 
 function Perfil() {
 	const { data, empresa, userData, textos, availableLanguages } =
@@ -25,15 +26,12 @@ function Perfil() {
 	const id = useId();
 	const router = useRouter();
 
-	// Estados para los inputs; se inicializan con userData o cadena vacía
 	const [nombre, setNombre] = useState(userData?.nombre || "");
 	const [alias, setAlias] = useState(userData?.alias || "");
 	const [email, setEmail] = useState(userData?.email || "");
 	const [fdnac, setFdnac] = useState(userData?.fdnac || "");
 	const [telefono, setTelefono] = useState(userData?.telefono || "");
 	const [sexo, setSexo] = useState(userData?.sexo || "");
-
-	// Estados para el modal
 	const [showModal, setShowModal] = useState(false);
 	const [modalMessage, setModalMessage] = useState("");
 
@@ -66,7 +64,6 @@ function Perfil() {
 		}
 	}, [data?.paises, selectedPais]);
 
-	// Actualiza los estados cuando userData cambia
 	useEffect(() => {
 		if (userData) {
 			setNombre(userData.nombre || "");
@@ -78,7 +75,6 @@ function Perfil() {
 		}
 	}, [userData]);
 
-	// updateUserData envía los datos actuales; si tiene éxito, muestra el modal con response.mensaje
 	const updateUserData = useCallback(async () => {
 		try {
 			const response = await axios.post(
@@ -106,7 +102,7 @@ function Perfil() {
 					},
 				}
 			);
-			// Se muestra el modal con el mensaje de la respuesta
+
 			setModalMessage(response.data.mensaje);
 			setShowModal(true);
 			return response.data;
@@ -127,9 +123,13 @@ function Perfil() {
 		lang,
 	]);
 
+	const onClickPasswordButton = () => {
+		router.push("/app/perfil/password");
+	};
+
 	if (isLoading) {
 		return (
-			<div className="mt-20 text-black">
+			<div className="mt-20 text-blueEmmagini">
 				<div className="mt-96">
 					<section className="dots-container">
 						<div className="dot"></div>
@@ -294,14 +294,16 @@ function Perfil() {
 						onClick={updateUserData}
 					/>
 					<RoundButton
-						buttonClassName="w-full h-[45.37px] bg-sky-400 mt-6 py-5 px-10"
-						textClassName="text-white font-bold text-base"
-						text={textos?.btn_completar_perfil_cancelar}
-					/>
-					<RoundButton
 						buttonClassName="w-full h-[45.37px] bg-[#f0ad4e] mt-6 py-5 px-10"
 						textClassName="text-white font-bold text-base first-letter:uppercase"
 						text={textos?.btn_password}
+						onClick={onClickPasswordButton}
+					/>
+					<RoundButton
+						buttonClassName="w-full h-[45.37px] bg-sky-400 mt-6 py-5 px-10"
+						textClassName="text-white font-bold text-base"
+						text={textos?.btn_completar_perfil_cancelar}
+						onClick={() => router.push("/app")}
 					/>
 				</div>
 			</div>
