@@ -15,6 +15,7 @@ const App = ({ idPartida }) => {
 	const { token, userId, lang } = useAuthContext();
 	const { refetchAppData } = useDataContext();
 	const router = useRouter();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const [shuffledBlocks, setShuffledBlocks] = useState([]);
 	const [animating, setAnimating] = useState(false);
 	const [gameLocked, setGameLocked] = useState(false);
@@ -40,13 +41,14 @@ const App = ({ idPartida }) => {
 
 	const girarRuleta = useCallback(
 		async (clickedBlock) => {
+			console.log("✅ HOST_URL cargado:", HOST_URL);
 			try {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/tirar_ruleta",
 					{
 						token: token,
 						userid: userId,
-						host: "demo14.emmagini.com",
+						host: HOST_URL,
 						lang: lang,
 						id: idPartida,
 					},

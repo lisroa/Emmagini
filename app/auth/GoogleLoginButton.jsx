@@ -9,18 +9,19 @@ import { useAuthContext } from "@/app/context/AuthProvider";
 const GoogleLoginButton = () => {
 	const router = useRouter();
 
-	const { token, userId, setToken, setUserId, lang } = useAuthContext();
+	const { setToken, setUserId, lang } = useAuthContext();
 
 	const TOKEN_KEY = "token";
 	const USER_ID_KEY = "user_id";
-
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const handleGoogleLoginSuccess = useCallback(
 		async (credentialResponse) => {
+			console.log("✅ HOST_URL cargado:", HOST_URL);
 			try {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/google_login",
 					{
-						host: "demo14.emmagini.com",
+						host: HOST_URL,
 						client_id: credentialResponse.clientId,
 						credential: credentialResponse.credential,
 						fcm_token: "",

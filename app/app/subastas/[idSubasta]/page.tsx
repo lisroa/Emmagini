@@ -19,6 +19,9 @@ interface ComponentProps {
 	};
 }
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
+console.log("✅ HOST_URL cargado:", HOST_URL);
+
 const fetchAuctionDetails = async (
 	token: string,
 	userId: string,
@@ -31,7 +34,7 @@ const fetchAuctionDetails = async (
 			token,
 			userid: userId,
 			id: idSubasta,
-			host: "demo14.emmagini.com",
+			host: HOST_URL,
 			lang: lang,
 		},
 		{
@@ -56,9 +59,8 @@ const placeBid = async (
 			new URLSearchParams({
 				q: idSubasta,
 				w: oferta,
-				host: "demo14.emmagini.com",
-				callback:
-					"https://demo14.emmagini.com/home.php#v=detalle-subastas&id=a0f94f4a-c050-11ee-bc84-ec15a2edbff6",
+				host: HOST_URL,
+				callback: `https://${HOST_URL}/home.php#v=detalle-subastas&id=a0f94f4a-c050-11ee-bc84-ec15a2edbff6`,
 				token,
 				userid: userId,
 				lang: lang,

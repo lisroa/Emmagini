@@ -33,6 +33,9 @@ interface AuthContextValues {
 export const AuthContext = createContext<AuthContextValues>({} as any);
 
 export const AuthProvider = ({ children }) => {
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
+	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [userId, setUserId] = useState("");
 	const [token, setToken] = useState("");
 	const [lang, setLang] = useState("es");
@@ -53,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 						password: password,
 						repassword: confirmPassword,
 						lang: lang,
-						host: "demo14.emmagini.com",
+						host: HOST_URL,
 						timezone: -3,
 						fcm_token: "",
 					},
@@ -86,7 +89,7 @@ export const AuthProvider = ({ children }) => {
 						fcm_token: "",
 						id_plataforma: 3,
 						lang: lang,
-						host: "demo14.emmagini.com",
+						host: HOST_URL,
 					},
 					{
 						headers: {
@@ -131,7 +134,7 @@ export const AuthProvider = ({ children }) => {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/google_login",
 				{
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					client_id:
 						"861018734768-mm2f76o6bidnoplpck3i87vdm91vrbut.apps.googleusercontent.com",
 					credential: credential,

@@ -24,6 +24,9 @@ type FormSchema = z.infer<typeof formSchema>;
 export default function Page() {
 	const router = useRouter();
 	const { signInWithEmailAndPassword, lang } = useAuthContext();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
+
+	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
 
@@ -46,7 +49,7 @@ export default function Page() {
 	const fetchLoginText = useCallback(async () => {
 		try {
 			const data = new URLSearchParams();
-			data.append("host", "demo14.emmagini.com");
+			data.append("host", HOST_URL);
 			data.append("fcm_token", "");
 			data.append("id_plataforma", "3");
 			data.append("lang", lang);

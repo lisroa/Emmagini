@@ -24,15 +24,16 @@ interface ComponentProps {
 function Page({ params: { idAlbum } }: ComponentProps) {
 	const { token, userId, lang } = useAuthContext();
 	const { empresaModoPremium, userModoPremium, empresa } = useDataContext();
+	const router = useRouter();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const [loading, setLoading] = useState(true);
 	const [modalImage, setModalImage] = useState(null);
 	const [dataAlbum, setDataAlbum] = useState<any>(null);
 	const [stickersPrices, setStickersPrices] = useState(null);
 	const [modalOpen, setModalOpen] = useState(false);
 
-	const router = useRouter();
-
 	const getAlbumData = useCallback(async () => {
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/get_album",
@@ -40,8 +41,8 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					token: token,
 					userid: userId,
 					id: idAlbum,
-					host: "demo14.emmagini.com",
-					callback: "https://demo14.emmagini.com/home.php#v=inicio",
+					host: HOST_URL,
+					callback: `https://${HOST_URL}/home.php#v=inicio`,
 					lang: lang,
 				},
 				{
@@ -110,6 +111,7 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 	};
 
 	const fetchPricesData = useCallback(async () => {
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/prices",
@@ -117,10 +119,9 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 					token: token,
 					userid: userId,
 					id: idAlbum,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
-					callback:
-						"https://demo14.emmagini.com/home.php#v=album&id=" + idAlbum,
+					callback: `https://${HOST_URL}/home.php#v=album&id=` + idAlbum,
 				},
 				{
 					headers: {

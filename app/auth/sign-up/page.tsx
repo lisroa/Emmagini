@@ -24,10 +24,11 @@ type FormSchema = z.infer<typeof formSchema>;
 
 export default function Page() {
 	const router = useRouter();
-
 	const { singUpNewUser, lang } = useAuthContext();
-
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
+
+	console.log("✅ HOST_URL cargado:", HOST_URL);
 
 	const { register, handleSubmit, formState } = useForm<FormSchema>({
 		resolver: zodResolver(formSchema),
@@ -38,7 +39,7 @@ export default function Page() {
 	const fetchLoginText = useCallback(async () => {
 		try {
 			const data = new URLSearchParams();
-			data.append("host", "demo14.emmagini.com");
+			data.append("host", HOST_URL);
 			data.append("fcm_token", "");
 			data.append("id_plataforma", "3");
 			data.append("lang", lang);

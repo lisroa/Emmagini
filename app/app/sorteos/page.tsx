@@ -13,13 +13,17 @@ import { BsCartCheck } from "react-icons/bs";
 import { AiOutlineTrophy } from "react-icons/ai";
 import "@/app/components/styles/loader.css";
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
+console.log("✅ HOST_URL cargado:", HOST_URL);
+
 const fetchSorteos = async (token: any, userId: any, lang: string) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/get_sorteos",
 		{
 			token,
 			userid: userId,
-			host: "demo14.emmagini.com",
+			host: HOST_URL,
 			id_club: null,
 			lang: lang,
 		},

@@ -21,6 +21,9 @@ interface ComponentProps {
 	};
 }
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
+console.log("✅ HOST_URL cargado:", HOST_URL);
 const fetchProduct = async (
 	token: string,
 	userId: string,
@@ -33,8 +36,8 @@ const fetchProduct = async (
 			token,
 			userid: userId,
 			id: idProducto,
-			host: "demo14.emmagini.com",
-			callback: `https://demo14.emmagini.com/home.php#v=detalle-productos&id=${idProducto}`,
+			host: HOST_URL,
+			callback: `https://${HOST_URL}/home.php#v=detalle-productos&id=${idProducto}`,
 			lang: lang,
 		},
 		{
@@ -60,8 +63,8 @@ const purchaseProduct = async (
 			{
 				q: productId,
 				w: price,
-				host: "demo14.emmagini.com",
-				callback: `https://demo14.emmagini.com/home.php#v=detalle-productos&id=${productId}`,
+				host: HOST_URL,
+				callback: `https://${HOST_URL}/home.php#v=detalle-productos&id=${productId}`,
 				token,
 				userid: userId,
 				lang: lang,

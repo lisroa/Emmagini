@@ -22,10 +22,10 @@ function Perfil() {
 	const { data, empresa, userData, textos, availableLanguages } =
 		useDataContext();
 	const { token, userId, lang, setLang } = useAuthContext();
-	const [selectedPais, setSelectedPais] = useState("");
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const id = useId();
 	const router = useRouter();
-
+	const [selectedPais, setSelectedPais] = useState("");
 	const [nombre, setNombre] = useState(userData?.nombre || "");
 	const [alias, setAlias] = useState(userData?.alias || "");
 	const [email, setEmail] = useState(userData?.email || "");
@@ -76,6 +76,7 @@ function Perfil() {
 	}, [userData]);
 
 	const updateUserData = useCallback(async () => {
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/profile",
@@ -90,8 +91,8 @@ function Perfil() {
 					domicilio: "",
 					alias: alias,
 					dni: "",
-					host: "demo14.emmagini.com",
-					callback: "https://demo14.emmagini.com/home.php#v=profile",
+					host: HOST_URL,
+					callback: `https://${HOST_URL}/home.php#v=profile`,
 					token: token,
 					userid: userId,
 					lang: lang,

@@ -14,6 +14,9 @@ export const FrontDataContext = createContext();
 
 export const FrontDataProvider = ({ children }) => {
 	const { lang } = useAuthContext();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
+	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [sideMenuOpen, setSideMenuOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 
@@ -29,7 +32,7 @@ export const FrontDataProvider = ({ children }) => {
 				{
 					token: token,
 					userid: userId,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
@@ -59,7 +62,7 @@ export const FrontDataProvider = ({ children }) => {
 				{
 					token: token,
 					userid: userId,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					id_club: "e6b564b3-c526-11ee-bc84-ec15a2edbff6",
 					lang: lang,
 				},

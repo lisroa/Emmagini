@@ -36,10 +36,11 @@ const sideMenuVariants = {
 };
 
 const SideMenu = () => {
-	const { textos } = useDataContext();
 	const { sideMenuOpen, setSideMenuOpen, setModalOpen } = useDataFrontContext();
-	const { lang } = useAuthContext();
+	const { lang, token, userId } = useAuthContext();
 	const router = useRouter();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
@@ -72,15 +73,14 @@ const SideMenu = () => {
 	}, [sideMenuOpen, setSideMenuOpen]);
 
 	const logOut = useCallback(async () => {
-		const token = localStorage.getItem("token");
-		const userId = localStorage.getItem("user_id");
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/logout",
 				{
 					token: token,
 					userid: userId,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{

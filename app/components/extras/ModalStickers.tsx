@@ -110,11 +110,13 @@ const ModalStickers = ({
 }: ModalStickersProps) => {
 	const { token, userId, lang } = useAuthContext();
 	const { refetchAppData } = useDataContext();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const [isAnimationVisible, setIsAnimationVisible] = useState(false);
 	const [stickers, setStickers] = useState([]);
 
 	const buySticker = useCallback(
 		async (idSobre: any) => {
+			console.log("✅ HOST_URL cargado:", HOST_URL);
 			try {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/buy",
@@ -122,9 +124,9 @@ const ModalStickers = ({
 						album: idAlbum,
 						plan: idSobre,
 						es_monedas: 0,
-						host: "demo14.emmagini.com",
+						host: HOST_URL,
 						lang: lang,
-						callback: `https://demo14.emmagini.com/home.php#v=album&id=${idAlbum}`,
+						callback: `https://${HOST_URL}/home.php#v=album&id=${idAlbum}`,
 						token: token,
 						userid: userId,
 					},

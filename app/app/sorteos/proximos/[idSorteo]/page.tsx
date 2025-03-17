@@ -15,6 +15,10 @@ import { BsCartCheck } from "react-icons/bs";
 import { AiOutlineTrophy } from "react-icons/ai";
 import "@/app/components/styles/loader.css";
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
+console.log("✅ HOST_URL cargado:", HOST_URL);
+
 const fetchSorteo = async (
 	token: any,
 	userId: any,
@@ -27,7 +31,7 @@ const fetchSorteo = async (
 			token,
 			userid: userId,
 			id: idSorteo,
-			host: "demo14.emmagini.com",
+			host: HOST_URL,
 			lang: lang,
 		},
 		{

@@ -12,6 +12,7 @@ function Page() {
 	const { empresa, textos } = useDataContext();
 	const { token, userId, lang } = useAuthContext();
 	const router = useRouter();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const [newPassword, setNewPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
 	const [showModal, setShowModal] = useState(false);
@@ -40,15 +41,15 @@ function Page() {
 	}, [empresa]);
 
 	const updateUserPassword = useCallback(async () => {
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/password",
 				{
 					password_1: newPassword,
 					password_2: repeatPassword,
-					host: "demo14.emmagini.com",
-					callback:
-						"https://demo14.emmagini.com/home.php#v=password&back=profile",
+					host: HOST_URL,
+					callback: `https://${HOST_URL}/home.php#v=password&back=profile`,
 					token: token,
 					userid: userId,
 					lang: lang,

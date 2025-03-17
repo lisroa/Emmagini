@@ -18,12 +18,6 @@ import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
 import "@/app/components/styles/loader.css";
 
-const formatTime = (seconds: number) => {
-	const m = Math.floor(seconds / 60);
-	const s = seconds % 60;
-	return `${m < 10 ? "0" + m : m}:${s < 10 ? "0" + s : s}`;
-};
-
 const shuffleArray = (array: any[]) => {
 	return array
 		.map((item) => ({ sort: Math.random(), value: item }))
@@ -57,8 +51,9 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const [showRuleta, setShowRuleta] = useState(false);
 	const [buttonText, setButtonText] = useState<string>("Volver");
 	const [showRuletaButton, setShowRuletaButton] = useState<boolean>(false);
-
 	const [gameStarted, setGameStarted] = useState(false);
+
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 
 	const game = infoGames?.find((gameItem: any) => gameItem.id === idJuego);
 
@@ -83,6 +78,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	}, [game]);
 
 	const iniciarPartida = useCallback(async () => {
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/iniciar_partida",
@@ -91,7 +87,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					userid: userId,
 					id_juego: idJuego,
 					id_partida: "",
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
@@ -170,7 +166,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 						correctas: correctCount,
 						incorrectas: incorrectCount,
 						timeout: isTimeout ? 1 : 0,
-						host: "demo14.emmagini.com",
+						host: HOST_URL,
 						lang: lang,
 					},
 					{
@@ -235,7 +231,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					userid: userId,
 					id_juego: idJuego,
 					data: JSON.stringify(formattedData),
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{

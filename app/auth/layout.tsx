@@ -9,8 +9,11 @@ import { useAuthContext } from "../context/AuthProvider";
 import "@/app/components/styles/loader.css";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-	const clientId =
-		"861018734768-mm2f76o6bidnoplpck3i87vdm91vrbut.apps.googleusercontent.com";
+	const clientId = process.env.NEXT_PUBLIC_GOOGLE_ID || "";
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
+
+	console.log("✅ HOST_URL cargado:", HOST_URL);
+	console.log("✅ CLIENTID cargado:", clientId);
 
 	const { lang, setLang } = useAuthContext();
 	const [themeResponse, setThemeResponse] = useState<any>(null);
@@ -20,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	const fetchTheme = useCallback(async () => {
 		try {
 			const data = new URLSearchParams();
-			data.append("host", "demo14.emmagini.com");
+			data.append("host", HOST_URL);
 			data.append("lang", lang);
 
 			const response = await axios.post(
@@ -42,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	const fetchLoginText = useCallback(async () => {
 		try {
 			const data = new URLSearchParams();
-			data.append("host", "demo14.emmagini.com");
+			data.append("host", HOST_URL);
 			data.append("fcm_token", "");
 			data.append("id_plataforma", "3");
 			data.append("lang", lang);

@@ -2,7 +2,6 @@
 import Image from "next/image";
 import axios from "axios";
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/context/AuthProvider";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import RoundButton from "@/app/components/buttons/RoundButton";
@@ -10,7 +9,7 @@ import Modal from "@/app/components/extras/ModalMensajes";
 import imageTester from "../../../public/assets/premium-tester.png";
 
 function Page() {
-	const router = useRouter();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const { token, userId, lang } = useAuthContext();
 	const { data } = useDataContext();
 	const [inputValue, setInputValue] = useState("");
@@ -42,12 +41,13 @@ function Page() {
 	};
 
 	const subscribeToPremium = useCallback(async () => {
+		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/bepremium_club",
 				{
 					code: inputValue,
-					host: "demo14.emmagini.com/home.php#v=inicio",
+					host: `${HOST_URL}/home.php#v=inicio`,
 					token: token,
 					userid: userId,
 					lang: lang,

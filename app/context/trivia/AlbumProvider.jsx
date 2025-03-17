@@ -8,8 +8,11 @@ import { useQuery } from "react-query";
 export const AlbumDataContext = createContext();
 
 export const AlbumDataProvider = ({ children }) => {
-	const [idAlbum, setIdAlbum] = useState(null);
 	const { userId, token, lang } = useAuthContext();
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+
+	console.log("✅ HOST_URL cargado:", HOST_URL);
+	const [idAlbum, setIdAlbum] = useState(null);
 
 	const fetchAlbumData = async () => {
 		if (!idAlbum || !token || !userId) {
@@ -23,8 +26,8 @@ export const AlbumDataProvider = ({ children }) => {
 				id: idAlbum,
 				token,
 				userid: userId,
-				host: "demo14.emmagini.com",
-				callback: "https://demo14.emmagini.com/home.php#v=inicio",
+				host: HOST_URL,
+				callback: `https://${HOST_URL}/home.php#v=inicio`,
 				lang: lang,
 			},
 			{
