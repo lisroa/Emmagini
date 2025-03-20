@@ -41,7 +41,6 @@ const App = ({ idPartida }) => {
 
 	const girarRuleta = useCallback(
 		async (clickedBlock) => {
-			console.log("✅ HOST_URL cargado:", HOST_URL);
 			try {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/tirar_ruleta",
@@ -104,7 +103,7 @@ const App = ({ idPartida }) => {
 	return (
 		<div className="container-app">
 			<div className="container">
-				<h1 className="text-center text-white text-3xl font-bold">
+				<h1 className="text-center text-white text-3xl font-bold mt-10">
 					Elige una carta para multiplicar tu premio
 				</h1>
 				<Board

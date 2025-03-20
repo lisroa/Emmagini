@@ -171,10 +171,12 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 			if (response.data.ruleta === 1) {
 				setButtonText("Multiplica tu premio");
 				setShowRuletaButton(true);
+				setGameStarted(false);
 			} else {
 				setButtonText("Volver");
 				setShowRuletaButton(false);
 			}
+			setGameStarted(false);
 		} catch (error) {
 			console.error("Error al hacer la solicitud", error);
 		}
@@ -294,6 +296,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 
 	const handleStartGame = () => {
 		setIsHelpModalOpen(false);
+		setGameStarted(true);
 	};
 	return (
 		<div>

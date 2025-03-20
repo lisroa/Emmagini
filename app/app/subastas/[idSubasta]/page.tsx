@@ -20,7 +20,6 @@ interface ComponentProps {
 }
 
 const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
-console.log("✅ HOST_URL cargado:", HOST_URL);
 
 const fetchAuctionDetails = async (
 	token: string,

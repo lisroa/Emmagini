@@ -10,8 +10,6 @@ export const AlbumDataContext = createContext();
 export const AlbumDataProvider = ({ children }) => {
 	const { userId, token, lang } = useAuthContext();
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
-
-	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [idAlbum, setIdAlbum] = useState(null);
 
 	const fetchAlbumData = async () => {

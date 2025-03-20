@@ -53,6 +53,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	const [column1, setColumn1] = useState([]);
 	const [column2, setColumn2] = useState([]);
 	const [matchedDivs, setMatchedDivs] = useState([]);
+	const [wrongMatchIndices, setWrongMatchIndices] = useState([]);
 	const [clickedDivs, setClickedDivs] = useState([]);
 	const [correctAttempts, setCorrectAttempts] = useState(0);
 	const [incorrectAttempts, setIncorrectAttempts] = useState(0);
@@ -215,12 +216,14 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			setModalText(updatedContent.texto);
 			refetchAppData();
 			if (response.data.ruleta === 1) {
+				setGameStarted(false);
 				setButtonText("Multiplica tu premio");
 				setShowRuletaButton(true);
 			} else {
 				setButtonText("Volver");
 				setShowRuletaButton(false);
 			}
+			setGameStarted(false);
 		} catch (error) {
 			console.error("Error al finalizar la partida:", error);
 		}
@@ -287,8 +290,6 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 		fetchData,
 	]);
 
-	// Verificamos si los divs seleccionados son pares o no, vamos contando los intentos correctos e incorrectos.
-
 	const handleDivClick = (item: any, index: any) => {
 		// @ts-ignore
 		if (matchedDivs.includes(index) || clickedDivs.length === 2) return;
@@ -306,13 +307,15 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 				setCorrectAttempts((prev) => prev + 1);
 			} else {
 				setIncorrectAttempts((prev) => prev + 1);
+				// @ts-ignore
+				setWrongMatchIndices([firstDiv.index, secondDiv.index]);
 			}
 
 			setTimeout(() => {
 				setClickedDivs([]);
+				setWrongMatchIndices([]);
 			}, 1000);
 
-			// Verificar si todos los pares fueron encontrados
 			if (matchedDivs.length + 2 === column1.length * 2) {
 				finalizarPartida();
 			}
@@ -326,8 +329,13 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 			const isSelected = clickedDivs.some((div) => div.index === realIndex);
 			// @ts-ignore
 			const isMatched = matchedDivs.includes(realIndex);
+			// @ts-ignore
+			const isWrongMatch = wrongMatchIndices.includes(realIndex);
+
 			const borderColor = isMatched
-				? "border-green-700"
+				? "border-[#1b943a]"
+				: isWrongMatch
+				? "border-red"
 				: isSelected
 				? "border-blueEmmagini"
 				: "border-gray-500";
@@ -336,8 +344,8 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 				<div
 					key={realIndex}
 					onClick={() => handleDivClick(item, realIndex)}
-					className={`w-full h-28 rounded-lg border-4 ${borderColor} ${
-						isMatched ? "cursor-not-allowed" : ""
+					className={`w-full h-32 rounded-lg border-8 ${borderColor} ${
+						isMatched ? "cursor-not-allowed" : "cursor-pointer"
 					}`}
 				>
 					<Image
@@ -470,6 +478,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 	};
 	const handleStartGame = () => {
 		setIsHelpModalOpen(false);
+		setGameStarted(true);
 	};
 	const handleModalButtonClick = () => {
 		if (showRuletaButton) {

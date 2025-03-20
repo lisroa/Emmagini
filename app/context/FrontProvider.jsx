@@ -15,8 +15,6 @@ export const FrontDataContext = createContext();
 export const FrontDataProvider = ({ children }) => {
 	const { lang } = useAuthContext();
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
-
-	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [sideMenuOpen, setSideMenuOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 

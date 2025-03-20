@@ -35,7 +35,6 @@ export const AuthContext = createContext<AuthContextValues>({} as any);
 export const AuthProvider = ({ children }) => {
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 
-	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [userId, setUserId] = useState("");
 	const [token, setToken] = useState("");
 	const [lang, setLang] = useState("es");

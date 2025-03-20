@@ -17,8 +17,6 @@ export default function Page() {
 	const { lang } = useAuthContext();
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
 
-	console.log("✅ HOST_URL cargado:", HOST_URL);
-
 	const fetchLoginText = useCallback(async () => {
 		try {
 			const data = new URLSearchParams();

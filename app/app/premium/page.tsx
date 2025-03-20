@@ -41,7 +41,6 @@ function Page() {
 	};
 
 	const subscribeToPremium = useCallback(async () => {
-		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/bepremium_club",

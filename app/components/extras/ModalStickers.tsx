@@ -116,7 +116,6 @@ const ModalStickers = ({
 
 	const buySticker = useCallback(
 		async (idSobre: any) => {
-			console.log("✅ HOST_URL cargado:", HOST_URL);
 			try {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/buy",

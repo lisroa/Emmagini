@@ -26,7 +26,6 @@ export default function Page() {
 	const { signInWithEmailAndPassword, lang } = useAuthContext();
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
 
-	console.log("✅ HOST_URL cargado:", HOST_URL);
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
 

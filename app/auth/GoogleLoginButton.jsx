@@ -16,7 +16,6 @@ const GoogleLoginButton = () => {
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 	const handleGoogleLoginSuccess = useCallback(
 		async (credentialResponse) => {
-			console.log("✅ HOST_URL cargado:", HOST_URL);
 			try {
 				const response = await axios.post(
 					"https://backend.emmagini.com/api2/google_login",

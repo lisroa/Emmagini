@@ -78,7 +78,6 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	}, [game]);
 
 	const iniciarPartida = useCallback(async () => {
-		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/iniciar_partida",
@@ -189,12 +188,14 @@ function Page({ params: { idJuego } }: ComponentProps) {
 				resetGameState();
 				refetchAppData();
 				if (response.data.ruleta === 1) {
+					setGameStarted(false);
 					setButtonText("Multiplica tu premio");
 					setShowRuletaButton(true);
 				} else {
 					setButtonText("Volver");
 					setShowRuletaButton(false);
 				}
+				setGameStarted(false);
 			} catch (error) {
 				console.error("Error al finalizar la partida:", error);
 			}
@@ -370,7 +371,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 													{...provided.draggableProps}
 													{...provided.dragHandleProps}
 													className={`w-[215px] h-[120px] relative rounded-lg mx-auto box-border ${
-														isCorrect ? "border-[4px] border-green-500" : ""
+														isCorrect ? "border-[6px] border-[#1b943a]" : ""
 													}`}
 												>
 													<Image

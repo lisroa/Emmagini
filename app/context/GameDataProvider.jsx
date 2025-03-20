@@ -11,8 +11,6 @@ export const GameDataProvider = ({ children }) => {
 	const { userId, token, lang } = useAuthContext();
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 
-	console.log("✅ HOST_URL cargado:", HOST_URL);
-
 	const fetchAppData = async () => {
 		const response = await axios.post(
 			"https://backend.emmagini.com/api2/validate",

@@ -17,8 +17,6 @@ import "@/app/components/styles/loader.css";
 
 const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 
-console.log("✅ HOST_URL cargado:", HOST_URL);
-
 const fetchSorteo = async (
 	token: any,
 	userId: any,
@@ -82,8 +80,6 @@ function Page({ params: { idSorteo } }: ComponentProps) {
 	} = useQuery(["raffleData", token, userId], () =>
 		fetchSorteo(token, userId, idSorteo, lang)
 	);
-
-	console.log(raffleData);
 
 	function fixImageUrl(url: string) {
 		if (!url) {

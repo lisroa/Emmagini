@@ -33,7 +33,6 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 	const [modalOpen, setModalOpen] = useState(false);
 
 	const getAlbumData = useCallback(async () => {
-		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/get_album",
@@ -111,7 +110,6 @@ function Page({ params: { idAlbum } }: ComponentProps) {
 	};
 
 	const fetchPricesData = useCallback(async () => {
-		console.log("✅ HOST_URL cargado:", HOST_URL);
 		try {
 			const response = await axios.post(
 				"https://backend.emmagini.com/api2/prices",

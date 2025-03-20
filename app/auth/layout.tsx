@@ -12,9 +12,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	const clientId = process.env.NEXT_PUBLIC_GOOGLE_ID || "";
 	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL || "";
 
-	console.log("✅ HOST_URL cargado:", HOST_URL);
-	console.log("✅ CLIENTID cargado:", clientId);
-
 	const { lang, setLang } = useAuthContext();
 	const [themeResponse, setThemeResponse] = useState<any>(null);
 	const [loginTextResponse, setLoginTextResponse] = useState<any>(null);
@@ -84,10 +81,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 		loadData();
 	}, [fetchTheme, fetchLoginText]);
-
-	/*useEffect(() => {
-		console.log("Idioma actual:", lang);
-	}, [lang]); */
 
 	if (loading) {
 		return (
