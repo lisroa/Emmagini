@@ -8,6 +8,8 @@ import MemoBlock from "../MemoBlock/MemoBlock";
 import RoundButton from "@/app/components/buttons/RoundButton";
 import { useRouter } from "next/navigation";
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+console.log("HOST", HOST_URL);
 interface ComponentProps {
 	params: {
 		idJuego: string;
@@ -25,8 +27,8 @@ const fetchGetGame = async (
 		{
 			id: idJuego,
 			action: "get",
-			host: "demo14.emmagini.com",
-			callback: `https://demo14.emmagini.com/home.php#v=mom&id=${idJuego}`,
+			host: HOST_URL,
+			callback: `https://${HOST_URL}/home.php#v=mom&id=${idJuego}`,
 			token,
 			userid: userId,
 			lang: lang,
@@ -51,8 +53,8 @@ const fetchStartGame = async (
 		{
 			id: idJuego,
 			action: "start",
-			host: "demo14.emmagini.com",
-			callback: `https://demo14.emmagini.com/home.php#v=mom&id=${idJuego}`,
+			host: HOST_URL,
+			callback: `https://${HOST_URL}/home.php#v=mom&id=${idJuego}`,
 			token,
 			userid: userId,
 			lang: lang,
@@ -78,8 +80,8 @@ const fetchActionGame = async (
 		{
 			id: idJuego,
 			action,
-			host: "demo14.emmagini.com",
-			callback: `https://demo14.emmagini.com/home.php#v=mom&id=${idJuego}`,
+			host: HOST_URL,
+			callback: `https://${HOST_URL}/home.php#v=mom&id=${idJuego}`,
 			token,
 			userid: userId,
 			lang: lang,

@@ -17,6 +17,9 @@ function Page({ params: { idJuego } }: ComponentProps) {
 	const [loading, setLoading] = useState(false);
 	const [response, setResponse] = useState<any>(null);
 
+	const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+	console.log("HOST", HOST_URL);
+
 	const iniciarPartida = useCallback(async () => {
 		try {
 			const response = await axios.post(
@@ -26,7 +29,7 @@ function Page({ params: { idJuego } }: ComponentProps) {
 					userid: userId,
 					id_juego: idJuego,
 					id_partida: "",
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{

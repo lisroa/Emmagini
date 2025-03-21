@@ -18,15 +18,18 @@ import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
 import "@/app/components/styles/loader.css";
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+console.log("HOST", HOST_URL);
+
 // @ts-ignore
 const validateData = async ({ token, userId, lang }) => {
 	const response = await axios.post(
 		"https://backend.emmagini.com/api2/validate",
 		{
-			callback: "https://demo14.emmagini.com/home.php#v=inicio",
+			callback: `https://${HOST_URL}/home.php#v=inicio`,
 			token,
 			userid: userId,
-			host: "demo14.emmagini.com",
+			host: HOST_URL,
 			lang: lang,
 		},
 		{
@@ -99,7 +102,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					userid: userId,
 					id_juego: idJuego,
 					id_partida: "",
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
@@ -194,7 +197,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					correctas: correctAttempts,
 					incorrectas: incorrectAttempts,
 					timeout: 0,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
@@ -255,7 +258,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					correctas: correctAttempts,
 					incorrectas: incorrectAttempts,
 					timeout: 0,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
@@ -383,7 +386,7 @@ const Page = ({ params: { idJuego } }: ComponentProps) => {
 					correctas: correctAttempts,
 					incorrectas: incorrectAttempts,
 					timeout: 0,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{

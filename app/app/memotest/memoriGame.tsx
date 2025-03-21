@@ -14,6 +14,8 @@ import { MdWorkspacePremium } from "react-icons/md";
 import { GrPowerReset } from "react-icons/gr";
 import "./styles.css";
 
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
+console.log("HOST", HOST_URL);
 interface AppProps {
 	idDelJuego: string;
 	idPartida: string;
@@ -146,7 +148,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 					correctas: successfulAttempts,
 					incorrectas: failedAttempts,
 					timeout: 0,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
@@ -206,7 +208,7 @@ const App: React.FC<AppProps> = ({ idDelJuego, idPartida, iniciarPartida }) => {
 					correctas: successfulAttempts,
 					incorrectas: failedAttempts,
 					timeout: 1,
-					host: "demo14.emmagini.com",
+					host: HOST_URL,
 					lang: lang,
 				},
 				{
