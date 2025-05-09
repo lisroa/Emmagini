@@ -5,7 +5,6 @@ import React from "react";
 import { useDataContext } from "@/app/context/GameDataProvider";
 import ImageBanner from "../components/home/ImageBanner";
 import Table from "../components/home/Table";
-import banner from "../../public/assets/bg/background.png";
 import "@/app/components/styles/loader.css";
 import ButtonNav from "../components/home/ButtonNav";
 import { BsGift } from "react-icons/bs";
